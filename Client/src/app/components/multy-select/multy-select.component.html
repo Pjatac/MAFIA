@@ -1,0 +1,7 @@
+<mat-form-field>
+    <mat-label>Servers</mat-label>
+    <mat-select [formControl]="servers" #ms multiple [(value)]="selected"> <!-- (selectionChange)="newSelection(selected)" -->
+      <mat-option *ngFor="let srv of srvList" [value]="srv">{{srv}}</mat-option>
+      <button mat-button (click)="newSelection(selected, ms)">Apply</button>
+    </mat-select>
+  </mat-form-field>
