@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import * as c3 from 'c3';
-import { VMService } from '../services/vm.service';
+import { VMService } from '../../services/vm.service';
 
 @Component({
   selector: 'app-mem-chart',
