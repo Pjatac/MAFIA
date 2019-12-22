@@ -4,4 +4,6 @@
 <div class="chart" *ngIf="memData">
     <app-mem-chart [(chartData)]="memData"></app-mem-chart>
 </div>
-<app-multy-select [(srvList)]="srvList" (changeSelection)="changeSelection($event)"></app-multy-select>
+<div style="text-align: center">
+    <app-multy-select [(srvList)]="srvList" (changeSelection)="changeSelection($event)"></app-multy-select>
+</div>

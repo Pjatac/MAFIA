@@ -27,12 +27,13 @@ export class VmComponent implements OnInit {
       this.memData = chartData.m;
     });
     this.vmService.getNewServersData().subscribe((servers: SRV[]) => {
-      let chartData = Helper.BuildChartData(servers);
+      // let chartData = Helper.BuildChartData(servers);
+      // this.cpuData = chartData.c;
+      // this.memData = chartData.m;
+      this.serversData = Helper.AddData(this.serversData, servers);
+      let chartData = Helper.BuildChartData(this.serversData);
       this.cpuData = chartData.c;
       this.memData = chartData.m;
-      //let tmp = Helper.AddData(this.serversData, servers);
-      //this.cpuData = chartData.c;
-      //this.memData = chartData.m;
     });
   }
   changeSelection(servers) {
