@@ -11,6 +11,6 @@ ConnectToDb();
 sessionRouter.sessionRouter(io);
 
 
-
-server.listen(3000);
-console.log("Server started");
+const port = 100;
+server.listen(port);
+console.log("Server started on port",port);
