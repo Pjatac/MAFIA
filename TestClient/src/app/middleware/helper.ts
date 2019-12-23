@@ -1,6 +1,13 @@
 import { SRV } from '../models/srv';
 
 export class Helper{
+    static buildAxisXLabels(period){
+        let labels = ['x'];
+        for(let i = 0; i < 16; i++) {
+          labels.push((period*i).toString());
+        }
+        return labels;
+      }
     static AddData(current: SRV[], newData: SRV[]){
         if (current[0].vms[0].data.length < 16){
             let srvCounter = 0;
