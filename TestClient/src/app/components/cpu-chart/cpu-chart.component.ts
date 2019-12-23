@@ -1,6 +1,7 @@
 import { Component, OnChanges, Input } from '@angular/core';
 import * as c3 from 'c3';
 import { VMService } from 'src/app/services/vm.service';
+import { Helper } from 'src/app/middleware/helper';
 
 @Component({
   selector: 'app-cpu-chart',
@@ -9,6 +10,7 @@ import { VMService } from 'src/app/services/vm.service';
 })
 export class CpuChartComponent implements OnChanges {
   @Input() chartData;
+  @Input() period;
 
   constructor(private vmService: VMService) { }
 
@@ -16,17 +18,27 @@ export class CpuChartComponent implements OnChanges {
     this.buildChart();
   }
   buildChart() {
-    this.chartData = {
-      columns: this.chartData
+    let columns = Helper.buildAxisXLabels(this.period);
+    let chartData = this.chartData;
+    chartData.unshift(columns);
+    chartData = {
+      x: 'x',
+      columns: chartData
     };
     let chart = c3.generate({
       bindto: '#cpuChart',
-      data: this.chartData,
+      data: chartData,
       axis: {
         x: {
+          type: 'indexed',
           label: {
             text: 'Time',
             position: 'outer-right'
+          },
+          tick: {
+            format: function (d) {
+              return d+'min';
+            }
           }
         },
         y: {

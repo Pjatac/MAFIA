@@ -8,10 +8,11 @@ import { CpuChartComponent } from './components/cpu-chart/cpu-chart.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MultySelectComponent } from './components/multy-select/multy-select.component';
-import { MemChartComponent } from './mem-chart/mem-chart.component';
-import { VmComponent } from './vm/vm.component';
+import { MemChartComponent } from './components/mem-chart/mem-chart.component';
+import { VmComponent } from './components/vm/vm.component';
+import { PeriodSelectComponent } from './components/period-select/period-select.component';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost:150', options: {} };
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +20,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     CpuChartComponent,
     MultySelectComponent,
     MemChartComponent,
-    VmComponent
+    VmComponent,
+    PeriodSelectComponent
   ],
   imports: [
     BrowserModule,

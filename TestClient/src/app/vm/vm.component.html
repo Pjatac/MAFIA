@@ -1,7 +1,0 @@
-<div class="chart" *ngIf="cpuData">
-    <app-cpu-chart [(chartData)]="cpuData"></app-cpu-chart>
-</div>
-<div class="chart" *ngIf="memData">
-    <app-mem-chart [(chartData)]="memData"></app-mem-chart>
-</div>
-<app-multy-select [(srvList)]="srvList" (changeSelection)="changeSelection($event)"></app-multy-select>
