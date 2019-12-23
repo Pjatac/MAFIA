@@ -5,10 +5,7 @@ var ids = 1;
 module.exports = {
     sessionRouter: (io) => {
         io.on('connection', function (socket) {
-            let c = {
-                id: ids,
-                session: socket,
-            }
+            let c = {id: ids, session: socket}
             clients.push(c);
             ids++;
             console.log("a new user connected", clients.length);
