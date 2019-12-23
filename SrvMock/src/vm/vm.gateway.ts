@@ -1,6 +1,7 @@
 import { WebSocketGateway, WebSocketServer, SubscribeMessage, OnGatewayConnection, OnGatewayDisconnect } from '@nestjs/websockets';
 import { Socket } from 'dgram';
 import { threadId } from 'worker_threads';
+import { Params } from '../models/vmparams';
 
 @WebSocketGateway()
 export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
@@ -41,15 +42,33 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
                 ]
             }
             ]
+        },
+        {
+            name: 'Srv3', vms: [{
+                name: "vm1",
+                data: [{ cpuUsage: 32, memUsage: 59 },
+                { cpuUsage: 35, memUsage: 63 },
+                { cpuUsage: 45, memUsage: 82 }
+                ]
+            },
+            {
+                name: "vm2",
+                data: [{ cpuUsage: 79, memUsage: 53 },
+                { cpuUsage: 60, memUsage: 71 },
+                { cpuUsage: 35, memUsage: 84 }
+                ]
+            }
+            ]
         }
     ];
     @WebSocketServer() server;
     async handleConnection(client) {
-        this.clients.push({ user: client, dataType: [] });
+        let params = new Params(1, [])
+        this.clients.push({ user: client, params: params });
         let data;
         let tmp = this.data[0].vms[0].data.length;
         if (tmp <= 15)
-            data = this.getVMsByFilter(this.data, []);
+            data = this.getVMsByFilter(this.data, params);
         else {
             data = [];
             this.data.forEach(srv => {
@@ -59,7 +78,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
                  });
                  data.push({name: srv.name, vms: vms});
              });
-            data = this.getVMsByFilter(data, []);
+            data = this.getVMsByFilter(data, params);
         }
         client.emit('getAllServers', data);
         this.timer = global.setInterval(() => this.myTimer(), 2000);
@@ -72,12 +91,11 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     @SubscribeMessage('requestFiltredServers')
-    async onNewFilter(client, dataType: []) {
-        //let data = this.getVMsByFilter(this.data, dataType);
+    async onNewFilter(client, params: Params) {
         let data;
         let tmp = this.data[0].vms[0].data.length;
         if (tmp <= 15)
-            data = this.getVMsByFilter(this.data, dataType);
+            data = this.getVMsByFilter(this.data, params);
         else {
             data = [];
             this.data.forEach(srv => {
@@ -87,19 +105,19 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
                  });
                  data.push({name: srv.name, vms: vms});
              });
-            data = this.getVMsByFilter(data, dataType);
+            data = this.getVMsByFilter(data, params);
         }
         this.clients.forEach(cl => {
             if (cl.user.id === client.id)
-                cl.dataType = dataType;
+                cl.params = params;
         });
         client.emit('getFiltredServers', data);
     }
 
-    getVMsByFilter(data, dataFilter: []) {
-        if (dataFilter.length > 0) {
+    getVMsByFilter(data, dataFilter: Params) {
+        if (dataFilter.servers.length > 0) {
             let toSend = [];
-            dataFilter.forEach(srvName => {
+            dataFilter.servers.forEach(srvName => {
                 toSend.push(data.filter(function (obj) {
                     return obj.name == srvName;
                 })[0]);
@@ -159,7 +177,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
         });
 
         this.clients.forEach(c => {
-            let data = this.getVMsByFilter(newData, c.dataType);
+            let data = this.getVMsByFilter(newData, c.params);
             c.user.emit('getNewServersData', data);
         });
     }
