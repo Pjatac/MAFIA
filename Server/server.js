@@ -1,16 +1,15 @@
 const server = require('http').createServer();
 const io = require('socket.io')(server);
+
 const ConnectToDb = require('./database');
-const User = require('./scheme/user');
-var mongoose = require('mongoose');
-var sessionRouter = require('./router');
+const sessionRouter = require('./router');
+const PORT = 100;
 
 
-//Test for MushMush
+
 ConnectToDb();
 sessionRouter.sessionRouter(io);
 
 
-const port = 100;
-server.listen(port);
-console.log("Server started on port",port);
+server.listen(PORT);
+console.log("Server started on port",PORT);
