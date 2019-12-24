@@ -1,3 +1,4 @@
+const MockRep = require('../repositories/mokRep')
 const SLOTS = 15;
 module.exports ={
     GetChart:async function(data,socket,client)
@@ -8,7 +9,7 @@ module.exports ={
         let names = data.vmServers;
         let time = data.time * SLOTS;
 
-        //Got the data from mock
+        
 
         let chart1 = [];
         chart1.push('name- srv1');
@@ -19,5 +20,9 @@ module.exports ={
         
             
         
+    },
+    AddNewMockData: async function(data)
+    {
+        await MockRep.AddNewData(data);
     }
 }
