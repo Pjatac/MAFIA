@@ -2,7 +2,10 @@ import { WebSocketGateway, WebSocketServer, SubscribeMessage, OnGatewayConnectio
 import { Socket } from 'dgram';
 import { threadId } from 'worker_threads';
 import { Params } from '../models/vmparams';
-
+import { WS, WSResponse } from '../models/ws';
+const vmsDataCount = 15;
+const timeToAddCounter = 5;
+let counter = 0;
 @WebSocketGateway()
 export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
@@ -46,16 +49,16 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
         {
             name: 'Srv3', vms: [{
                 name: "vm1",
-                data: [{ cpuUsage: 32, memUsage: 59 },
-                { cpuUsage: 35, memUsage: 63 },
-                { cpuUsage: 45, memUsage: 82 }
+                data: [{ cpuUsage: 33, memUsage: 15 },
+                { cpuUsage: 75, memUsage: 45 },
+                { cpuUsage: 15, memUsage: 22 }
                 ]
             },
             {
                 name: "vm2",
-                data: [{ cpuUsage: 79, memUsage: 53 },
-                { cpuUsage: 60, memUsage: 71 },
-                { cpuUsage: 35, memUsage: 84 }
+                data: [{ cpuUsage: 39, memUsage: 41 },
+                { cpuUsage: 75, memUsage: 70 },
+                { cpuUsage: 55, memUsage: 44 }
                 ]
             }
             ]
@@ -63,26 +66,28 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
     ];
     @WebSocketServer() server;
     async handleConnection(client) {
+        //change tmp name,  and const
         let params = new Params(1, [])
         this.clients.push({ user: client, params: params });
         let data;
-        let tmp = this.data[0].vms[0].data.length;
-        if (tmp <= 15)
+        let dataLength = this.data[0].vms[0].data.length;
+        if (dataLength <= vmsDataCount)
             data = this.getVMsByFilter(this.data, params);
         else {
             data = [];
             this.data.forEach(srv => {
-                 let vms = [];
-                 srv.vms.forEach(vm => {
-                     vms.push({name: vm.name, data: vm.data.slice(-15)});
-                 });
-                 data.push({name: srv.name, vms: vms});
-             });
+                let vms = [];
+                srv.vms.forEach(vm => {
+                    vms.push({ name: vm.name, data: vm.data.slice(-vmsDataCount) });
+                });
+                data.push({ name: srv.name, vms: vms });
+            });
             data = this.getVMsByFilter(data, params);
         }
         client.emit('getAllServers', data);
-        this.timer = global.setInterval(() => this.myTimer(), 2000);
+        this.timer = global.setInterval(() => this.myTimer(), 5000);
     }
+
 
     async handleDisconnect(client) {
         this.clients = this.clients.filter(function (obj) {
@@ -90,21 +95,53 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
         });
     }
 
+    @SubscribeMessage('getResponses')
+    async onGetResponses(client) {
+        let codes = ["200", "201", "400", "401", "404", "500"];
+        let wsData = [{ name: "ws1", responses: [] }, { name: "ws2", responses: [] }, { name: "ws3", responses: [] }, { name: "ws4", responses: [] }];
+        for (let i = 0; i < 1000; i++)
+            wsData.forEach(ws => {
+                let req = (Math.random() > 0.5);
+                if (req) {
+                    let kind = Math.floor(Math.random() * 5);
+                    switch (kind){
+                        case 1: {
+                            ws.responses.push({ code: codes[Math.floor(Math.random() * 6)], time: Math.floor(Math.random() * 50) });
+                            break;
+                        }
+                        case 2: {
+                            ws.responses.push({ code: codes[Math.floor(Math.random() * 6)], time: Math.floor(Math.random() * 500) });
+                            break;
+                        }
+                        case 3: {
+                            ws.responses.push({ code: codes[Math.floor(Math.random() * 6)], time: Math.floor(Math.random() * 1000) });
+                            break;
+                        }
+                        case 4: {
+                            ws.responses.push({ code: codes[Math.floor(Math.random() * 6)], time: Math.floor(Math.random() * 2000) });
+                            break;
+                        }
+                    }
+                }
+            });
+        client.emit('getResponses', wsData);
+    }
+
     @SubscribeMessage('requestFiltredServers')
     async onNewFilter(client, params: Params) {
         let data;
-        let tmp = this.data[0].vms[0].data.length;
-        if (tmp <= 15)
+        let dataLength = this.data[0].vms[0].data.length;
+        if (dataLength <= vmsDataCount)
             data = this.getVMsByFilter(this.data, params);
         else {
             data = [];
             this.data.forEach(srv => {
-                 let vms = [];
-                 srv.vms.forEach(vm => {
-                     vms.push({name: vm.name, data: vm.data.slice(-15)});
-                 });
-                 data.push({name: srv.name, vms: vms});
-             });
+                let vms = [];
+                srv.vms.forEach(vm => {
+                    vms.push({ name: vm.name, data: vm.data.slice(-vmsDataCount) });
+                });
+                data.push({ name: srv.name, vms: vms });
+            });
             data = this.getVMsByFilter(data, params);
         }
         this.clients.forEach(cl => {
@@ -130,6 +167,26 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
 
     public async myTimer() {
+        //short
+        counter++;
+        if (counter == timeToAddCounter)
+            this.data.push({
+                name: 'Srv4', vms: [{
+                    name: "vm3",
+                    data: [{ cpuUsage: 33, memUsage: 15 },
+                    { cpuUsage: 15, memUsage: 22 },
+                    { cpuUsage: 75, memUsage: 45 }
+                    ]
+                },
+                {
+                    name: "vm5",
+                    data: [{ cpuUsage: 41, memUsage: 39 },
+                    { cpuUsage: 55, memUsage: 44 },
+                    { cpuUsage: 75, memUsage: 70 }
+                    ]
+                }
+                ]
+            });
         let newData = [];
         this.data.forEach(srv => {
             let vmNewData = [];
@@ -171,11 +228,10 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
                     else if (!(lastCpuUsage - change >= 0) && lastMemUsage - change >= 0)
                         vm.data.push({ cpuUsage: lastCpuUsage, memUsage: lastMemUsage - change });
                 }
-                vmNewData.push({name: vm.name, data: [{ cpuUsage: vm.data[vm.data.length - 1].cpuUsage, memUsage: vm.data[vm.data.length - 1].memUsage }]});
+                vmNewData.push({ name: vm.name, data: [{ cpuUsage: vm.data[vm.data.length - 1].cpuUsage, memUsage: vm.data[vm.data.length - 1].memUsage }] });
             });
-            newData.push({name: srv.name, vms: vmNewData});
+            newData.push({ name: srv.name, vms: vmNewData });
         });
-
         this.clients.forEach(c => {
             let data = this.getVMsByFilter(newData, c.params);
             c.user.emit('getNewServersData', data);

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SRV } from 'src/app/models/srv';
 import { Helper } from 'src/app/middleware/helper';
-import { VMService } from 'src/app/services/vm.service';
+import  VMService  from 'src/app/services/vm.service';
 import { Params } from 'src/app/models/vmparams';
 
 @Component({
@@ -17,23 +17,19 @@ export class VmComponent implements OnInit {
   cpuData;
   memData;
   period = 1;
-  //data for filtring servers on server side
+  //data for filtring servers data on server side
   params: Params;
 
   ngOnInit() {
     this.vmService.getAllServers().subscribe((servers: SRV[]) => {
       this.serversData = servers;
       this.srvList = Helper.getServers(servers);
-      let chartData = Helper.BuildChartData(servers);
-      this.params = {period: this.period, servers: this.srvList};
-      this.cpuData = chartData.c;
-      this.memData = chartData.m;
+      this.params = { period: this.period, servers: this.srvList };
+      this.buildChartData(servers);
     });
     this.vmService.getNewServersData().subscribe((servers: SRV[]) => {
       this.serversData = Helper.AddData(this.serversData, servers);
-      let chartData = Helper.BuildChartData(this.serversData);
-      this.cpuData = chartData.c;
-      this.memData = chartData.m;
+      this.buildChartData(this.serversData);
     });
   }
   changeSelection(servers) {
@@ -41,9 +37,7 @@ export class VmComponent implements OnInit {
     this.vmService.requestFitredServers(this.params);
     this.vmService.getFitredServers().subscribe((servers: SRV[]) => {
       this.serversData = servers;
-      let chartData = Helper.BuildChartData(servers);
-      this.cpuData = chartData.c;
-      this.memData = chartData.m;
+      this.buildChartData(servers);
     });
   }
   changePeriod(period) {
@@ -52,9 +46,13 @@ export class VmComponent implements OnInit {
     this.vmService.requestFitredServers(this.params);
     this.vmService.getFitredServers().subscribe((servers: SRV[]) => {
       this.serversData = servers;
-      let chartData = Helper.BuildChartData(servers);
-      this.cpuData = chartData.c;
-      this.memData = chartData.m;
+      this.buildChartData(servers);
     });
+  }
+
+  buildChartData(servers) {
+    let chartData = Helper.BuildChartData(servers);
+    this.cpuData = chartData.c;
+    this.memData = chartData.m;
   }
 }
