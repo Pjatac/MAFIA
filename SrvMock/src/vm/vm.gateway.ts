@@ -5,7 +5,7 @@ const vmsDataCount = 15;
 const timeToAddCounter = 5;
 let counter = 0;
 const timeToSendVMsData = 20000;
-
+//test
 @WebSocketGateway()
 export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
