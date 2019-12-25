@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-
 import { environment } from '../../environments/environment';
 import { User } from './user.model';
 import { JsonPipe } from '@angular/common';
 import { format } from 'util';
-
 
 @Injectable({
   providedIn: 'root'
@@ -16,28 +14,19 @@ export class UserService {
     password: ''
   };
 
-  //noAuthHeader = { headers: new HttpHeaders({ 'NoAuth': 'True' }) };
-
   constructor(private socket: Socket) { }
 
   postUser(user: User) {
-    //return this.http.post(environment.apiBaseUrl+'/register',user,this.noAuthHeader);
   }
 
   getSocket() {
     return this.socket;
   }
 
-  login(authCredentials) {
+  login(authCredentials,cb) {
     this.socket.on('login-res', data => {
-      alert("Login status " + JSON.stringify(data));
-      if (data.status) {
-        //Move to main page
-
-      }
-      else {
-        //Disply login unsuccesfull
-      }
+      debugger;
+      return cb(data);
     });
 
     this.socket.emit('login-request', authCredentials);

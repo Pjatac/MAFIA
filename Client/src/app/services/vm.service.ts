@@ -5,7 +5,6 @@ import { Socket } from 'ngx-socket-io';
   providedIn: 'root'
 })
 export class VmService {
-
   constructor(private socket: Socket) { }
   
   getAllServers(){

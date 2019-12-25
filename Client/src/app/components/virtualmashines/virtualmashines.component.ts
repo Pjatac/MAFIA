@@ -7,7 +7,6 @@ import { VmService } from 'src/app/services/vm.service';
   styleUrls: ['./virtualmashines.component.css']
 })
 export class VirtualmashinesComponent implements OnInit {
-
   constructor(private vmService: VmService) { }
 
   ngOnInit() {
@@ -15,5 +14,4 @@ export class VirtualmashinesComponent implements OnInit {
       console.log(data);
     });
   }
-
 }
