@@ -66,7 +66,12 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
     ];
     @WebSocketServer() server;
     async handleConnection(client) {
+<<<<<<< HEAD
+        console.log("New Connection");
+        
+=======
         //change tmp name,  and const
+>>>>>>> 2992496f0008bf93c21dc188bf709d6a0a966f11
         let params = new Params(1, [])
         this.clients.push({ user: client, params: params });
         let data;

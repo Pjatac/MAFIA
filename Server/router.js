@@ -15,7 +15,7 @@ module.exports = {
                 
                 let res = await UserSerivce.Login(data, socket);
                 if (res) {
-                    let c = { id: ids, session: socket }
+                    let c = { id: ids, session: socket,time:5,lastSentTime:Date.now() }
                     clients.push(c);
                     ids++;
                 }
