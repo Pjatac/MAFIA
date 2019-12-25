@@ -1,11 +1,11 @@
 import { WebSocketGateway, WebSocketServer, SubscribeMessage, OnGatewayConnection, OnGatewayDisconnect } from '@nestjs/websockets';
-import { Socket } from 'dgram';
-import { threadId } from 'worker_threads';
 import { Params } from '../models/vmparams';
-import { WS, WSResponse } from '../models/ws';
+
 const vmsDataCount = 15;
 const timeToAddCounter = 5;
 let counter = 0;
+const timeToSendVMsData = 20000;
+//test
 @WebSocketGateway()
 export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
@@ -64,14 +64,12 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
             ]
         }
     ];
+
     @WebSocketServer() server;
     async handleConnection(client) {
-<<<<<<< HEAD
+
         console.log("New Connection");
-        
-=======
-        //change tmp name,  and const
->>>>>>> 2992496f0008bf93c21dc188bf709d6a0a966f11
+
         let params = new Params(1, [])
         this.clients.push({ user: client, params: params });
         let data;
@@ -90,9 +88,9 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
             data = this.getVMsByFilter(data, params);
         }
         client.emit('getAllServers', data);
-        this.timer = global.setInterval(() => this.myTimer(), 5000);
+        //start sending VMs data
+        this.timer = global.setInterval(() => this.sendVMsData(), timeToSendVMsData);
     }
-
 
     async handleDisconnect(client) {
         this.clients = this.clients.filter(function (obj) {
@@ -170,9 +168,8 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
             return data;
     };
 
-
-    public async myTimer() {
-        //short
+    public async sendVMsData() {
+        //need to short
         counter++;
         if (counter == timeToAddCounter)
             this.data.push({
