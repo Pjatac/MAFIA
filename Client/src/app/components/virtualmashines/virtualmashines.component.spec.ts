@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { VirtualmashinesComponent } from './virtualmashines.component';
 
 describe('VirtualmashinesComponent', () => {
