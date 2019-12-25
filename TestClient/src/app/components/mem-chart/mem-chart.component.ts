@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import * as c3 from 'c3';
-import { VMService } from '../../services/vm.service';
 import { Helper } from 'src/app/middleware/helper';
 
 @Component({
@@ -12,7 +11,7 @@ export class MemChartComponent implements OnChanges {
   @Input() chartData;
   @Input() period;
 
-  constructor(private vmService: VMService) { }
+  constructor() { }
 
   ngOnChanges(){
       this.buildChart();

@@ -4,7 +4,7 @@ import { Socket } from 'ngx-socket-io';
 @Injectable({
   providedIn: 'root'
 })
-export class VMService {
+export default class VMService {
 
   constructor(private socket: Socket) { 
 

@@ -11,6 +11,11 @@ import { MultySelectComponent } from './components/multy-select/multy-select.com
 import { MemChartComponent } from './components/mem-chart/mem-chart.component';
 import { VmComponent } from './components/vm/vm.component';
 import { PeriodSelectComponent } from './components/period-select/period-select.component';
+import VMService from '../app/services/vm.service';
+import WSService from '../app/services/ws.service';
+import { WsComponent } from './components/ws/ws.component';
+import { RespPieChartComponent } from './components/resp-pie-chart/resp-pie-chart.component';
+import { TimePieChartComponent } from './components/time-pie-chart/time-pie-chart.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:150', options: {} };
 @NgModule({
@@ -21,7 +26,10 @@ const config: SocketIoConfig = { url: 'http://localhost:150', options: {} };
     MultySelectComponent,
     MemChartComponent,
     VmComponent,
-    PeriodSelectComponent
+    PeriodSelectComponent,
+    WsComponent,
+    RespPieChartComponent,
+    TimePieChartComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +39,7 @@ const config: SocketIoConfig = { url: 'http://localhost:150', options: {} };
     MaterialModule,
     SocketIoModule.forRoot(config)
   ],
-  providers: [],
+  providers: [VMService, WSService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
