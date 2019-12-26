@@ -13,7 +13,7 @@
     <label *ngIf="password.errors.required" class="validation-message">This field is required.</label>
     <label *ngIf="password.errors.minlength" class="validation-message">Enter atleast 4 characters.</label>
   </div>
-  <input type="password" #password name="confirmPassword" placeholder="Confirm Password"
+  <input type="password" #confirmPassword name="confirmPassword" placeholder="Confirm Password"
   minlength="4" required [ngClass]="{'invalid-textbox' :signUpForm.submitted && !confirmPassword.valid }">
   <div *ngIf="confirmPassword.value !== password.value">
     <label class="validation-message">Enter atleast 4 characters.</label>
