@@ -8,5 +8,6 @@ import { Component, Input, OnInit } from '@angular/core';
 export class NavigationBarLinkComponent {
   @Input() active: boolean;
   @Input() disable: boolean;
+  @Input() href: string;
 
 }
