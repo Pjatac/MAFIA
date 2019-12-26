@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
-import { UserService } from '../../shared/user.service';
+import { UserService } from '../../../shared/user.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,33 +10,31 @@ import { UserService } from '../../shared/user.service';
 })
 export class SignInComponent implements OnInit {
 
-  constructor(private userService: UserService,private router : Router) { }
+  constructor(private userService: UserService, private router: Router) { }
 
-  model ={
-    username :'',
-    password:''
+  model = {
+    username: '',
+    password: ''
   };
 
   serverErrorMessages: string;
 
   ngOnInit() {
-    if(this.userService.isLoggedIn())
-    this.router.navigateByUrl('/virtual-mashines');
+    if (this.userService.isLoggedIn())
+      this.router.navigateByUrl('/virtual-mashines');
   }
 
-  onSubmit(form : NgForm){
-   
-    let data = this.userService.login(form.value,(data) =>{
-      if(data.status)
-      {
+  onSubmit(form: NgForm) {
+
+    let data = this.userService.login(form.value, (data) => {
+      if (data.status) {
         this.router.navigateByUrl('/virtual-mashines');
 
       }
-      else
-      {
+      else {
         alert('Could not login!');
       }
     });
-   
+
   }
 }

@@ -1,26 +1,13 @@
 <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Santinol</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <button class="btn my-2 my-sm-0" type="submit">Virtual Machines</button>
-                </li>
-                <li class="nav-item">
-                    <button class="btn my-2 my-sm-0" type="submit">Response Metrics</button>
-                </li>
-                <li class="nav-item">
-                    <button class="btn my-2 my-sm-0" type="submit">Top Fail</button>
-                </li>
-            </ul>
-        </div>
-        <form class="form-inline">
-            <button class="btn my-2 my-sm-0" type="submit">Logout</button>
-        </form>
-    </nav>
+  <!--navbar-->
+  <app-navigation-bar>
+      <app-navigation-bar-link *ngIf="active">Virtual Machines</app-navigation-bar-link>
+      <app-navigation-bar-link *ngIf="active">Response Metrics</app-navigation-bar-link>
+      <app-navigation-bar-link *ngIf="active">Top Fail</app-navigation-bar-link>
+      <app-navigation-bar-link *ngIf="active">Logout</app-navigation-bar-link>
+  </app-navigation-bar>
+  <!--page-->
+  <div class="d-flex justify-content-center p-3 border">
     <router-outlet></router-outlet>
+  </div>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { UserService } from '../../shared/user.service'
+import { UserService } from '../../../shared/user.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,9 +13,9 @@ export class SignUpComponent implements OnInit {
   serverErrorMessages: string;
 
   constructor(private userService: UserService) { }
-  model ={
-    username :'',
-    password:''
+  model = {
+    username: '',
+    password: ''
   };
   ngOnInit() {
   }
