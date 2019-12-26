@@ -3,6 +3,8 @@ import { SRV } from 'src/app/models/srv';
 import { Helper } from 'src/app/middleware/helper';
 import  VMService  from 'src/app/services/vm.service';
 import { Params } from 'src/app/models/vmparams';
+import { MatDialog } from '@angular/material';
+import { MydialogComponent } from '../mydialog/mydialog.component';
 
 @Component({
   selector: 'app-vm',
@@ -11,7 +13,7 @@ import { Params } from 'src/app/models/vmparams';
 })
 export class VmComponent implements OnInit {
 
-  constructor(private vmService: VMService) { }
+  constructor(private vmService: VMService, public dialog: MatDialog) { }
   serversData: SRV[];
   srvList: string[];
   cpuData;
@@ -21,6 +23,7 @@ export class VmComponent implements OnInit {
   params: Params;
 
   ngOnInit() {
+    this.dialog.open(MydialogComponent, { data: "Hello on our cluster analic service" });
     this.vmService.getAllServers().subscribe((servers: SRV[]) => {
       this.serversData = servers;
       this.srvList = Helper.getServers(servers);

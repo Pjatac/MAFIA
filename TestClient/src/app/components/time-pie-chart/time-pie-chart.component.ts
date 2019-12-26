@@ -1,5 +1,8 @@
 import { Component, OnChanges, Input } from '@angular/core';
 import * as c3 from 'c3';
+import { MatDialog } from '@angular/material';
+import WSService from 'src/app/services/ws.service';
+import { MychartdialogComponent } from '../mychartdialog/mychartdialog.component';
 
 @Component({
   selector: 'app-time-pie-chart',
@@ -8,7 +11,7 @@ import * as c3 from 'c3';
 })
 export class TimePieChartComponent implements OnChanges {
   @Input() chartData;
-  constructor() { }
+  constructor(public dialog: MatDialog, private wsService: WSService) { }
 
   ngOnChanges() {
     this.buildChart(this.chartData);
@@ -19,7 +22,11 @@ export class TimePieChartComponent implements OnChanges {
       bindto: '#timePieChart',
       data: {
         columns: chartData,     
-        type: 'pie'
+        type: 'pie',
+        onclick: (d, i) => { 
+          let data = this.wsService.getCurrentTimeData(d.id);
+          this.dialog.open(MychartdialogComponent, { data: {data: data, title: d.id }}); 
+        }
       }
     });
   }

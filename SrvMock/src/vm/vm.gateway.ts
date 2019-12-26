@@ -5,7 +5,7 @@ const vmsDataCount = 15;
 const timeToAddCounter = 5;
 let counter = 0;
 const timeToSendVMsData = 20000;
-//test
+
 @WebSocketGateway()
 export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
@@ -67,9 +67,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     @WebSocketServer() server;
     async handleConnection(client) {
-
         console.log("New Connection");
-
         let params = new Params(1, [])
         this.clients.push({ user: client, params: params });
         let data;
