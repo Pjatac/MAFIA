@@ -1,5 +1,8 @@
 import { Component, OnChanges, Input } from '@angular/core';
+import { MychartdialogComponent } from '../mychartdialog/mychartdialog.component';
+import WSService from 'src/app/services/ws.service';
 import * as c3 from 'c3';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-resp-pie-chart',
@@ -8,7 +11,7 @@ import * as c3 from 'c3';
 })
 export class RespPieChartComponent implements OnChanges {
   @Input() chartData;
-  constructor() { }
+  constructor(public dialog: MatDialog, private wsService: WSService) { }
 
   ngOnChanges() {
     this.buildChart(this.chartData);
@@ -19,7 +22,11 @@ export class RespPieChartComponent implements OnChanges {
       bindto: '#respPieChart',
       data: {
         columns: chartData,     
-        type: 'pie'
+        type: 'pie',
+        onclick: (d, i) => { 
+          let data = this.wsService.getCurrentCodeData(d.id);
+          this.dialog.open(MychartdialogComponent,  { data: {data: data, title: d.id }}); 
+        }
       }
     });
   }

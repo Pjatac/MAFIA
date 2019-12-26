@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { MaterialModule} from './material.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MydialogComponent } from './components/mydialog/mydialog.component';
+import { MychartdialogComponent } from './components/mychartdialog/mychartdialog.component';
 import { CpuChartComponent } from './components/cpu-chart/cpu-chart.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,12 +16,13 @@ import WSService from '../app/services/ws.service';
 import { WsComponent } from './components/ws/ws.component';
 import { RespPieChartComponent } from './components/resp-pie-chart/resp-pie-chart.component';
 import { TimePieChartComponent } from './components/time-pie-chart/time-pie-chart.component';
+import { MydialogComponent } from './components/mydialog/mydialog.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:150', options: {} };
 @NgModule({
   declarations: [
     AppComponent,
-    MydialogComponent,
+    MychartdialogComponent,
     CpuChartComponent,
     MultySelectComponent,
     MemChartComponent,
@@ -29,7 +30,8 @@ const config: SocketIoConfig = { url: 'http://localhost:150', options: {} };
     PeriodSelectComponent,
     WsComponent,
     RespPieChartComponent,
-    TimePieChartComponent
+    TimePieChartComponent,
+    MydialogComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +42,7 @@ const config: SocketIoConfig = { url: 'http://localhost:150', options: {} };
     SocketIoModule.forRoot(config)
   ],
   providers: [VMService, WSService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [MychartdialogComponent,MydialogComponent]
 })
 export class AppModule { }

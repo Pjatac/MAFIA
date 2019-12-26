@@ -17,39 +17,9 @@ export class WsComponent implements OnInit {
   ngOnInit() {
     this.wsService.requestResponses();
     this.wsService.getResponses().subscribe((responses: WS[]) => {
-      let codes = ['200', '201', '400', '401', '404', '500'];
-      let times = ['<50', '500>>50', '999>>500', '>1000']
-      let responsesPieData = [];
-      let timesPieData = [];
-      codes.forEach(code => {
-        let pieData = [];
-        pieData.push(code);
-        pieData.push(0);
-        responses.forEach(wsData => {
-          wsData.responses.forEach(resp => {
-            if (resp.code.toString() === code)
-              pieData[1]++;
-          });
-        })
-        responsesPieData.push(pieData);
-      });
-      times.forEach(time => {
-        timesPieData.push([time, 0]);
-      });
-      responses.forEach(wsData => {
-        wsData.responses.forEach(resp => {
-          if (resp.time >= 1000)
-            timesPieData[3][1]++;
-          else if (resp.time >= 500)
-            timesPieData[2][1]++;
-          else if (resp.time >= 50)
-            timesPieData[1][1]++;
-          else
-            timesPieData[0][1]++;
-        });
-      });
-      this.respData = responsesPieData;
-      this.timeData =  timesPieData;
+      this.wsService.wsData = responses;
+      this.respData = this.wsService.getCodesData();
+      this.timeData =  this.wsService.getTimesData();
     });
   }
 }
