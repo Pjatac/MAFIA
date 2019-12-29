@@ -14,12 +14,9 @@ import { NavigationBarLinkComponent } from './components/common_elements/navigat
 // routes
 import { appRoutes } from './routes';
 import { UserService } from './shared/user.service';
-<<<<<<< HEAD
 // other
-=======
 //other
 import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider } from 'angularx-social-login';
->>>>>>> PjatakBranch
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { VirtualmashinesComponent } from './components/virtualmashines/virtualmashines.component';
@@ -70,16 +67,12 @@ export function provideConfig() {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
-<<<<<<< HEAD
-  }, AuthGuard, UserService],
-=======
-  },
+  }, AuthGuard, UserService,
   {
     provide: AuthServiceConfig,
     useFactory: provideConfig
   },
     AuthGuard, UserService],
->>>>>>> PjatakBranch
   bootstrap: [AppComponent]
 })
 export class AppModule { }
