@@ -10,7 +10,7 @@ let codes = ["200", "201", "400", "401", "404", "500"];
 
 @WebSocketGateway()
 export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
-    
+
     wsData = [{ name: "AuthMng", responses: [] }, { name: "ClientMng", responses: [] }, { name: "MailMng", responses: [] }, { name: "Analitic", responses: [] }];
     private timer: NodeJS.Timer;
     clients = [];
