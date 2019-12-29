@@ -25,10 +25,11 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import {
   MatIconModule,
   MatButtonModule,
-  MatCardModule
+  MatCardModule,
+  MatDialogModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { OurDialogComponent } from './components/our-dialog/our-dialog.component';
+import { OurDialogComponent } from '../app/components/our-dialog/our-dialog.component';
 
 const ioConfig: SocketIoConfig = { url: 'http://91.205.172.45:100', options: {} };
 const authConfig = new AuthServiceConfig([
@@ -65,6 +66,7 @@ export function provideConfig() {
     MatIconModule,
     MatButtonModule,
     MatCardModule,
+    MatDialogModule,
     BrowserAnimationsModule
   ],
   providers: [{
@@ -77,6 +79,7 @@ export function provideConfig() {
     useFactory: provideConfig
   },
     AuthGuard, UserService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [OurDialogComponent]
 })
 export class AppModule { }
