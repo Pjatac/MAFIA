@@ -28,6 +28,7 @@ import {
   MatCardModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OurDialogComponent } from './components/our-dialog/our-dialog.component';
 
 const ioConfig: SocketIoConfig = { url: 'http://91.205.172.45:100', options: {} };
 const authConfig = new AuthServiceConfig([
@@ -50,6 +51,7 @@ export function provideConfig() {
     VirtualmashinesComponent,
     NavigationBarComponent,
     NavigationBarLinkComponent,
+    OurDialogComponent
   ],
   imports: [
     BrowserModule,
