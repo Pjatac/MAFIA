@@ -51,7 +51,9 @@ export function provideConfig() {
     VirtualmashinesComponent,
     NavigationBarComponent,
     NavigationBarLinkComponent,
-    OurDialogComponent
+    OurDialogComponent,
+    NavigationBarComponent,
+    NavigationBarLinkComponent,
   ],
   imports: [
     BrowserModule,
