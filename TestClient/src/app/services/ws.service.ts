@@ -38,7 +38,7 @@ export default class WSService {
         maxTime = 1000;
         break;
       }
-      case this.times[2]: {
+      case this.times[3]: {
         minTime = 1000;
         maxTime = 10000;
         break;
