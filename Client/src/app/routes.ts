@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { UserComponent } from './user/user.component';
-import { SignUpComponent } from './user/sign-up/sign-up.component';
-import { SignInComponent } from './user/sign-in/sign-in.component';
+import { SignUpComponent } from './components/user/sign-up/sign-up.component';
+import { SignInComponent } from './components/user/sign-in/sign-in.component';
+import { UserComponent } from './components/user/user.component';
 import { VirtualmashinesComponent } from './components/virtualmashines/virtualmashines.component';
 
 export const appRoutes: Routes = [

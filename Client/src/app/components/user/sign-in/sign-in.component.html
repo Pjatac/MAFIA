@@ -2,7 +2,7 @@
     <img src="assets/img/single_user.png" id="icon" alt="User Icon" />
   </div>
   <form #signInForm="ngForm" (ngSubmit)="signInForm.valid && onSubmit(signInForm)">
-    <input type="text" name="userName" #userName="ngModel" [(ngModel)]="model.userName" placeholder="User Name" required
+    <input type="text" name="userName" #userName="ngModel" [(ngModel)]="model.username" placeholder="User Name" required
     [ngClass]="{'invalid-textbox' :signInForm.submitted && !userName.valid }">
     <div *ngIf="signInForm.submitted && !userName.valid">
     <label class="validation-message">This field is required.</label>
@@ -12,7 +12,10 @@
     <div *ngIf="signInForm.submitted && password.errors?.minlength">
       <label class="validation-message">Minimum 4 characters.</label>
     </div>
-    <input type="submit" value="Sign In">
+    <div class="d-flex justify-content-around mb-3 mt-2">
+      <button class="btn btn-lg btn-primary">Sign In</button>
+      <button class="btn btn-lg btn-primary">Facebook</button>
+    </div>
   </form>
   <!-- Error message -->
 <div class="alert" *ngIf="serverErrorMessages">
