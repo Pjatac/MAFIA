@@ -6,12 +6,15 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // components
 import { AppComponent } from './app.component';
-import { UserComponent } from './user/user.component';
-import { SignUpComponent } from './user/sign-up/sign-up.component';
-//routes
+import { UserComponent } from './components/user/user.component';
+import { SignInComponent } from './components/user/sign-in/sign-in.component';
+import { SignUpComponent } from './components/user/sign-up/sign-up.component';
+import { NavigationBarComponent } from './components/common_elements/navigation_bar/navigation_bar.component';
+import { NavigationBarLinkComponent } from './components/common_elements/navigation_bar/navigation_bar_link/navigation_bar_link.component';
+// routes
 import { appRoutes } from './routes';
-import { SignInComponent } from './user/sign-in/sign-in.component';
 import { UserService } from './shared/user.service';
+// other
 //other
 import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider } from 'angularx-social-login';
 import { AuthGuard } from './auth/auth.guard';
@@ -44,7 +47,9 @@ export function provideConfig() {
     UserComponent,
     SignUpComponent,
     SignInComponent,
-    VirtualmashinesComponent
+    VirtualmashinesComponent,
+    NavigationBarComponent,
+    NavigationBarLinkComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,7 +67,7 @@ export function provideConfig() {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
-  },
+  }, AuthGuard, UserService,
   {
     provide: AuthServiceConfig,
     useFactory: provideConfig

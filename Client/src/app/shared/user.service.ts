@@ -25,7 +25,7 @@ export class UserService {
 
   login(authCredentials,cb) {
     this.socket.on('login-res', data => {
-      debugger;
+      sessionStorage.setItem('token', data.token);
       return cb(data);
     });
 
@@ -36,7 +36,7 @@ export class UserService {
     this.socket.on('register-res', data => {
       alert("Register status " + data);
     });
-    
+
     this.socket.emit('register-request', authCredentials);
   }
 
