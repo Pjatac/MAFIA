@@ -3,7 +3,13 @@ export interface WSResponse{
     time: number;
 }
 
+export interface API{
+    name: string;
+    errors: Date[];
+}
+
 export class WS{
     name: string;
     responses: WSResponse[];
+    apis: API[];
 }
