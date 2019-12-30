@@ -66,7 +66,6 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     async handleDisconnect(client) {
         this.clients = this.clients.filter(function (obj) {
-            console.log("New Connection",this.clients.length);
             return obj.user.id !== client.id;
         });
     }

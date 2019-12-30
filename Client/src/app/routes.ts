@@ -4,6 +4,7 @@ import { SignInComponent } from './components/user/sign-in/sign-in.component';
 import { UserComponent } from './components/user/user.component';
 import { VirtualmashinesComponent } from './components/virtualmashines/virtualmashines.component';
 import { TimesResponsesComponent} from './components/times-responses/times-responses.component';
+import { ErrorsComponent } from './components/errors/errors.component';
 
 export const appRoutes: Routes = [
     {
@@ -19,6 +20,9 @@ export const appRoutes: Routes = [
     },
     {
         path: 'times-responses', component: TimesResponsesComponent
+    },
+    {
+        path: 'errors', component: ErrorsComponent
     },
     {
         path: '', redirectTo: '/login', pathMatch: 'full'
