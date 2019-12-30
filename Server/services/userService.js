@@ -1,10 +1,13 @@
 const UserRep = require('../repositories/userRep');
 const AuthService = require('./authService');
-const Logger = require('simple-node-logger').createSimpleLogger('server.log');
+const LoginLogger = require('simple-node-logger').createSimpleLogger('login.log');
+const RegisterLogger = require('simple-node-logger').createSimpleLogger('register.log');
 
 
 module.exports = {
     Register: async (data, socket) => {
+        RegisterLogger.info("Facebook Login from id ", data.fbID);
+
         let user = await UserRep.GetUser(data.userName);
         if (!user) {
             await UserRep.RegisterUser(data);
@@ -15,7 +18,7 @@ module.exports = {
         }
     },
     FBLogin: async (data, socket) => {
-        Logger.info("Facebook Login from id ", data.fbID);
+        LoginLogger.info("Facebook Login from id ", data.fbID);
         let user = await UserRep.GetFBUser(data.fbID);
         let result = { status: true };
         if (!user) {
@@ -34,6 +37,7 @@ module.exports = {
         }
     },
     Login: async (data, socket) => {
+        LoginLogger.info("Facebook Login from id ", data.fbID);
         let user = await UserRep.GetUser(data.userName);
         let result = { status: false };
         if (user) {
