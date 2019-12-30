@@ -37,7 +37,7 @@ module.exports = {
         }
     },
     Login: async (data, socket) => {
-        LoginLogger.info("Facebook Login from id ", data.fbID);
+        LoginLogger.info("Login from name ", data.userName);
         let user = await UserRep.GetUser(data.userName);
         let result = { status: false };
         if (user) {
