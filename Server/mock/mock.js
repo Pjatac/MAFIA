@@ -8,13 +8,10 @@ module.exports = {
 
     Start: async () =>{
         socketClient.on('getAllServers',(data) =>{
-        
-            MockRep.AddNewData(data);
             
         });
-        socketClient.on('getNewServersData',(data) =>{
-            console.log(data);
-            
+        socketClient.on('getNewServersData',async (data) =>{
+            await MockRep.AddNewData(data);
         });
     }
     
