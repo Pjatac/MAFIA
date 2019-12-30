@@ -9,5 +9,5 @@ ConnectToDb();
 sessionRouter.sessionRouter(io);
 mockServer.Start();
 server.listen(PORT);
-//console.log("Server started on port",PORT);
-log.info('npm start');
+//console.log();
+log.info("Server started on port ",PORT);
