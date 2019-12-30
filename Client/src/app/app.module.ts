@@ -15,6 +15,7 @@ import { NavigationBarLinkComponent } from './components/common_elements/navigat
 import { appRoutes } from './routes';
 import { UserService } from './shared/user.service';
 import VmService from '../app/services/vm.service';
+import TrService from '../app/services/tr.service';
 //other
 import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider } from 'angularx-social-login';
 import { AuthGuard } from './auth/auth.guard';
@@ -44,6 +45,10 @@ import { MemChartComponent } from './components/virtualmashines/mem-chart/mem-ch
 import { CpuChartComponent } from './components/virtualmashines/cpu-chart/cpu-chart.component';
 import { MultySelectComponent } from './components/virtualmashines/multy-select/multy-select.component';
 import { PeriodSelectComponent } from './components/virtualmashines/period-select/period-select.component';
+import { TimesResponsesComponent } from './components/times-responses/times-responses.component';
+import { RespPieChartComponent } from './components/times-responses/resp-pie-chart/resp-pie-chart.component';
+import { TimePieChartComponent } from './components/times-responses/time-pie-chart/time-pie-chart.component';
+import { PieChartDialogComponent } from './components/times-responses/pie-chart-dialog/pie-chart-dialog.component';
 
 const ioConfig: SocketIoConfig = { url: 'http://91.205.172.45:100', options: {} };
 
@@ -73,6 +78,10 @@ export function provideConfig() {
     CpuChartComponent,
     MultySelectComponent,
     PeriodSelectComponent,
+    TimesResponsesComponent,
+    RespPieChartComponent,
+    TimePieChartComponent,
+    PieChartDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -102,6 +111,7 @@ export function provideConfig() {
     AuthGuard,
     UserService,
     VmService,
+    TrService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
@@ -112,6 +122,6 @@ export function provideConfig() {
       useFactory: provideConfig
     }],
   bootstrap: [AppComponent],
-  entryComponents: [OurDialogComponent]
+  entryComponents: [OurDialogComponent, PieChartDialogComponent]
 })
 export class AppModule { }
