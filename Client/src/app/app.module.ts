@@ -32,6 +32,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OurDialogComponent } from '../app/components/our-dialog/our-dialog.component';
 
 const ioConfig: SocketIoConfig = { url: 'http://91.205.172.45:100', options: {} };
+
+
 const authConfig = new AuthServiceConfig([
   {
     id: FacebookLoginProvider.PROVIDER_ID,
