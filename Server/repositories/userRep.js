@@ -8,7 +8,7 @@ module.exports = {
         try {
             let user = new User({
                 _id: new mongoose.Types.ObjectId(),
-                username: data.userName,
+                username: data.userName.toLower(),
                 password: data.password
             });
             await user.save();
@@ -20,7 +20,7 @@ module.exports = {
     },
     GetUser: async function (Username) {
         try {
-            let res = await User.findOne({ username: Username });
+            let res = await User.findOne({ username: Username.toLower() });
             return res;
         } catch (error) {
             //TO-DO : Write error to logger
