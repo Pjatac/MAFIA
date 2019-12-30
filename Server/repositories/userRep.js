@@ -6,9 +6,10 @@ const FBUser = require('../scheme/fbUser');
 module.exports = {
     RegisterUser: async function (data) {
         try {
+            let userN = ""+data.userName;
             let user = new User({
                 _id: new mongoose.Types.ObjectId(),
-                username: data.userName.toLower(),
+                username: userN.toLowerCase(),
                 password: data.password
             });
             await user.save();
@@ -19,8 +20,9 @@ module.exports = {
         }
     },
     GetUser: async function (Username) {
+        let userN = "" + Username;
         try {
-            let res = await User.findOne({ username: Username.toLower() });
+            let res = await User.findOne({ username: userN.toLowerCase() });
             return res;
         } catch (error) {
             //TO-DO : Write error to logger
