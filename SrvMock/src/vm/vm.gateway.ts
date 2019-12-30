@@ -5,7 +5,7 @@ import { WS } from 'src/models/ws';
 const vmsDataCount = 15;
 const timeToAddCounter = 5;
 let counter = 0;
-const timeToSendVMsData = 20000;
+const timeToSendVMsData = 40000;
 let codes = ["200", "201", "400", "401", "404", "500"];
 
 @WebSocketGateway()
@@ -40,7 +40,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     @WebSocketServer() server;
     async handleConnection(client) {
-        console.log("New Connection");
+        console.log("New Connection",this.clients.length);
         let params = new Params(1, [])
         this.clients.push({ user: client, params: params });
         let data;
@@ -66,6 +66,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     async handleDisconnect(client) {
         this.clients = this.clients.filter(function (obj) {
+            console.log("New Connection",this.clients.length);
             return obj.user.id !== client.id;
         });
     }
