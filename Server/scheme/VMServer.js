@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const VMServerSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    ServerName: String,
-    VMList: [{
-        Name: String,
-        Data:[{
-            CPU: Number,
-            Memory: Number,
+    name: String,
+    vms: [{
+        name: String,
+        data:[{
+            cpuUsage: Number,
+            memUsage: Number,
             Time : Date
         }]
     }],
