@@ -17,6 +17,7 @@ import { WsComponent } from './components/ws/ws.component';
 import { RespPieChartComponent } from './components/resp-pie-chart/resp-pie-chart.component';
 import { TimePieChartComponent } from './components/time-pie-chart/time-pie-chart.component';
 import { MydialogComponent } from './components/mydialog/mydialog.component';
+import { ErrorsComponent } from './components/errors/errors.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:150', options: {} };
 @NgModule({
@@ -31,7 +32,8 @@ const config: SocketIoConfig = { url: 'http://localhost:150', options: {} };
     WsComponent,
     RespPieChartComponent,
     TimePieChartComponent,
-    MydialogComponent
+    MydialogComponent,
+    ErrorsComponent
   ],
   imports: [
     BrowserModule,

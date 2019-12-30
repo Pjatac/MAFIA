@@ -118,4 +118,15 @@ export default class WSService {
     return timesPieData;
   }
 
+  getAllErrorsData() {
+    let data = [];
+    this.wsData.forEach(ws => {
+      ws.apis.forEach(api => {
+        data.push(api.name);
+        
+        
+      });
+    });
+  }
+
 }

@@ -49,6 +49,7 @@ import { TimesResponsesComponent } from './components/times-responses/times-resp
 import { RespPieChartComponent } from './components/times-responses/resp-pie-chart/resp-pie-chart.component';
 import { TimePieChartComponent } from './components/times-responses/time-pie-chart/time-pie-chart.component';
 import { PieChartDialogComponent } from './components/times-responses/pie-chart-dialog/pie-chart-dialog.component';
+import { ErrorsComponent } from './components/errors/errors.component';
 
 const ioConfig: SocketIoConfig = { url: 'http://91.205.172.45:100', options: {} };
 
@@ -84,6 +85,7 @@ export function provideConfig() {
     RespPieChartComponent,
     TimePieChartComponent,
     PieChartDialogComponent,
+    ErrorsComponent,
   ],
   imports: [
     BrowserModule,
