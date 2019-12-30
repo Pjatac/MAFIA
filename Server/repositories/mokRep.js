@@ -3,7 +3,7 @@ const VMServer = require('../scheme/vMServer')
 
 module.exports = {
     AddNewData: async function (data) {
-        console.log("Got to add sata");
+        console.log("Got to add sata",data);
         
         try {
             let date = Date.now();

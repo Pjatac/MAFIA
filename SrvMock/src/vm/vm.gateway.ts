@@ -5,7 +5,7 @@ import { WS } from 'src/models/ws';
 const vmsDataCount = 15;
 const timeToAddCounter = 5;
 let counter = 0;
-const timeToSendVMsData = 20000;
+const timeToSendVMsData = 10000;
 let codes = ["200", "201", "400", "401", "404", "500"];
 
 @WebSocketGateway()
