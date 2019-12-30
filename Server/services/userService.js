@@ -12,6 +12,27 @@ module.exports = {
             socket.emit('register-res', false);
         }
     },
+    FBLogin:async(data,socket)=>
+    {
+        let user = await UserRep.GetFBUser(data.fbID);
+        if(!user)
+        {
+            let res = await UserRep.RegisterFBUser(data);
+            if(res)
+            {
+                socket.emit("fb-login-res",true);
+            }
+            else
+            {
+                socket.emit("fb-login-res",false);
+            }
+
+        }
+        if(res)
+            {
+                socket.emit("fb-login-res",true);
+            }
+    },
     Login: async (data, socket) => {
         let user = await UserRep.GetUser(data.userName);
         let result = { status: false };

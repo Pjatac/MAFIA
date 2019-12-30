@@ -26,10 +26,14 @@ module.exports = {
             const AddNewData = async (data) =>{
                 await MockService.AddNewMockData(data);
             }
+            const FbLoginReq = async (data) =>{
+                await UserSerivce.FBLogin(data,socket);
+            }
             console.log("a new user connected", clients.length);
 
             socket.on('register-request', RegisterRequest);
             socket.on('login-request', LoginRequest);
+            socket.on('fb-login-request', FbLoginReq);
             socket.on('chart-request',ChartRequest)
             socket.on('add-new-data',AddNewData)
             socket.on('disconnect', function () {
