@@ -1,3 +1,4 @@
+const log = require('simple-node-logger').createSimpleLogger('server.log');
 const server = require('http').createServer();
 const io = require('socket.io')(server);
 const ConnectToDb = require('./database');
@@ -6,4 +7,5 @@ const PORT = 100;
 ConnectToDb();
 sessionRouter.sessionRouter(io);
 server.listen(PORT);
-console.log("Server started on port",PORT);
+//console.log("Server started on port",PORT);
+log.info('npm start');

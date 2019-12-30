@@ -1,5 +1,7 @@
 const UserRep = require('../repositories/userRep');
 const AuthService = require('./authService');
+const log = require('simple-node-logger').createSimpleLogger('server.log');
+
 
 module.exports = {
     Register: async (data, socket) => {
@@ -13,6 +15,7 @@ module.exports = {
         }
     },
     FBLogin: async (data, socket) => {
+        log.info("A new FB Login request from id :",data.fbID)
         let user = await UserRep.GetFBUser(data.fbID);
         let result = { status: true };
         if (!user) {
