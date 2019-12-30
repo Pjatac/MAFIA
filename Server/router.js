@@ -8,10 +8,12 @@ module.exports = {
         io.on('connection', function (socket) {
 
             const RegisterRequest = async (data) => {
+                console.log("Register Request",data);
+
                 await UserSerivce.Register(data, socket);
             }
             const LoginRequest = async (data) => {
-                console.log("Login Request");
+                console.log("Login Request",data);
                 
                 let res = await UserSerivce.Login(data, socket);
                 if (res) {

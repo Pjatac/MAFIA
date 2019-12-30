@@ -12,34 +12,30 @@ module.exports = {
             socket.emit('register-res', false);
         }
     },
-    FBLogin:async(data,socket)=>
-    {
+    FBLogin: async (data, socket) => {
         let user = await UserRep.GetFBUser(data.fbID);
-        if(!user)
-        {
+        let result = { status: true };
+        if (!user) {
             let res = await UserRep.RegisterFBUser(data);
-            if(res)
-            {
-                socket.emit("fb-login-res",true);
+            if (res) {
+                result.token = await UserRep.GetToken(15);
+                socket.emit("fb-login-res", result);
             }
-            else
-            {
-                socket.emit("fb-login-res",false);
+            else {
+                socket.emit("fb-login-res", false);
             }
-
         }
-        if(res)
-            {
-                socket.emit("fb-login-res",true);
-            }
+        else {
+            result.token = await UserRep.GetToken(15);
+            socket.emit("fb-login-res", result);
+        }
     },
     Login: async (data, socket) => {
         let user = await UserRep.GetUser(data.userName);
         let result = { status: false };
         if (user) {
             if (data.password == user.password) {
-               // result.token = AuthService.CreateValidationToken(user.userName);
-			    result.token = "fsdkm32487fsdnmskaji32u8i32j4ijls";
+                result.token = await UserRep.GetToken();
                 result.status = true;
             }
             else {
