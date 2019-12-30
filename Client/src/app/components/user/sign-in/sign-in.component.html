@@ -2,7 +2,7 @@
     <img src="assets/img/single_user.png" id="icon" alt="User Icon" />
   </div>
   <form #signInForm="ngForm" (ngSubmit)="signInForm.valid && onSubmit(signInForm)">
-    <input type="text" name="userName" #userName="ngModel" [(ngModel)]="model.username" placeholder="User Name or email(FB)" required
+    <input type="text" name="userName" #userName="ngModel" [(ngModel)]="model.username" placeholder="User name" required
     [ngClass]="{'invalid-textbox' :signInForm.submitted && !userName.valid }">
     <div *ngIf="signInForm.submitted && !userName.valid">
     <label class="validation-message">This field is required.</label>

@@ -19,10 +19,6 @@ export class UserService {
   postUser(user: User) {
   }
 
-  getSocket() {
-    return this.socket;
-  }
-
   login(authCredentials,cb) {
     this.socket.on('login-res', data => {
       sessionStorage.setItem('token', data.token);
@@ -30,6 +26,14 @@ export class UserService {
     });
 
     this.socket.emit('login-request', authCredentials);
+  }
+  fb_login(fbData, cb) {
+    this.socket.on('fb-login-res', data => {
+      sessionStorage.setItem('token', data.token);
+      return cb(data);
+    });
+
+    this.socket.emit('fb-login-request', fbData);
   }
 
   register(authCredentials) {
