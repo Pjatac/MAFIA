@@ -1,3 +1,12 @@
-<p>
-  virtualmashines works!
-</p>
+<div class="chart" *ngIf="cpuData">
+  <app-cpu-chart [(chartData)]="cpuData" [(period)]="period"></app-cpu-chart>
+</div>
+<div class="chart" *ngIf="memData">
+  <app-mem-chart [(chartData)]="memData" [(period)]="period"></app-mem-chart>
+</div>
+<div class="mySelect" style="text-align: center">
+  <app-multy-select [(srvList)]="srvList" (changeSelection)="changeSelection($event)"></app-multy-select>
+</div>
+<div class="mySelect" style="text-align: center">
+  <app-period-select (changePeriod)="changePeriod($event)"></app-period-select>
+</div>

@@ -1,7 +1,7 @@
 // built-in
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // components
@@ -14,7 +14,7 @@ import { NavigationBarLinkComponent } from './components/common_elements/navigat
 // routes
 import { appRoutes } from './routes';
 import { UserService } from './shared/user.service';
-// other
+import VmService from '../app/services/vm.service';
 //other
 import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider } from 'angularx-social-login';
 import { AuthGuard } from './auth/auth.guard';
@@ -26,10 +26,24 @@ import {
   MatIconModule,
   MatButtonModule,
   MatCardModule,
-  MatDialogModule
+  MatDialogModule,
+  MatSortModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatInputModule,
+  MatSelectModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSliderModule,
+  MatNativeDateModule,
+  MatDatepickerModule,
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OurDialogComponent } from '../app/components/our-dialog/our-dialog.component';
+import { MemChartComponent } from './components/virtualmashines/mem-chart/mem-chart.component';
+import { CpuChartComponent } from './components/virtualmashines/cpu-chart/cpu-chart.component';
+import { MultySelectComponent } from './components/virtualmashines/multy-select/multy-select.component';
+import { PeriodSelectComponent } from './components/virtualmashines/period-select/period-select.component';
 
 const ioConfig: SocketIoConfig = { url: 'http://91.205.172.45:100', options: {} };
 
@@ -55,6 +69,10 @@ export function provideConfig() {
     OurDialogComponent,
     NavigationBarComponent,
     NavigationBarLinkComponent,
+    MemChartComponent,
+    CpuChartComponent,
+    MultySelectComponent,
+    PeriodSelectComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,18 +85,32 @@ export function provideConfig() {
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    MatSortModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSliderModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true
-  }, AuthGuard, UserService,
-  {
-    provide: AuthServiceConfig,
-    useFactory: provideConfig
-  },
-    AuthGuard, UserService],
+  providers: [
+    AuthGuard,
+    UserService,
+    VmService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }, AuthGuard, UserService,
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    }],
   bootstrap: [AppComponent],
   entryComponents: [OurDialogComponent]
 })
