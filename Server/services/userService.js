@@ -6,7 +6,7 @@ const RegisterLogger = require('simple-node-logger').createSimpleLogger('registe
 
 module.exports = {
     Register: async (data, socket) => {
-        RegisterLogger.info("Facebook Login from id ", data.fbID);
+        RegisterLogger.info("Register from name ", data.userName.toLower());
 
         let user = await UserRep.GetUser(data.userName);
         if (!user) {
