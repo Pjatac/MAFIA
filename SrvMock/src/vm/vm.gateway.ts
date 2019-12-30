@@ -11,7 +11,10 @@ let codes = ["200", "201", "400", "401", "404", "500"];
 @WebSocketGateway()
 export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
-    wsData = [{ name: "AuthMng", responses: [] }, { name: "ClientMng", responses: [] }, { name: "MailMng", responses: [] }, { name: "Analitic", responses: [] }];
+    wsData = [{ name: "AuthMng", responses: [], apis: [{ name: "LogIn", errors: [] }, { name: "LogOut", errors: [] }] },
+    { name: "ClientMng", responses: [], apis: [{ name: "Create", errors: [] }, { name: "Edit", errors: [] }, { name: "Del", errors: [] }] },
+    { name: "MailMng", responses: [], apis: [{ name: "Send", errors: [] }, { name: "Check", errors: [] }] },
+    { name: "Analitic", responses: [], apis: [{ name: "GetAll", errors: [] }, { name: "GetErr", errors: [] }, { name: "GetServ", errors: [] }, { name: "GetResp", errors: [] }] }];
     private timer: NodeJS.Timer;
     clients = [];
     data = [
@@ -41,6 +44,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
         let params = new Params(1, [])
         this.clients.push({ user: client, params: params });
         let data;
+        //need to check max length, not first
         let dataLength = this.data[0].vms[0].data.length;
         if (dataLength <= vmsDataCount)
             data = this.getVMsByFilter(this.data, params);
@@ -151,34 +155,46 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
         });
     }
     generateWSresponses() {
+        this.generateWSerrors();
         for (let i = 0; i < 1000; i++)
-        this.wsData.forEach(ws => {
-            let req = (Math.random() > 0.5);
-            if (req) {
-                let kind = Math.floor(Math.random() * 5);
-                switch (kind) {
-                    case 1: {
-                        ws.responses.push(this.addResponse(50));
-                        break;
-                    }
-                    case 2: {
-                        ws.responses.push(this.addResponse(500));
-                        break;
-                    }
-                    case 3: {
-                        ws.responses.push(this.addResponse(1000));
-                        break;
-                    }
-                    case 4: {
-                        ws.responses.push(this.addResponse(2000));
-                        break;
+            this.wsData.forEach(ws => {
+                let req = (Math.random() > 0.5);
+                if (req) {
+                    let kind = Math.floor(Math.random() * 5);
+                    switch (kind) {
+                        case 1: {
+                            ws.responses.push(this.addResponse(50));
+                            break;
+                        }
+                        case 2: {
+                            ws.responses.push(this.addResponse(500));
+                            break;
+                        }
+                        case 3: {
+                            ws.responses.push(this.addResponse(1000));
+                            break;
+                        }
+                        case 4: {
+                            ws.responses.push(this.addResponse(2000));
+                            break;
+                        }
                     }
                 }
-            }
-        });
+            });
     }
 
     generateWSerrors() {
-        
+        let endDate = new Date();
+        let startDate = new Date();
+        startDate.setHours(startDate.getHours() - 24);
+        //Fill by  10 seconds
+        for (let currentDate = startDate; currentDate < endDate; currentDate.setSeconds(currentDate.getSeconds() + 10)) {
+            this.wsData.forEach(ws => {
+                ws.apis.forEach( api => {
+                    if (Math.random() > 0.9)
+                        api.errors.push(currentDate);
+                })
+            })
+        }
     }
 }

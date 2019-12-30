@@ -30,10 +30,10 @@ export class SignInComponent implements OnInit {
       this.router.navigateByUrl('/virtual-mashines');
     this.authService.authState.subscribe((user) => {
       if (user) {
-        this.user = user;
-        this.loggedIn = (user != null);
-        this.dialog.open(OurDialogComponent, { data: `Welcome, ${this.user.name}` });
-        this.router.navigateByUrl('/virtual-mashines');
+        let fbData = {fbID: user.id, email: user.email};
+        let data = this.userService.fb_login(fbData, (data) => {
+          this.dataProcessing(data);
+        });
       }
     });
   }
@@ -47,16 +47,16 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-
     let data = this.userService.login(form.value, (data) => {
-      if (data.status) {
-        this.router.navigateByUrl('/virtual-mashines');
-      }
-      else {
-        this.dialog.open(OurDialogComponent, { data: data.err });
-      }
+      this.dataProcessing(data);
     });
-    //this.signInWithFB();
-
+  }
+  dataProcessing(data) {
+    if (data.status) {
+      this.router.navigateByUrl('/virtual-mashines');
+    }
+    else {
+      this.dialog.open(OurDialogComponent, { data: data.err });
+    }
   }
 }
