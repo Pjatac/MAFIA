@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -6,14 +6,12 @@ import { FormControl } from '@angular/forms';
   templateUrl: './multy-select.component.html',
   styleUrls: ['./multy-select.component.css']
 })
-export class MultySelectComponent implements OnInit {
+export class MultySelectComponent {
   servers = new FormControl();
   @Input() srvList: string[];
   @Output() changeSelection = new EventEmitter();
   constructor() { }
-  ngOnInit() {
-    this.srvList = [];
-  }
+
   newSelection(servers: string[], ms) {
     ms.close();
     this.changeSelection.emit(servers);

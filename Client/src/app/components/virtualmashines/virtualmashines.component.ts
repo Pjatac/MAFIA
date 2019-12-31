@@ -34,6 +34,7 @@ export class VirtualmashinesComponent implements OnInit {
     //   this.serversData = Helper.AddData(this.serversData, servers);
     //   this.buildChartData(this.serversData);
     // });
+    this.params = new Params(1, []);
     this.serversData = [
       {
           name: 'Srv1', vms: [

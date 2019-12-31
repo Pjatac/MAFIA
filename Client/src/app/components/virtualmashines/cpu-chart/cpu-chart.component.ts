@@ -1,4 +1,4 @@
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, ViewEncapsulation } from '@angular/core';
 import * as c3 from 'c3';
 import { Helper } from 'src/app/middleware/helper';
 
@@ -6,7 +6,9 @@ import { Helper } from 'src/app/middleware/helper';
 @Component({
   selector: 'app-cpu-chart',
   templateUrl: './cpu-chart.component.html',
-  styleUrls: ['./cpu-chart.component.css']
+  styleUrls: ['./cpu-chart.component.css'],
+  encapsulation: ViewEncapsulation.None
+
 })
 export class CpuChartComponent implements OnChanges {
   @Input() chartData;
