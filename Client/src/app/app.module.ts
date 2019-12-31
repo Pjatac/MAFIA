@@ -128,4 +128,5 @@ export function provideConfig() {
   bootstrap: [AppComponent],
   entryComponents: [OurDialogComponent, PieChartDialogComponent]
 })
-export class AppModule { }
+export class AppModule {
+ }

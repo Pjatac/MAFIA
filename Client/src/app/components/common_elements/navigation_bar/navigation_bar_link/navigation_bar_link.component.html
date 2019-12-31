@@ -1,6 +1,6 @@
 
         <li class="nav-item" [ngClass]="active ? 'active' : ''">
-          <a class="nav-link navbar-link-text-m" [ngClass]="disable ? 'disabled' : ''" [href]="href">
+          <a class="nav-link navbar-link-text-m" [ngClass]="disable ? 'disabled' : ''" [href]="href" (click)="onClick()">
             <ng-content></ng-content>
           </a>
         </li>

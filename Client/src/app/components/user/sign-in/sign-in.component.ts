@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UserService } from '../../../shared/user.service';
@@ -13,6 +13,9 @@ import { AuthService, FacebookLoginProvider, SocialUser } from 'angularx-social-
 })
 export class SignInComponent implements OnInit {
 
+  @Output() status = new EventEmitter();
+  
+  //fb data
   user: SocialUser;
   loggedIn: boolean;
 
@@ -50,10 +53,12 @@ export class SignInComponent implements OnInit {
     let data = this.userService.login(form.value, (data) => {
       this.dataProcessing(data);
     });
-    //this.router.navigateByUrl('/virtual-mashines');
+
   }
   dataProcessing(data) {
     if (data.status) {
+      this.dialog.open(OurDialogComponent, { data: "TADA" });
+      this.status.emit();
       this.router.navigateByUrl('/virtual-mashines');
     }
     else {
