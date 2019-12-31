@@ -11,7 +11,7 @@ export class ErrorsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    var chart = c3.generate({
+    var barChart = c3.generate({
       data: {
           columns: [
               ['data1', 30, 200, 100, 400, 150, 250],

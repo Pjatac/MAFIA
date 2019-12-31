@@ -14,16 +14,24 @@ export class ErrorsComponent implements OnInit {
     var chart = c3.generate({
       data: {
           columns: [
-              ['data1', 30, 200, 100, 400, 150, 250],
-              ['data2', 130, 100, 140, 200, 150, 50]
+              ['AuthMng/LogIn', 50],
+              ['ClientManager/Edit', 0],
+              ['ClientManager/Create', 110],
+              ['AuthMng/LogOut', 72]
           ],
-          type: 'bar'
+          type: 'bar',
+          color : function (color, d) {
+            return "#0000FF";
+        },
+        labels: true
       },
       bar: {
           width: {
               ratio: 0.5 
-          }
-      }
+          },
+          space: 0.75
+          
+      },
   });
   }
 

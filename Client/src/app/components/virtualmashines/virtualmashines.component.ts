@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import VmService  from 'src/app/services/vm.service';
+import VmService from 'src/app/services/vm.service';
 import { Helper } from '../../middleware/helper';
 import { SRV } from 'src/app/models/srv';
 import { Params } from 'src/app/models/vmparams';
@@ -23,7 +23,7 @@ export class VirtualmashinesComponent implements OnInit {
   params: Params;
 
   ngOnInit() {
-    this.dialog.open(OurDialogComponent, { data: "Hello on our cluster analic service" });
+    //this.dialog.open(OurDialogComponent, { data: "Hello on our cluster analic service" });
     // this.vmService.getAllServers().subscribe((servers: SRV[]) => {
     //   this.serversData = servers;
     //   this.srvList = Helper.getServersNames(servers);
@@ -34,28 +34,9 @@ export class VirtualmashinesComponent implements OnInit {
     //   this.serversData = Helper.AddData(this.serversData, servers);
     //   this.buildChartData(this.serversData);
     // });
-    this.serversData = [
-      {
-          name: 'Srv1', vms: [
-              { name: "vm1", data: [{ cpuUsage: 100, memUsage: 25 }, { cpuUsage: 95, memUsage: 35 }, { cpuUsage: 55, memUsage: 45 }] },
-              { name: "vm2", data: [{ cpuUsage: 50, memUsage: 45 }, { cpuUsage: 55, memUsage: 45 }, { cpuUsage: 70, memUsage: 60 }] }
-          ]
-      },
-      {
-          name: 'Srv2', vms: [
-              { name: "vm1", data: [{ cpuUsage: 20, memUsage: 35 }, { cpuUsage: 25, memUsage: 45 }, { cpuUsage: 75, memUsage: 80 }] },
-              { name: "vm2", data: [{ cpuUsage: 99, memUsage: 75 }, { cpuUsage: 90, memUsage: 70 }, { cpuUsage: 95, memUsage: 30 }] }
-          ]
-      },
-      {
-          name: 'Srv3', vms: [
-              { name: "vm1", data: [{ cpuUsage: 33, memUsage: 15 }, { cpuUsage: 75, memUsage: 45 }, { cpuUsage: 15, memUsage: 22 }] },
-              { name: "vm2", data: [{ cpuUsage: 39, memUsage: 41 }, { cpuUsage: 75, memUsage: 70 }, { cpuUsage: 55, memUsage: 44 }] }
-          ]
-      }
-  ];
-  this.srvList = Helper.getServersNames(this.serversData);
-  this.buildChartData(this.serversData);
+    this.serversData = Helper.getVMsData();
+    this.srvList = Helper.getServersNames(this.serversData);
+    this.buildChartData(this.serversData);
   }
   changeSelection(servers) {
     this.params.servers = servers;

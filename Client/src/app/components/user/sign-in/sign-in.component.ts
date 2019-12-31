@@ -47,10 +47,10 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    // let data = this.userService.login(form.value, (data) => {
-    //   this.dataProcessing(data);
-    // });
-    this.router.navigateByUrl('/virtual-mashines');
+    let data = this.userService.login(form.value, (data) => {
+      this.dataProcessing(data);
+    });
+    //this.router.navigateByUrl('/virtual-mashines');
   }
   dataProcessing(data) {
     if (data.status) {

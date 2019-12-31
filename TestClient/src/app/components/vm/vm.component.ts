@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SRV } from 'src/app/models/srv';
 import { Helper } from 'src/app/middleware/helper';
-import  VMService  from 'src/app/services/vm.service';
+import  { VMService } from '../../services/vm.service';
 import { Params } from 'src/app/models/vmparams';
 import { MatDialog } from '@angular/material';
 import { MydialogComponent } from '../mydialog/mydialog.component';

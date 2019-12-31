@@ -5,11 +5,7 @@ import { WS } from 'src/models/ws';
 const vmsDataCount = 15;
 const timeToAddCounter = 5;
 let counter = 0;
-<<<<<<< HEAD
 const timeToSendVMsData = 10000;
-=======
-const timeToSendVMsData = 40000;
->>>>>>> PjatakBranch
 let codes = ["200", "201", "400", "401", "404", "500"];
 
 @WebSocketGateway()
@@ -44,11 +40,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     @WebSocketServer() server;
     async handleConnection(client) {
-<<<<<<< HEAD
         console.log("New Connectionn",this.clients.length);
-=======
-        console.log("New Connection",this.clients.length);
->>>>>>> PjatakBranch
         let params = new Params(1, [])
         this.clients.push({ user: client, params: params });
         let data;
@@ -74,14 +66,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     async handleDisconnect(client) {
         this.clients = this.clients.filter(function (obj) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-            console.log(this.clients.length);
-=======
             console.log("New Connection",this.clients.length);
->>>>>>> PjatakBranch
-=======
->>>>>>> PjatakBranch
             return obj.user.id !== client.id;
             
         });

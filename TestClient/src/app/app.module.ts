@@ -11,7 +11,7 @@ import { MultySelectComponent } from './components/multy-select/multy-select.com
 import { MemChartComponent } from './components/mem-chart/mem-chart.component';
 import { VmComponent } from './components/vm/vm.component';
 import { PeriodSelectComponent } from './components/period-select/period-select.component';
-import VMService from '../app/services/vm.service';
+import { VMService } from '../app/services/vm.service';
 import WSService from '../app/services/ws.service';
 import { WsComponent } from './components/ws/ws.component';
 import { RespPieChartComponent } from './components/resp-pie-chart/resp-pie-chart.component';
