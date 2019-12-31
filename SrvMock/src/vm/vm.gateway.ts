@@ -1,6 +1,7 @@
 import { WebSocketGateway, WebSocketServer, SubscribeMessage, OnGatewayConnection, OnGatewayDisconnect } from '@nestjs/websockets';
 import { Params } from '../models/vmparams';
 import { WS } from 'src/models/ws';
+import { MockData } from './vm.mock';
 
 const vmsDataCount = 15;
 const timeToAddCounter = 5;
@@ -11,32 +12,13 @@ let codes = ["200", "201", "400", "401", "404", "500"];
 @WebSocketGateway()
 export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
-    wsData = [{ name: "AuthMng", responses: [], apis: [{ name: "LogIn", errors: [] }, { name: "LogOut", errors: [] }] },
-    { name: "ClientMng", responses: [], apis: [{ name: "Create", errors: [] }, { name: "Edit", errors: [] }, { name: "Del", errors: [] }] },
-    { name: "MailMng", responses: [], apis: [{ name: "Send", errors: [] }, { name: "Check", errors: [] }] },
-    { name: "Analitic", responses: [], apis: [{ name: "GetAll", errors: [] }, { name: "GetErr", errors: [] }, { name: "GetServ", errors: [] }, { name: "GetResp", errors: [] }] }];
+    wsData = MockData.wsData;
+    data = MockData.data;
+
+
     private timer: NodeJS.Timer;
     clients = [];
-    data = [
-        {
-            name: 'Srv1', vms: [
-                { name: "vm1", data: [{ cpuUsage: 100, memUsage: 25 }, { cpuUsage: 95, memUsage: 35 }, { cpuUsage: 55, memUsage: 45 }] },
-                { name: "vm2", data: [{ cpuUsage: 50, memUsage: 45 }, { cpuUsage: 55, memUsage: 45 }, { cpuUsage: 70, memUsage: 60 }] }
-            ]
-        },
-        {
-            name: 'Srv2', vms: [
-                { name: "vm1", data: [{ cpuUsage: 20, memUsage: 35 }, { cpuUsage: 25, memUsage: 45 }, { cpuUsage: 75, memUsage: 80 }] },
-                { name: "vm2", data: [{ cpuUsage: 99, memUsage: 75 }, { cpuUsage: 90, memUsage: 70 }, { cpuUsage: 95, memUsage: 30 }] }
-            ]
-        },
-        {
-            name: 'Srv3', vms: [
-                { name: "vm1", data: [{ cpuUsage: 33, memUsage: 15 }, { cpuUsage: 75, memUsage: 45 }, { cpuUsage: 15, memUsage: 22 }] },
-                { name: "vm2", data: [{ cpuUsage: 39, memUsage: 41 }, { cpuUsage: 75, memUsage: 70 }, { cpuUsage: 55, memUsage: 44 }] }
-            ]
-        }
-    ];
+    
 
     @WebSocketServer() server;
     async handleConnection(client) {
@@ -131,15 +113,11 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     public async sendVMsData() {
-        //need to short
+        //add new server after count from server start
         counter++;
         if (counter == timeToAddCounter)
-            this.data.push({
-                name: 'Srv4', vms: [
-                    { name: "vm3", data: [{ cpuUsage: 33, memUsage: 15 }, { cpuUsage: 15, memUsage: 22 }, { cpuUsage: 75, memUsage: 45 }] },
-                    { name: "vm5", data: [{ cpuUsage: 41, memUsage: 39 }, { cpuUsage: 55, memUsage: 44 }, { cpuUsage: 75, memUsage: 70 }] }
-                ]
-            });
+            this.data.push(MockData.newSrv);
+        //forming new data
         let newData = [];
         this.data.forEach(srv => {
             let vmNewData = [];
@@ -151,6 +129,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
             });
             newData.push({ name: srv.name, vms: vmNewData });
         });
+        //sending new data to all connected clients by params
         this.clients.forEach(c => {
             let data = this.getVMsByFilter(newData, c.params);
             c.user.emit('getNewServersData', data);
