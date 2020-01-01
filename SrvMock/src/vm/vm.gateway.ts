@@ -58,10 +58,10 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
         return { code: codes[Math.floor(Math.random() * codes.length)], time: Math.floor(Math.random() * time) }
     }
 
-    @SubscribeMessage('getResponses')
+    @SubscribeMessage('getWsData')
     async onGetResponses(client) {
         this.generateWSresponses();
-        client.emit('getResponses', this.wsData);
+        client.emit('getWsData', this.wsData);
     }
 
     @SubscribeMessage('requestFiltredServers')

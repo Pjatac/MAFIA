@@ -13,11 +13,11 @@ export default class WSService {
   constructor(private socket: Socket) { }
 
   requestResponses() {
-    this.socket.emit('getResponses');
+    this.socket.emit('getWsData');
   }
 
   getResponses() {
-    return this.socket.fromEvent('getResponses');
+    return this.socket.fromEvent('getWsData');
   }
 
   getCurrentTimeData(time) {

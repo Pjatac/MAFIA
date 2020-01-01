@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import * as c3 from 'c3';
 
 @Component({
@@ -8,7 +8,7 @@ import * as c3 from 'c3';
 })
 export class ErrorsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _elementRef: ElementRef) { }
 
   ngOnInit() {
     var chart = c3.generate({
@@ -33,6 +33,10 @@ export class ErrorsComponent implements OnInit {
         
     },
 });
+this.getHtml();
+}
+  getHtml() {
+    console.log(this._elementRef.nativeElement);
+  }
 }
 
-}
