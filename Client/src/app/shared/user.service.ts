@@ -5,6 +5,8 @@ import { User } from './user.model';
 import { JsonPipe } from '@angular/common';
 import { format } from 'util';
 import AuthService from '../services/auth.service'
+import { MatDialog } from '@angular/material';
+import { OurDialogComponent } from '../components/our-dialog/our-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ export class UserService {
     password: ''
   };
 
-  constructor(private socket: Socket, private auth:AuthService) { }
+  constructor(private socket: Socket, private auth:AuthService, public dialog: MatDialog) { }
 
   postUser(user: User) {
   }
@@ -39,7 +41,7 @@ export class UserService {
 
   register(authCredentials) {
     this.socket.on('register-res', data => {
-      alert("Register status " + data);
+      this.dialog.open(OurDialogComponent, { data: "Register status " + data });
     });
 
     this.socket.emit('register-request', authCredentials);

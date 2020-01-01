@@ -28,5 +28,8 @@ module.exports = {
             console.log(error);
 
         }
+    },
+    AddWSData: async function (data){
+    
     }
 }
