@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { User } from './user.model';
 import { JsonPipe } from '@angular/common';
 import { format } from 'util';
+import AuthService from '../services/auth.service'
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,14 @@ export class UserService {
     password: ''
   };
 
-  constructor(private socket: Socket) { }
+  constructor(private socket: Socket, private auth:AuthService) { }
 
   postUser(user: User) {
   }
 
-  login(authCredentials,cb) {
+  login(authCredentials, cb) {
     this.socket.on('login-res', data => {
-      sessionStorage.setItem('token', data.token);
+      this.auth.setToken(data.token);
       return cb(data);
     });
 
@@ -29,7 +30,7 @@ export class UserService {
   }
   fb_login(fbData, cb) {
     this.socket.on('fb-login-res', data => {
-      sessionStorage.setItem('token', data.token);
+      this.auth.setToken(data.token);
       return cb(data);
     });
 
@@ -44,20 +45,8 @@ export class UserService {
     this.socket.emit('register-request', authCredentials);
   }
 
-  setToken(token: string) {
-    localStorage.setItem('token', token);
-  }
-
-  getToken() {
-    return localStorage.getItem('token');
-  }
-
-  deleteToken() {
-    localStorage.removeItem('token');
-  }
-
   getUserPayload() {
-    var token = this.getToken();
+    var token = this.auth.getToken();
     if (token) {
       var userPayload = atob(token.split('.')[1]);
       return JSON.parse(userPayload);

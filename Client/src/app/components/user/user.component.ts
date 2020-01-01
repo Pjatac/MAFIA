@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import AuthService from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user',
@@ -8,10 +9,10 @@ import { Router } from '@angular/router';
 })
 export class UserComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private auth: AuthService) { }
 
   ngOnInit() {
-    if(sessionStorage.getItem('token'))
+    if(this.auth.getToken())
       this.router.navigateByUrl('/virtual-mashines');
   }
 

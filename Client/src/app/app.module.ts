@@ -16,6 +16,7 @@ import { appRoutes } from './routes';
 import { UserService } from './shared/user.service';
 import VmService from '../app/services/vm.service';
 import TrService from '../app/services/tr.service';
+import AuthService from './services/auth.service';
 //other
 import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider } from 'angularx-social-login';
 import { AuthGuard } from './auth/auth.guard';
@@ -116,6 +117,7 @@ export function provideConfig() {
     UserService,
     VmService,
     TrService,
+    AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
