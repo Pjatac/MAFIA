@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import * as c3 from 'c3';
+import AuthService from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-errors',
@@ -8,9 +9,10 @@ import * as c3 from 'c3';
 })
 export class ErrorsComponent implements OnInit {
 
-  constructor(private _elementRef: ElementRef) { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit() {
+    this.auth.CheckTokenValidation();
     var chart = c3.generate({
       data: {
         columns: [
@@ -33,10 +35,7 @@ export class ErrorsComponent implements OnInit {
         
     },
 });
-this.getHtml();
+
 }
-  getHtml() {
-    console.log(this._elementRef.nativeElement);
-  }
 }
 

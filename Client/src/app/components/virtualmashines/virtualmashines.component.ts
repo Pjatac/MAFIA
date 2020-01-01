@@ -5,6 +5,7 @@ import { SRV } from 'src/app/models/srv';
 import { Params } from 'src/app/models/vmparams';
 import { MatDialog } from '@angular/material';
 import { OurDialogComponent } from '../our-dialog/our-dialog.component';
+import AuthService from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-virtualmashines',
@@ -12,7 +13,7 @@ import { OurDialogComponent } from '../our-dialog/our-dialog.component';
   styleUrls: ['./virtualmashines.component.css']
 })
 export class VirtualmashinesComponent implements OnInit {
-  constructor(private vmService: VmService, public dialog: MatDialog) { }
+  constructor(private vmService: VmService, public dialog: MatDialog, private auth: AuthService) { }
 
   serversData: SRV[];
   srvList: string[];
@@ -23,6 +24,7 @@ export class VirtualmashinesComponent implements OnInit {
   params: Params;
 
   ngOnInit() {
+    this.auth.CheckTokenValidation();
     //this.dialog.open(OurDialogComponent, { data: "Hello on our cluster analic service" });
     // this.vmService.getAllServers().subscribe((servers: SRV[]) => {
     //   this.serversData = servers;

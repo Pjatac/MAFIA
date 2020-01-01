@@ -13,6 +13,11 @@ module.exports = {
         socketClient.on('getNewServersData',async (data) =>{
             await MockRep.AddNewData(data);
         });
+        socketClient.on('getWsData',async(data) =>{
+         await MockRep.
+        });
+
+
     }
     
 }

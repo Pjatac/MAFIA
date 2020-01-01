@@ -4,6 +4,9 @@ import { environment } from '../../environments/environment';
 import { User } from './user.model';
 import { JsonPipe } from '@angular/common';
 import { format } from 'util';
+import AuthService from '../services/auth.service'
+import { MatDialog } from '@angular/material';
+import { OurDialogComponent } from '../components/our-dialog/our-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +17,14 @@ export class UserService {
     password: ''
   };
 
-  constructor(private socket: Socket) { }
+  constructor(private socket: Socket, private auth:AuthService, public dialog: MatDialog) { }
 
   postUser(user: User) {
   }
 
-  login(authCredentials,cb) {
+  login(authCredentials, cb) {
     this.socket.on('login-res', data => {
-      sessionStorage.setItem('token', data.token);
+      this.auth.setToken(data.token);
       return cb(data);
     });
 
@@ -29,7 +32,7 @@ export class UserService {
   }
   fb_login(fbData, cb) {
     this.socket.on('fb-login-res', data => {
-      sessionStorage.setItem('token', data.token);
+      this.auth.setToken(data.token);
       return cb(data);
     });
 
@@ -38,26 +41,14 @@ export class UserService {
 
   register(authCredentials) {
     this.socket.on('register-res', data => {
-      alert("Register status " + data);
+      this.dialog.open(OurDialogComponent, { data: "Register status " + data });
     });
 
     this.socket.emit('register-request', authCredentials);
   }
 
-  setToken(token: string) {
-    localStorage.setItem('token', token);
-  }
-
-  getToken() {
-    return localStorage.getItem('token');
-  }
-
-  deleteToken() {
-    localStorage.removeItem('token');
-  }
-
   getUserPayload() {
-    var token = this.getToken();
+    var token = this.auth.getToken();
     if (token) {
       var userPayload = atob(token.split('.')[1]);
       return JSON.parse(userPayload);
