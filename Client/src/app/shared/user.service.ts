@@ -4,6 +4,8 @@ import { environment } from '../../environments/environment';
 import { User } from './user.model';
 import { JsonPipe } from '@angular/common';
 import { format } from 'util';
+import { MatDialog } from '@angular/material';
+import { OurDialogComponent } from '../components/our-dialog/our-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class UserService {
     password: ''
   };
 
-  constructor(private socket: Socket) { }
+  constructor(private socket: Socket,public dialog: MatDialog) { }
 
   postUser(user: User) {
   }
@@ -38,7 +40,7 @@ export class UserService {
 
   register(authCredentials) {
     this.socket.on('register-res', data => {
-      alert("Register status " + data);
+      this.dialog.open(OurDialogComponent, { data: "Register status " + data });
     });
 
     this.socket.emit('register-request', authCredentials);
