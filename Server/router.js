@@ -14,6 +14,8 @@ module.exports = {
                 await UserSerivce.Register(data, socket);
             }
             const GetAllServers = async function () {
+                console.log("Get all servers request");
+                
                 await MockService.GetAllServers(socket);
             }
             const LoginRequest = async (data) => {
@@ -51,7 +53,7 @@ module.exports = {
             console.log("Try to send");
             
             clients.forEach(cl => {
-                console.log(cl.nextSendTime);
+               // console.log(cl.nextSendTime);
                 
                 if (cl.nextSendTime < Date.now()) {
                     console.log("Send Data");
@@ -68,5 +70,5 @@ const Disconnect = function () {
     console.log('user disconnected', clients.length);
 }
 const AddMinutes = function (minutes) {
-    return new Date(Date.now() + minutes * 6000);
+    return new Date(Date.now() + minutes * 60000);
 }
