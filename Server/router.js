@@ -3,6 +3,7 @@ const MockService = require('./services/mockService')
 
 var clients = [];
 var ids = 1;
+const DEFAULT_SEND_TIME = 5;
 module.exports = {
     sessionRouter: (io) => {
         io.on('connection', function (socket) {
@@ -17,7 +18,7 @@ module.exports = {
 
                 let res = await UserSerivce.Login(data, socket);
                 if (res) {
-                    let c = { id: ids, session: socket, time: 5, lastSentTime: Date.now() }
+                    let c = { id: ids, session: socket, time: DEFAULT_SEND_TIME, lastSentTime: Date.now() }
                     clients.push(c);
                     ids++;
                 }
