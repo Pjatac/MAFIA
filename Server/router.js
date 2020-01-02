@@ -57,6 +57,7 @@ module.exports = {
                 
                 if (cl.nextSendTime < Date.now()) {
                     console.log("Send Data");
+                    
                     await MockService.GetAllServers(cl.session);
                     cl.nextSendTime = AddMinutes(cl.defaultTime);
                 }
