@@ -7,7 +7,7 @@ module.exports = {
             return await VMServer.find();
         else
             {
-                return await VMServer.find().limit(5);
+                return await VMServer.find().limit(1);
             }
         },
     AddNewServersData: async function (data) {

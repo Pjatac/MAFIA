@@ -25,7 +25,7 @@ export default class VmService {
   // }
 
   requestServers(params?:  Params) {
-    return this.socket.emit('getServers');
+    return this.socket.emit('getServers', params);
   }
 
   getServers() {
