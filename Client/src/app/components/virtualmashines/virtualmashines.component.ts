@@ -26,6 +26,7 @@ export class VirtualmashinesComponent implements OnInit {
   ngOnInit() {
     this.auth.CheckTokenValidation();
     //this.dialog.open(OurDialogComponent, { data: "Hello on our cluster analic service" });
+    this.vmService.requestAllServers();
     this.vmService.getAllServers().subscribe((servers: SRV[]) => {
       this.serversData = servers;
       this.srvList = Helper.getServersNames(servers);

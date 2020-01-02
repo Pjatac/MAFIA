@@ -15,6 +15,10 @@ export default class VmService {
     return this.socket.fromEvent('getFiltredServers');
   }
 
+  requestAllServers(){
+    return this.socket.emit('getAllServers');
+  }
+
   getAllServers(){
     return this.socket.fromEvent('getAllServers');
   }
