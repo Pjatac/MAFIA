@@ -7,14 +7,16 @@ console.log("Mock Server is up!");
 module.exports = {
 
     Start: async () =>{
-        socketClient.on('getAllServers',(data) =>{
+        // socketClient.on('getAllServers',(data) =>{
             
-        });
+        // });
+        
         socketClient.on('getNewServersData',async (data) =>{
-            await MockRep.AddNewData(data);
+            await MockRep.AddNewServersData(data);
         });
+        
         socketClient.on('getWsData',async(data) =>{
-         await MockRep.
+         await MockRep.AddWSData(data);
         });
 
 

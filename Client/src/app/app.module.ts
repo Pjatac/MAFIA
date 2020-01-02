@@ -52,7 +52,7 @@ import { TimePieChartComponent } from './components/times-responses/time-pie-cha
 import { PieChartDialogComponent } from './components/times-responses/pie-chart-dialog/pie-chart-dialog.component';
 import { ErrorsComponent } from './components/errors/errors.component';
 
-const ioConfig: SocketIoConfig = { url: 'http://91.205.172.45:100', options: {} };
+const ioConfig: SocketIoConfig = { url: 'localhost:100', options: {} };//http://91.205.172.45
 
 
 const authConfig = new AuthServiceConfig([
