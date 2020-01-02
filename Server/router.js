@@ -42,17 +42,20 @@ module.exports = {
             socket.on('logoutRequest', Disconnect);
             socket.on('disconnect', Disconnect);
         });
+        setInterval(() => {
+            console.log("Started");
+            
+            clients.forEach(cl => {
+                if(cl.nextSendTime < Date.now())
+                {
+                    cl.socket.emit("mockData","Some mock data");
+                    cl.nextSendTime = AddMinutes(cl.defaultTime);
+                }
+            });
+        }, 30000/1);
     }
 }
-setInterval(() => {
-    clients.forEach(cl => {
-        if(cl.nextSendTime < Date.now())
-        {
-            console.log("Send Data To User");
-            cl.nextSendTime = AddMinutes(cl.defaultTime);
-        }
-    });
-}, 30000/30000);
+
 const Disconnect = function () {
     clients.splice(clients.indexOf(x => x.session = socket), 1);
     console.log('user disconnected', clients.length);
