@@ -25,7 +25,7 @@ module.exports ={
     {
         await MockRep.AddNewData(data);
     },
-    GetAllServers: async function(socket) {
-        socket.emit('getAllServers', await MockRep.GetAllServers());
+    GetServers: async function(socket, params) {
+        socket.emit('getServers', await MockRep.GetServers(params));
     }
 }

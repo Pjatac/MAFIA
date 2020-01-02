@@ -2,8 +2,13 @@ var mongoose = require('mongoose');
 const VMServer = require('../scheme/vMServer')
 
 module.exports = {
-    GetAllServers: async function () {
-        return await VMServer.find();
+    GetServers: async function (params) {
+        if (!params)
+            return await VMServer.find();
+        else
+            {
+                return await VMServer.find().limit(5);
+            }
         },
     AddNewServersData: async function (data) {
         //console.log("Got to add sata",data);
