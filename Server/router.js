@@ -42,11 +42,26 @@ module.exports = {
             socket.on('fb-login-request', FbLoginReq);
             socket.on('chart-request',ChartRequest)
             socket.on('add-new-data',AddNewData)
-            socket.on('disconnect', function () {
-                clients.splice(clients.indexOf(x => x.session = socket), 1);
-                console.log('user disconnected', clients.length);
-            });
-
+            socket.on('disconnect', Disconnect)
         });
+            setInterval(() => {
+                console.log("Started");
+                
+                clients.forEach(cl => {
+                    if(cl.nextSendTime < Date.now())
+                    {
+                        cl.socket.emit("mockData","Some mock data");
+                        cl.nextSendTime = AddMinutes(cl.defaultTime);
+                    }
+                });
+            }, 30000/1);
+        }
     }
-}
+    
+    const Disconnect = function () {
+        clients.splice(clients.indexOf(x => x.session = socket), 1);
+        console.log('user disconnected', clients.length);
+    }
+    const AddMinutes = function (minutes) {
+        return new Date(Date.now() + minutes * 60000);
+    }
