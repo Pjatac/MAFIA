@@ -13,14 +13,19 @@ module.exports = {
 
                 await UserSerivce.Register(data, socket);
             }
+            const GetAllServers = async function () {
+                await MockService.GetAllServers(socket);
+            }
             const LoginRequest = async (data) => {
                 console.log("Login Request", data);
 
                 let res = await UserSerivce.Login(data, socket);
                 if (res) {
-                    let c = { id: ids, session: socket,defaultTime : DEFAULT_SEND_TIME, nextSendTime: AddMinutes(DEFAULT_SEND_TIME)}
+                    let c = { id: ids, session: socket, defaultTime: DEFAULT_SEND_TIME, nextSendTime: AddMinutes(DEFAULT_SEND_TIME) }
                     clients.push(c);
                     ids++;
+                    socket.emit("mockData", "Some mock data");
+
                 }
             }
             const ChartRequest = async (data) => {
@@ -33,7 +38,7 @@ module.exports = {
                 await UserSerivce.FBLogin(data, socket);
             }
             console.log("a new user connected", clients.length);
-
+            socket.on("getAllServers",GetAllServers);
             socket.on('register-request', RegisterRequest);
             socket.on('login-request', LoginRequest);
             socket.on('fb-login-request', FbLoginReq);
@@ -43,16 +48,18 @@ module.exports = {
             socket.on('disconnect', Disconnect);
         });
         setInterval(() => {
-            console.log("Started");
+            console.log("Try to send");
             
             clients.forEach(cl => {
-                if(cl.nextSendTime < Date.now())
-                {
-                    cl.socket.emit("mockData","Some mock data");
+                console.log(cl.nextSendTime);
+                
+                if (cl.nextSendTime < Date.now()) {
+                    console.log("Send Data");
+                    cl.session.emit("mockData", "Some mock data");
                     cl.nextSendTime = AddMinutes(cl.defaultTime);
                 }
             });
-        }, 30000/1);
+        }, 10000 / 1);
     }
 }
 
@@ -61,5 +68,5 @@ const Disconnect = function () {
     console.log('user disconnected', clients.length);
 }
 const AddMinutes = function (minutes) {
-    return new Date(Date.now() + minutes * 60000);
+    return new Date(Date.now() + minutes * 6000);
 }
