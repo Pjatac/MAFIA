@@ -28,8 +28,10 @@ export class VirtualmashinesComponent implements OnInit {
     this.vmService.requestServers();
     this.vmService.getServers().subscribe((servers: SRV[]) => {
       this.serversData = servers;
-      this.srvList = Helper.getServersNames(servers);
-      this.params = { period: this.period, servers: this.srvList };
+      if (!this.srvList) {
+        this.srvList = Helper.getServersNames(servers);
+        this.params = { period: this.period, servers: this.srvList };
+      }
       this.buildChartData(servers);
     });
     this.vmService.getNewServersData().subscribe((servers: SRV[]) => {
@@ -40,19 +42,11 @@ export class VirtualmashinesComponent implements OnInit {
   changeSelection(servers) {
     this.params.servers = servers;
     this.vmService.requestServers(this.params);
-    this.vmService.getServers().subscribe((servers: SRV[]) => {
-      this.serversData = servers;
-      this.buildChartData(servers);
-    });
   }
   changePeriod(period) {
     this.params.period = period;
     this.period = period;
     this.vmService.requestServers(this.params);
-    this.vmService.getServers().subscribe((servers: SRV[]) => {
-      this.serversData = servers;
-      this.buildChartData(servers);
-    });
   }
 
   buildChartData(servers) {
