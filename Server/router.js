@@ -39,6 +39,7 @@ module.exports = {
             const FbLoginReq = async (data) => {
                 await UserSerivce.FBLogin(data, socket);
             }
+            //Test
             console.log("a new user connected", clients.length);
             socket.on("getAllServers",GetAllServers);
             socket.on('register-request', RegisterRequest);
@@ -57,7 +58,7 @@ module.exports = {
                 
                 if (cl.nextSendTime < Date.now()) {
                     console.log("Send Data");
-                    
+
                     await MockService.GetAllServers(cl.session);
                     cl.nextSendTime = AddMinutes(cl.defaultTime);
                 }
