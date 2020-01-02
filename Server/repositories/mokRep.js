@@ -49,6 +49,19 @@ module.exports = {
 
         }
     },
+    GetResponses: async function (date) {
+        if (!date){
+            data =  await WebService.find(); 
+            toSend = []; 
+            data.forEach(ws => {
+                toSend.push({name: ws.name, responses: ws.data[ws.data.length - 1].responses});
+            })
+            return toSend;
+        }
+        else {
+            return await VMServer.find({ name: { "$in": params.servers } });
+        }
+    },
     AddWSData: async function (data) {
         try {
             let date = Date.now();

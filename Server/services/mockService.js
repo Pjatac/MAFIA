@@ -27,5 +27,8 @@ module.exports ={
     },
     GetServers: async function(socket, params) {
         socket.emit('getServers', await MockRep.GetServers(params));
+    },
+    GetResponses: async function(socket, date) {
+        socket.emit('getResponses', await MockRep.GetResponses(date));
     }
 }

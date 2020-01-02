@@ -22,9 +22,9 @@ module.exports = {
                     ids++;
                 }
             }
-            const ChartRequest = async (data) =>{
-                await MockService.GetChart(data,socket,clients.find(x=> x.session == socket));
-            }
+            // const ChartRequest = async (data) =>{
+            //     await MockService.GetChart(data,socket,clients.find(x=> x.session == socket));
+            // }
             const AddNewData = async (data) =>{
                 await MockService.AddNewMockData(data);
             }
@@ -34,13 +34,17 @@ module.exports = {
             const GetServers = async (params) => {
                 await MockService.GetServers(socket, params);
             }
+            const GetResponses = async (date) => {
+                await MockService.GetResponses(socket, date);
+            }
             console.log("a new user connected", clients.length);
 
+            socket.on('getResponses', GetResponses);
             socket.on('getServers', GetServers);
             socket.on('register-request', RegisterRequest);
             socket.on('login-request', LoginRequest);
             socket.on('fb-login-request', FbLoginReq);
-            socket.on('chart-request',ChartRequest)
+            //socket.on('chart-request',ChartRequest)
             socket.on('add-new-data',AddNewData)
             socket.on('disconnect', Disconnect)
         });
