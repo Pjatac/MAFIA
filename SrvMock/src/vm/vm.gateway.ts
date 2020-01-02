@@ -47,10 +47,9 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     async handleDisconnect(client) {
+        console.log("Disconnect ", client);
         this.clients = this.clients.filter(function (obj) {
-            console.log("New Connection",this.clients.length);
-            return obj.user.id !== client.id;
-            
+            return obj.user.id !== client.id;   
         });
     }
 
@@ -130,6 +129,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
             newData.push({ name: srv.name, vms: vmNewData });
         });
         //sending new data to all connected clients by params
+        if 
         this.clients.forEach(c => {
             let data = this.getVMsByFilter(newData, c.params);
             c.user.emit('getNewServersData', data);
