@@ -31,12 +31,12 @@ module.exports = {
             const FbLoginReq = async (data) =>{
                 await UserSerivce.FBLogin(data,socket);
             }
-            const GetAllServers = async () => {
-                await MockService.GetAllServers(socket);
+            const GetServers = async (params) => {
+                await MockService.GetServers(socket, params);
             }
             console.log("a new user connected", clients.length);
 
-            socket.on('getAllServers', GetAllServers);
+            socket.on('getServers', GetServers);
             socket.on('register-request', RegisterRequest);
             socket.on('login-request', LoginRequest);
             socket.on('fb-login-request', FbLoginReq);
