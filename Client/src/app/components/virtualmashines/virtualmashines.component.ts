@@ -25,9 +25,8 @@ export class VirtualmashinesComponent implements OnInit {
 
   ngOnInit() {
     this.auth.CheckTokenValidation();
-    //this.dialog.open(OurDialogComponent, { data: "Hello on our cluster analic service" });
-    this.vmService.requestAllServers();
-    this.vmService.getAllServers().subscribe((servers: SRV[]) => {
+    this.vmService.requestServers();
+    this.vmService.getServers().subscribe((servers: SRV[]) => {
       this.serversData = servers;
       this.srvList = Helper.getServersNames(servers);
       this.params = { period: this.period, servers: this.srvList };
@@ -37,15 +36,11 @@ export class VirtualmashinesComponent implements OnInit {
       this.serversData = Helper.AddData(this.serversData, servers);
       this.buildChartData(this.serversData);
     });
-    // this.params = new Params(1, []);
-    // this.serversData = Helper.getVMsData();
-    // this.srvList = Helper.getServersNames(this.serversData);
-    // this.buildChartData(this.serversData);
   }
   changeSelection(servers) {
     this.params.servers = servers;
-    this.vmService.requestFitredServers(this.params);
-    this.vmService.getFitredServers().subscribe((servers: SRV[]) => {
+    this.vmService.requestServers(this.params);
+    this.vmService.getServers().subscribe((servers: SRV[]) => {
       this.serversData = servers;
       this.buildChartData(servers);
     });
@@ -53,8 +48,8 @@ export class VirtualmashinesComponent implements OnInit {
   changePeriod(period) {
     this.params.period = period;
     this.period = period;
-    this.vmService.requestFitredServers(this.params);
-    this.vmService.getFitredServers().subscribe((servers: SRV[]) => {
+    this.vmService.requestServers(this.params);
+    this.vmService.getServers().subscribe((servers: SRV[]) => {
       this.serversData = servers;
       this.buildChartData(servers);
     });
