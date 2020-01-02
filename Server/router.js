@@ -3,7 +3,7 @@ const MockService = require('./services/mockService')
 
 var clients = [];
 var ids = 1;
-const DEFAULT_SEND_TIME = 5;
+const DEFAULT_SEND_TIME = 1;
 module.exports = {
     sessionRouter: (io) => {
         io.on('connection', function (socket) {
@@ -18,7 +18,7 @@ module.exports = {
 
                 let res = await UserSerivce.Login(data, socket);
                 if (res) {
-                    let c = { id: ids, session: socket, time: DEFAULT_SEND_TIME, lastSentTime: Date.now() }
+                    let c = { id: ids, session: socket,defaultTime : DEFAULT_SEND_TIME, nextSendTime: AddMinutes(DEFAULT_SEND_TIME)}
                     clients.push(c);
                     ids++;
                 }
@@ -39,13 +39,24 @@ module.exports = {
             socket.on('fb-login-request', FbLoginReq);
             socket.on('chart-request', ChartRequest)
             socket.on('add-new-data', AddNewData)
-            socket.on('logoutRequest',Disconnect);
+            socket.on('logoutRequest', Disconnect);
             socket.on('disconnect', Disconnect);
-
         });
     }
 }
+setInterval(() => {
+    clients.forEach(cl => {
+        if(cl.nextSendTime < Date.now())
+        {
+            console.log("Send Data To User");
+            cl.nextSendTime = AddMinutes(cl.defaultTime);
+        }
+    });
+}, 30000/30000);
 const Disconnect = function () {
     clients.splice(clients.indexOf(x => x.session = socket), 1);
     console.log('user disconnected', clients.length);
+}
+const AddMinutes = function (minutes) {
+    return new Date(Date.now() + minutes * 60000);
 }
