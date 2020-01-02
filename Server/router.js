@@ -34,30 +34,17 @@ module.exports = {
             const GetAllServers = async () => {
                 await MockService.GetAllServers(socket);
             }
-            //Test
             console.log("a new user connected", clients.length);
 
             socket.on('getAllServers', GetAllServers);
             socket.on('register-request', RegisterRequest);
             socket.on('login-request', LoginRequest);
             socket.on('fb-login-request', FbLoginReq);
-            socket.on('chart-request', ChartRequest)
-            socket.on('add-new-data', AddNewData)
-            socket.on('logoutRequest', Disconnect);
-            socket.on('disconnect', Disconnect);
-        });
-        setInterval(() => {
-            console.log("Try to send");
-            
-            clients.forEach(cl => {
-               // console.log(cl.nextSendTime);
-                
-                if (cl.nextSendTime < Date.now()) {
-                    console.log("Send Data");
-
-                    await MockService.GetAllServers(cl.session);
-                    cl.nextSendTime = AddMinutes(cl.defaultTime);
-                }
+            socket.on('chart-request',ChartRequest)
+            socket.on('add-new-data',AddNewData)
+            socket.on('disconnect', function () {
+                clients.splice(clients.indexOf(x => x.session = socket), 1);
+                console.log('user disconnected', clients.length);
             });
 
         });
