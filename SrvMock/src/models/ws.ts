@@ -5,7 +5,7 @@ export interface WSResponse{
 
 export interface API{
     name: string;
-    errors: Date[];
+    errs: Date[];
 }
 
 export class WS{

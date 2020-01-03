@@ -1,9 +1,9 @@
 export class MockData{
 
-    static wsData = [{ name: "AuthMng", responses: [], apis: [{ name: "LogIn", errors: [] }, { name: "LogOut", errors: [] }] },
-    { name: "ClientMng", responses: [], apis: [{ name: "Create", errors: [] }, { name: "Edit", errors: [] }, { name: "Del", errors: [] }] },
-    { name: "MailMng", responses: [], apis: [{ name: "Send", errors: [] }, { name: "Check", errors: [] }] },
-    { name: "Analitic", responses: [], apis: [{ name: "GetAll", errors: [] }, { name: "GetErr", errors: [] }, { name: "GetServ", errors: [] }, { name: "GetResp", errors: [] }] }];
+    static wsData = [{ name: "AuthMng", responses: [], apis: [{ name: "LogIn", errs: [] }, { name: "LogOut", errs: [] }] },
+    { name: "ClientMng", responses: [], apis: [{ name: "Create", errs: [] }, { name: "Edit", errs: [] }, { name: "Del", errs: [] }] },
+    { name: "MailMng", responses: [], apis: [{ name: "Send", errs: [] }, { name: "Check", errs: [] }] },
+    { name: "Analitic", responses: [], apis: [{ name: "GetAll", errs: [] }, { name: "GetErr", errs: [] }, { name: "GetServ", errs: [] }, { name: "GetResp", errs: [] }] }];
 
     static data = [
         {

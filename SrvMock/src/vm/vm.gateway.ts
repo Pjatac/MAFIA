@@ -175,7 +175,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
             this.wsData.forEach(ws => {
                 ws.apis.forEach( api => {
                     if (Math.random() > 0.9)
-                        api.errors.push(currentDate);
+                        api.errs.push(currentDate);
                 })
             })
         }
