@@ -66,7 +66,7 @@ export default class TrService {
     });
     this.wsData.forEach(wsData => {
       wsData.responses.forEach(resp => {
-        if (resp.code === code)
+        if (resp.code == code)
           if (resp.time >= 1000)
             timesPieData[3][1]++;
           else if (resp.time >= 500)

@@ -14,6 +14,7 @@ import { NavigationBarLinkComponent } from './components/common_elements/navigat
 // routes
 import { appRoutes } from './routes';
 import { UserService } from './shared/user.service';
+import ErrService from '../app/services/err.service';
 import VmService from '../app/services/vm.service';
 import TrService from '../app/services/tr.service';
 import AuthService from './services/auth.service';
@@ -118,6 +119,7 @@ export function provideConfig() {
     VmService,
     TrService,
     AuthService,
+    ErrService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

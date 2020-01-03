@@ -37,8 +37,12 @@ module.exports = {
             const GetResponses = async (date) => {
                 await MockService.GetResponses(socket, date);
             }
+            const GetErrors = async (params) => {
+                await MockService.GetErrors(socket, params);
+            }
             console.log("a new user connected", clients.length);
 
+            socket.on('getErrors', GetErrors)
             socket.on('getResponses', GetResponses);
             socket.on('getServers', GetServers);
             socket.on('register-request', RegisterRequest);

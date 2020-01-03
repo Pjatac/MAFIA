@@ -18,15 +18,11 @@ export class TimesResponsesComponent implements OnInit {
 
   ngOnInit() {
     this.auth.CheckTokenValidation();
-    // this.trService.requestResponses();
-    // this.trService.getResponses().subscribe((responses: TimeResponse[]) => {
-    //   this.trService.wsData = responses;
-    //   this.respData = this.trService.getCodesData();
-    //   this.timeData =  this.trService.getTimesData();
-    // });
-    
-    this.trService.wsData = Helper.getWSData();
-    this.respData = this.trService.getCodesData();
-    this.timeData = this.trService.getTimesData();
+    this.trService.requestResponses();
+    this.trService.getResponses().subscribe((responses: TimeResponse[]) => {
+      this.trService.wsData = responses;
+      this.respData = this.trService.getCodesData();
+      this.timeData =  this.trService.getTimesData();
+    });
   }
 }
