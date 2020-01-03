@@ -22,9 +22,6 @@ module.exports = {
                     ids++;
                 }
             }
-            // const ChartRequest = async (data) =>{
-            //     await MockService.GetChart(data,socket,clients.find(x=> x.session == socket));
-            // }
             const AddNewData = async (data) =>{
                 await MockService.AddNewMockData(data);
             }
@@ -48,7 +45,6 @@ module.exports = {
             socket.on('register-request', RegisterRequest);
             socket.on('login-request', LoginRequest);
             socket.on('fb-login-request', FbLoginReq);
-            //socket.on('chart-request',ChartRequest)
             socket.on('add-new-data',AddNewData)
             socket.on('disconnect', Disconnect)
         });
