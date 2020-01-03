@@ -14,15 +14,15 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     wsData = MockData.wsData;
     data = MockData.data;
-
+    lastSendOfWS = new Date();
 
     private timer: NodeJS.Timer;
     clients = [];
-    
+
 
     @WebSocketServer() server;
     async handleConnection(client) {
-        console.log("New Connectionn",this.clients.length);
+        console.log("New Connectionn", this.clients.length);
         let params = new Params(1, [])
         this.clients.push({ user: client, params: params });
         let data;
@@ -49,7 +49,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
     async handleDisconnect(client) {
         console.log("Disconnect ", client);
         this.clients = this.clients.filter(function (obj) {
-            return obj.user.id !== client.id;   
+            return obj.user.id !== client.id;
         });
     }
 
@@ -59,8 +59,10 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     @SubscribeMessage('getWsData')
     async onGetResponses(client) {
-        this.generateWSresponses();
-        client.emit('getWsData', this.wsData);
+       // if ((this.lastSendOfWS.getDay() - new Date().getDay()) < 0) {
+            this.generateWSresponses();
+            client.emit('getWsData', this.wsData);
+        //}
     }
 
     @SubscribeMessage('requestFiltredServers')
@@ -134,8 +136,8 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
             c.user.emit('getNewServersData', data);
             console.log("Sent");
         });
-       
-        
+
+
     }
     generateWSresponses() {
         this.generateWSerrors();
@@ -173,7 +175,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
         //Fill by  10 seconds
         for (let currentDate = startDate; currentDate < endDate; currentDate.setSeconds(currentDate.getSeconds() + 10)) {
             this.wsData.forEach(ws => {
-                ws.apis.forEach( api => {
+                ws.apis.forEach(api => {
                     if (Math.random() > 0.9)
                         api.errs.push(currentDate);
                 })
