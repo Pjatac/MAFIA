@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 export interface Period {
   value: string;
@@ -11,16 +11,10 @@ export interface Period {
   styleUrls: ['./period-select.component.css']
 })
 export class PeriodSelectComponent implements OnInit {
-
+  @Input() periods: Period[];
   @Output() changePeriod = new EventEmitter();
   selectedPeriod;
-  periods: Period[] = [
-    {value: '1', viewValue: '1 minute'},
-    {value: '5', viewValue: '5 minutes'},
-    {value: '15', viewValue: '15 minutes'},
-    {value: '30', viewValue: '30 minutes'},
-    {value: '60', viewValue: '1 hour'}
-  ];
+  
   constructor() { }
 
   ngOnInit() {

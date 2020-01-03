@@ -52,6 +52,10 @@ import { RespPieChartComponent } from './components/times-responses/resp-pie-cha
 import { TimePieChartComponent } from './components/times-responses/time-pie-chart/time-pie-chart.component';
 import { PieChartDialogComponent } from './components/times-responses/pie-chart-dialog/pie-chart-dialog.component';
 import { ErrorsComponent } from './components/errors/errors.component';
+import { OurDataPickerComponent } from './components/errors/our-data-picker/our-data-picker.component';
+import { OurWsMultySelectComponent } from './components/errors/our-ws-multy-select/our-ws-multy-select.component';
+import { OurApiMultySelectComponent } from './components/errors/our-api-multy-select/our-api-multy-select.component';
+import { TopCountSelectComponent } from './components/errors/top-count-select/top-count-select.component';
 
 const ioConfig: SocketIoConfig = { url: 'localhost:100', options: {} };//http://91.205.172.45
 
@@ -88,6 +92,10 @@ export function provideConfig() {
     TimePieChartComponent,
     PieChartDialogComponent,
     ErrorsComponent,
+    OurDataPickerComponent,
+    OurWsMultySelectComponent,
+    OurApiMultySelectComponent,
+    TopCountSelectComponent,
   ],
   imports: [
     BrowserModule,

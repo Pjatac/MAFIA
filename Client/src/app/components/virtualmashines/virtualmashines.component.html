@@ -9,6 +9,6 @@
     <app-multy-select [(srvList)]="srvList" (changeSelection)="changeSelection($event)"></app-multy-select>
   </div>
   <div class="mySelect" style="text-align: center">
-    <app-period-select (changePeriod)="changePeriod($event)"></app-period-select>
+    <app-period-select [(periods)]="periods" (changePeriod)="changePeriod($event)"></app-period-select>
   </div>
 </div>

@@ -20,6 +20,13 @@ export class VirtualmashinesComponent implements OnInit {
   cpuData;
   memData;
   period = 1;
+  periods  = [
+    {value: '1', viewValue: '1 minute'},
+    {value: '5', viewValue: '5 minutes'},
+    {value: '15', viewValue: '15 minutes'},
+    {value: '30', viewValue: '30 minutes'},
+    {value: '60', viewValue: '1 hour'}
+  ];
   //data for filtring servers data on server side
   params: Params;
 
