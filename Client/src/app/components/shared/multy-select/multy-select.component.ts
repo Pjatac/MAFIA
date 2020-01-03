@@ -7,12 +7,13 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./multy-select.component.css']
 })
 export class MultySelectComponent {
-  servers = new FormControl();
-  @Input() srvList: string[];
+  msControl = new FormControl();
+  @Input() title;
+  @Input() msList: string[];
   @Output() changeSelection = new EventEmitter();
   constructor() { }
-  newSelection(servers: string[], ms) {
+  newSelection(selection: string[], ms) {
     ms.close();
-    this.changeSelection.emit(servers);
+    this.changeSelection.emit(selection);
   }
 }

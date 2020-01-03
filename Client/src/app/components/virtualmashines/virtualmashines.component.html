@@ -6,9 +6,9 @@
 </div>
 <div class="d-flex justify-content-around">
   <div class="mySelect" style="text-align: center">
-    <app-multy-select [(srvList)]="srvList" (changeSelection)="changeSelection($event)"></app-multy-select>
+    <app-multy-select [(msList)]="srvList" [(title)]="msTitle" (changeSelection)="changeSelection($event)"></app-multy-select>
   </div>
   <div class="mySelect" style="text-align: center">
-    <app-period-select [(periods)]="periods" (changePeriod)="changePeriod($event)"></app-period-select>
+    <app-simple-select [(selections)]="periods" [(title)]="simpleSelectionTitle" (changeSelection)="changePeriod($event)"></app-simple-select>
   </div>
 </div>

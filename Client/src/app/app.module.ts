@@ -45,17 +45,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OurDialogComponent } from '../app/components/our-dialog/our-dialog.component';
 import { MemChartComponent } from './components/virtualmashines/mem-chart/mem-chart.component';
 import { CpuChartComponent } from './components/virtualmashines/cpu-chart/cpu-chart.component';
-import { MultySelectComponent } from './components/virtualmashines/multy-select/multy-select.component';
-import { PeriodSelectComponent } from './components/virtualmashines/period-select/period-select.component';
+import { MultySelectComponent } from './components/shared/multy-select/multy-select.component';
+import { SimpleSelectComponent } from './components/shared/simple-select/simple-select.component';
 import { TimesResponsesComponent } from './components/times-responses/times-responses.component';
 import { RespPieChartComponent } from './components/times-responses/resp-pie-chart/resp-pie-chart.component';
 import { TimePieChartComponent } from './components/times-responses/time-pie-chart/time-pie-chart.component';
 import { PieChartDialogComponent } from './components/times-responses/pie-chart-dialog/pie-chart-dialog.component';
 import { ErrorsComponent } from './components/errors/errors.component';
 import { OurDataPickerComponent } from './components/errors/our-data-picker/our-data-picker.component';
-import { OurWsMultySelectComponent } from './components/errors/our-ws-multy-select/our-ws-multy-select.component';
-import { OurApiMultySelectComponent } from './components/errors/our-api-multy-select/our-api-multy-select.component';
-import { TopCountSelectComponent } from './components/errors/top-count-select/top-count-select.component';
 
 const ioConfig: SocketIoConfig = { url: 'localhost:100', options: {} };//http://91.205.172.45
 
@@ -86,16 +83,13 @@ export function provideConfig() {
     MemChartComponent,
     CpuChartComponent,
     MultySelectComponent,
-    PeriodSelectComponent,
+    SimpleSelectComponent,
     TimesResponsesComponent,
     RespPieChartComponent,
     TimePieChartComponent,
     PieChartDialogComponent,
     ErrorsComponent,
     OurDataPickerComponent,
-    OurWsMultySelectComponent,
-    OurApiMultySelectComponent,
-    TopCountSelectComponent,
   ],
   imports: [
     BrowserModule,

@@ -20,6 +20,9 @@ export class VirtualmashinesComponent implements OnInit {
   cpuData;
   memData;
   period = 1;
+  msTitle="Servers";
+
+  simpleSelectionTitle = "Period";
   periods  = [
     {value: '1', viewValue: '1 minute'},
     {value: '5', viewValue: '5 minutes'},
