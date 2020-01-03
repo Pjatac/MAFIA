@@ -42,7 +42,7 @@ import {
   MatDatepickerModule,
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { OurDialogComponent } from '../app/components/our-dialog/our-dialog.component';
+import { OurDialogComponent } from './components/shared/our-dialog/our-dialog.component';
 import { MemChartComponent } from './components/virtualmashines/mem-chart/mem-chart.component';
 import { CpuChartComponent } from './components/virtualmashines/cpu-chart/cpu-chart.component';
 import { MultySelectComponent } from './components/shared/multy-select/multy-select.component';

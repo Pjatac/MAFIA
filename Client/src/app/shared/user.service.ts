@@ -6,7 +6,7 @@ import { JsonPipe } from '@angular/common';
 import { format } from 'util';
 import AuthService from '../services/auth.service'
 import { MatDialog } from '@angular/material';
-import { OurDialogComponent } from '../components/our-dialog/our-dialog.component';
+import { OurDialogComponent } from '../components/shared/our-dialog/our-dialog.component';
 
 @Injectable({
   providedIn: 'root'

@@ -3,7 +3,7 @@ import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UserService } from '../../../shared/user.service';
 import { MatDialog } from '@angular/material';
-import { OurDialogComponent } from '../../our-dialog/our-dialog.component';
+import { OurDialogComponent } from '../../shared/our-dialog/our-dialog.component';
 import { AuthService, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
 
 @Component({

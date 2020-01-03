@@ -4,7 +4,7 @@ import { Helper } from '../../middleware/helper';
 import { SRV } from 'src/app/models/srv';
 import { Params } from 'src/app/models/vmparams';
 import { MatDialog } from '@angular/material';
-import { OurDialogComponent } from '../our-dialog/our-dialog.component';
+import { OurDialogComponent } from '../shared/our-dialog/our-dialog.component';
 import AuthService from 'src/app/services/auth.service';
 
 @Component({
