@@ -11,12 +11,8 @@ module.exports = {
         }
     },
     AddNewServersData: async function (data) {
-        //console.log("Got to add sata",data);
-
-
         try {
             for (let i = 0; i < data.length; i++) {
-                //let date = Date.now();
                 const server = await VMServer.findOne({ name: data[i].name });
                 if (!server) {
                     let serverData = new VMServer({
@@ -24,10 +20,6 @@ module.exports = {
                         name: data[i].name,
                         vms: data[i].vms,
                     })
-                    // serverData.vms.forEach(data => {
-                    //     data.Time = date;
-                    // });
-                    //Save
                     await serverData.save();
                 }
                 else {
@@ -41,12 +33,40 @@ module.exports = {
                 }
             }
             console.log("New VMs Data Inbounds");
-
-
-
         } catch (error) {
             console.log(error);
-
+        }
+    },
+    GetNewServersData: async function (params) {
+        if (!params) {
+            let all = await VMServer.find();
+            //need to schange finding from DB by params
+            let newData = [];
+            all.forEach(srv => {
+                let vmNewData = [];
+                srv.vms.forEach(vm => {
+                    let lastCpuUsage = vm.data[vm.data.length - 1].cpuUsage;
+                    let lastMemUsage = vm.data[vm.data.length - 1].memUsage;
+                    vmNewData.push({ name: vm.name, data: [{ cpuUsage: lastCpuUsage, memUsage: lastMemUsage }] });
+                });
+                newData.push({ name: srv.name, vms: vmNewData });
+            });
+            return newData;
+        }
+        else {
+            let all = await VMServer.find({ name: { "$in": params.servers } });
+            //need to schange finding from DB by params
+            let newData = [];
+            all.forEach(srv => {
+                let vmNewData = [];
+                srv.vms.forEach(vm => {
+                    let lastCpuUsage = vm.data[vm.data.length - 1].cpuUsage;
+                    let lastMemUsage = vm.data[vm.data.length - 1].memUsage;
+                    vmNewData.push({ name: vm.name, data: [{ cpuUsage: lastCpuUsage, memUsage: lastMemUsage }] });
+                });
+                newData.push({ name: srv.name, vms: vmNewData });
+            });
+            return newData;
         }
     },
     GetResponses: async function (date) {
@@ -72,6 +92,7 @@ module.exports = {
                     toSend.push([ws.name + "/" + api.name, api.errs.length]);
                 });
             })
+            //stam dugma
             // let pipe_line = [{ "$match": { "email": employee.email } },
             // { "$unwind": "$workerData.data" },
             // {
@@ -116,12 +137,8 @@ module.exports = {
                 }
             }
             console.log("New WSs Data Inbounds");
-
-
-
         } catch (error) {
             console.log(error);
-
         }
     }
 }

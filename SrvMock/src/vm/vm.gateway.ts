@@ -6,7 +6,7 @@ import { MockData } from './vm.mock';
 const vmsDataCount = 15;
 const timeToAddCounter = 5;
 let counter = 0;
-const timeToSendVMsData = 10000;
+const timeToSendVMsData = 60000;
 let codes = ["200", "201", "400", "401", "404", "500"];
 
 @WebSocketGateway()

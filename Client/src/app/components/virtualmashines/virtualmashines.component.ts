@@ -49,10 +49,12 @@ export class VirtualmashinesComponent implements OnInit {
       this.buildChartData(this.serversData);
     });
   }
+
   changeSelection(servers) {
     this.params.servers = servers;
     this.vmService.requestServers(this.params);
   }
+  
   changePeriod(period) {
     this.params.period = period;
     this.period = period;

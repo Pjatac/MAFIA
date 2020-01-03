@@ -3,25 +3,23 @@ const MockService = require('./services/mockService')
 
 var clients = [];
 var ids = 1;
+var sentInterval = 1;
 module.exports = {
     sessionRouter: (io) => {
         io.on('connection', function (socket) {
-
+            let c = { id: ids, session: socket, nextSentTime: new Date() }
+            clients.push(c);
+            ids++;
             const RegisterRequest = async (data) => {
                 console.log("Register Request",data);
 
                 await UserSerivce.Register(data, socket);
             }
             const LoginRequest = async (data) => {
-                console.log("Login Request",data);
-                
-                let res = await UserSerivce.Login(data, socket);
-                if (res) {
-                    let c = { id: ids, session: socket,time:5,lastSentTime:Date.now() }
-                    clients.push(c);
-                    ids++;
-                }
+                console.log("Login Request",data);              
+                await UserSerivce.Login(data, socket);
             }
+
             const AddNewData = async (data) =>{
                 await MockService.AddNewMockData(data);
             }
@@ -29,6 +27,13 @@ module.exports = {
                 await UserSerivce.FBLogin(data,socket);
             }
             const GetServers = async (params) => {
+                if (params) {
+                    cl = clients.filter(cl => {
+                        return cl.session === socket;
+                      })
+                    cl.params = params;
+                    cl.nextSendTime = AddMinutes(params.period);
+                }
                 await MockService.GetServers(socket, params);
             }
             const GetResponses = async (date) => {
@@ -52,10 +57,13 @@ module.exports = {
                 console.log("Started");
                 
                 clients.forEach(cl => {
-                    if(cl.nextSendTime < Date.now())
+                    if(cl.nextSentTime < Date.now())
                     {
-                        cl.socket.emit("mockData","Some mock data");
-                        cl.nextSendTime = AddMinutes(cl.defaultTime);
+                        MockService.GetNewServersData(cl.session, cl.params);
+                        if (cl.params)
+                            cl.nextSendTime = AddMinutes(cl.params.period);
+                        else
+                            cl.nextSendTime = AddMinutes(sentInterval);
                     }
                 });
             }, 30000/1);
@@ -64,6 +72,7 @@ module.exports = {
     
     const Disconnect = function () {
         clients.splice(clients.indexOf(x => x.session = socket), 1);
+        ids--;
         console.log('user disconnected', clients.length);
     }
     const AddMinutes = function (minutes) {

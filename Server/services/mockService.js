@@ -13,5 +13,8 @@ module.exports ={
     },
     GetErrors: async function(socket, params) {
         socket.emit('getErrors', await MockRep.GetErrors(params));
+    },
+    GetNewServersData: async function(socket, params) {
+        socket.emit('getNewServersData', await MockRep.GetNewServersData(params));
     }
 }
