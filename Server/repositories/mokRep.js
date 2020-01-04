@@ -1,13 +1,61 @@
 var mongoose = require('mongoose');
 const VMServer = require('../scheme/vMServer')
 const WebService = require('../scheme/WebService')
+const DATA_COUNT = 15;
 
 module.exports = {
     GetServers: async function (params) {
-        if (!params)
-            return await VMServer.find();
+        if (!params) {
+            let lastChanges = await VMServer.aggregate([
+                { $unwind: "$vms" },
+                { $project: { "_id": 0, name: 1, "vms": { name: "$vms.name", data: { $slice: ["$vms.data", -DATA_COUNT] } } } },
+                { $group: { "_id": { name: "$name" }, vms: { "$push": "$vms" } } },
+                { $project: { "_id": 0, name: "$_id.name", vms: "$vms" } }
+            ]).exec();
+            return lastChanges;
+        }
         else {
-            return await VMServer.find({ name: { "$in": params.servers } });
+            //console.time('label');
+            // executing time for this code with 4 servers and period 1 hour = 368ms 
+            // let serversData = [];
+            // let servers = await VMServer.find({ name: { "$in": params.servers } } );
+            // servers.forEach(srv => {              
+            //     serversData.push({name: srv.name, vms: []});
+            //     srv.vms.forEach(vm => {
+            //         vmData = {name: vm.name, data: []}                   
+            //         for (let i = vm.data.length -1; i > vm.data.length - 1 - params.period*DATA_COUNT; i -= params.period)
+            //             if (vm.data[i])
+            //                 vmData.data.push(vm.data[i]);
+            //         serversData[serversData.length - 1].vms.push(vmData);
+            //     })
+            // });
+            
+            // executing time for this code with 4 servers and period 1 hour = 366ms 
+            let lastChanges = await VMServer.aggregate([
+                { $match: { name: { "$in": params.servers } } },
+                { $unwind: "$vms" },
+                {
+                    $project: {
+                        "_id": 0, name: 1, 
+                        "vms": {
+                            name: "$vms.name",
+                            data: {
+                                $map: {
+                                    input: { $range: [{ 
+                                        $add: [ { $size: "$vms.data" }, -1] }, 
+                                        { $add: [ { $size: "$vms.data" }, -params.period * DATA_COUNT ] },
+                                         -params.period] },
+                                    in: { $arrayElemAt: ["$vms.data", "$$this"] }
+                                }
+                            }
+                        }
+                    }
+                },
+                { $group: { "_id": { name: "$name" }, vms: { "$push": "$vms" } } },
+                { $project: { "_id": 0, name: "$_id.name", vms: "$vms" } }
+            ]).exec();
+           //console.timeEnd('label');
+            return lastChanges;
         }
     },
     AddNewServersData: async function (data) {
@@ -49,7 +97,7 @@ module.exports = {
         }
         else {
             let lastChanges = await VMServer.aggregate([
-                { $match: { name: { "$in": params.servers }}},
+                { $match: { name: { "$in": params.servers } } },
                 { $unwind: "$vms" },
                 { $project: { "_id": 0, name: 1, "vms": { name: "$vms.name", data: { $arrayElemAt: ["$vms.data", -1] } } } },
                 { $group: { "_id": { name: "$name" }, vms: { "$push": "$vms" } } },
@@ -81,24 +129,6 @@ module.exports = {
                     toSend.push([ws.name + "/" + api.name, api.errs.length]);
                 });
             })
-            //stam dugma
-            // let pipe_line = [{ "$match": { "email": employee.email } },
-            // { "$unwind": "$workerData.data" },
-            // {
-            //     "$project": {
-            //         "_id": 0,
-            //         "d": { "$dayOfMonth": "$workerData.data.start" },
-            //         "m": { "$month": "$workerData.data.start" },
-            //         "y": { "$year": "$workerData.data.start" },
-            //         "h": { "$subtract": ["$workerData.data.end", "$workerData.data.start"] }
-            //     }
-            // },
-            // { "$match": { "$and": [{ "m": month }, { "y": year }] } },
-            // { "$group": { "_id": { "day": "$d" }, "total": { "$sum": "$h" } } },
-            // { "$project": { "_id": 0, "day": "$_id.day", "total": "$total" } },
-            // { "$sort": { "day": 1 } }
-            // ];
-            // let lastDayFAils = await this.WebService.aggregate(pipe_line).exec();
             return toSend;
         }
         else {
