@@ -69,14 +69,14 @@ export class Helper {
         }
         return labels;
     }
-    static AddData(current: SRV[], newData: SRV[]) {
+    static AddData(current: SRV[], newData) {
         if (current.length > 0) {
             if (current[0].vms[0].data.length < 16) {
                 let srvCounter = 0;
                 current.forEach(srv => {
                     let vmCounter = 0;
                     srv.vms.forEach(vm => {
-                        let pos = newData[srvCounter].vms[vmCounter].data[0];
+                        let pos = newData[srvCounter].vms[vmCounter].data;
                         vm.data.push({ cpuUsage: pos.cpuUsage, memUsage: pos.memUsage });
                         vmCounter++;
                     });
@@ -88,7 +88,7 @@ export class Helper {
                 current.forEach(srv => {
                     let vmCounter = 0;
                     srv.vms.forEach(vm => {
-                        let pos = newData[srvCounter].vms[vmCounter].data[0];
+                        let pos = newData[srvCounter].vms[vmCounter].data;
                         vm.data.splice(0, 1);
                         vm.data.push({ cpuUsage: pos.cpuUsage, memUsage: pos.memUsage });
                         vmCounter++;

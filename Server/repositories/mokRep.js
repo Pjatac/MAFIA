@@ -39,34 +39,23 @@ module.exports = {
     },
     GetNewServersData: async function (params) {
         if (!params) {
-            let all = await VMServer.find();
-            //need to schange finding from DB by params
-            let newData = [];
-            all.forEach(srv => {
-                let vmNewData = [];
-                srv.vms.forEach(vm => {
-                    let lastCpuUsage = vm.data[vm.data.length - 1].cpuUsage;
-                    let lastMemUsage = vm.data[vm.data.length - 1].memUsage;
-                    vmNewData.push({ name: vm.name, data: [{ cpuUsage: lastCpuUsage, memUsage: lastMemUsage }] });
-                });
-                newData.push({ name: srv.name, vms: vmNewData });
-            });
-            return newData;
+            let lastChanges = await VMServer.aggregate([
+                { $unwind: "$vms" },
+                { $project: { "_id": 0, name: 1, "vms": { name: "$vms.name", data: { $arrayElemAt: ["$vms.data", -1] } } } },
+                { $group: { "_id": { name: "$name" }, vms: { "$push": "$vms" } } },
+                { $project: { "_id": 0, name: "$_id.name", vms: "$vms" } }
+            ]).exec();
+            return lastChanges;
         }
         else {
-            let all = await VMServer.find({ name: { "$in": params.servers } });
-            //need to schange finding from DB by params
-            let newData = [];
-            all.forEach(srv => {
-                let vmNewData = [];
-                srv.vms.forEach(vm => {
-                    let lastCpuUsage = vm.data[vm.data.length - 1].cpuUsage;
-                    let lastMemUsage = vm.data[vm.data.length - 1].memUsage;
-                    vmNewData.push({ name: vm.name, data: [{ cpuUsage: lastCpuUsage, memUsage: lastMemUsage }] });
-                });
-                newData.push({ name: srv.name, vms: vmNewData });
-            });
-            return newData;
+            let lastChanges = await VMServer.aggregate([
+                { $match: { name: { "$in": params.servers }}},
+                { $unwind: "$vms" },
+                { $project: { "_id": 0, name: 1, "vms": { name: "$vms.name", data: { $arrayElemAt: ["$vms.data", -1] } } } },
+                { $group: { "_id": { name: "$name" }, vms: { "$push": "$vms" } } },
+                { $project: { "_id": 0, name: "$_id.name", vms: "$vms" } }
+            ]).exec();
+            return lastChanges;
         }
     },
     GetResponses: async function (date) {
