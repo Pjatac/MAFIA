@@ -1,4 +1,4 @@
-export class Params{
+export class VMParams{
     period: number;
     servers: string[];
     constructor(period, servers) {

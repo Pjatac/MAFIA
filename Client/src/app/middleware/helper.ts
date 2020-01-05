@@ -15,7 +15,7 @@ export class Helper {
     }
 
     static AddData(current: SRV[], newData) {
-        if (current.length > 0) {
+        if (current) {
             if (current[0].vms[0].data.length < 16) {
                 let srvCounter = 0;
                 current.forEach(srv => {
@@ -46,7 +46,7 @@ export class Helper {
         else
             return newData;
     }
-    
+
     static BuildChartData(servers: SRV[]) {
         let chartsData = { c: [], m: [] };
         let cpuData = [];

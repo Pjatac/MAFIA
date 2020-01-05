@@ -9,8 +9,9 @@ export default class ErrService {
   wsData;
 
   constructor(private socket: Socket) { }
-  requestErrors() {
-    this.socket.emit('getErrors');
+
+  requestErrors(props?) {
+    this.socket.emit('getErrors', props);
   }
 
   getErrors() {
@@ -26,7 +27,14 @@ export default class ErrService {
       if (wsList.indexOf(names[0]) == -1)
         wsList.push(names[0]);
     });
-    return {wsList: wsList, apiList: apiList};
+    return { wsList: wsList, apiList: apiList };
   }
 
+  GetAPIsByWSs(wss) {
+    return [];
+  }
+
+  GetWSsByAPIs(apis) {
+    return [];
+  }
 }

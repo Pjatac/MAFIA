@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import VmService from 'src/app/services/vm.service';
 import { Helper } from '../../middleware/helper';
 import { SRV } from 'src/app/models/srv';
-import { Params } from 'src/app/models/vmparams';
+import { VMParams } from 'src/app/models/vmparams';
 import { MatDialog } from '@angular/material';
 import { OurDialogComponent } from '../shared/our-dialog/our-dialog.component';
 import AuthService from 'src/app/services/auth.service';
@@ -31,7 +31,7 @@ export class VirtualmashinesComponent implements OnInit {
     {value: '60', viewValue: '1 hour'}
   ];
   //data for filtring servers data on server side
-  params: Params;
+  params: VMParams;
 
   ngOnInit() {
     this.auth.CheckTokenValidation();
@@ -54,7 +54,7 @@ export class VirtualmashinesComponent implements OnInit {
     this.params.servers = servers;
     this.vmService.requestServers(this.params);
   }
-  
+
   changePeriod(period) {
     this.params.period = period;
     this.period = period;

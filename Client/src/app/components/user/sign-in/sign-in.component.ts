@@ -57,7 +57,6 @@ export class SignInComponent implements OnInit {
   }
   dataProcessing(data) {
     if (data.status) {
-      this.dialog.open(OurDialogComponent, { data: "TADA" });
       this.status.emit();
       this.router.navigateByUrl('/virtual-mashines');
     }

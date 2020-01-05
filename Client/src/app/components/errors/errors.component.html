@@ -1,8 +1,8 @@
 <div id="chart"></div>
 <div class="d-flex justify-content-around">
-    <app-our-data-picker></app-our-data-picker>
-    <app-multy-select [(msList)]="wsList" [(title)]="wsSelectTitle" (changeSelection)="changeWsSelection($event)"></app-multy-select>
-    <app-multy-select [(msList)]="apiList" [(title)]="apiSelectTitle" (changeSelection)="changeApiSelection($event)"></app-multy-select>
+    <app-our-data-picker (changeSelection)="changeDate($event)"></app-our-data-picker>
+    <app-multy-select [(msList)]="params.wsList" [(title)]="wsSelectTitle" (changeSelection)="changeWsSelection($event)"></app-multy-select>
+    <app-multy-select [(msList)]="params.apiList" [(title)]="apiSelectTitle" (changeSelection)="changeApiSelection($event)"></app-multy-select>
     <app-simple-select [(selections)]="periods" [(title)]="simpleSelectionTitle" (changeSelection)="changePeriod($event)"></app-simple-select>
     <app-simple-select [(selections)]="topsList" [(title)]="topSelectionTitle" (changeSelection)="changeTop($event)"></app-simple-select>
 </div>
