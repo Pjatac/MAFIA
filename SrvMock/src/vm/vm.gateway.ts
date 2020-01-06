@@ -48,9 +48,6 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     async handleDisconnect(client) {
         console.log("Disconnect ", client);
-        // this.clients = this.clients.filter(function (obj) {
-        //     return obj.user.id !== client.id;
-        // });
         this.clients.splice(this.clients.indexOf(cl => cl.user.id = client.id), 1);
     }
 
@@ -60,10 +57,8 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     @SubscribeMessage('getWsData')
     async onGetResponses(client) {
-       // if ((this.lastSendOfWS.getDay() - new Date().getDay()) < 0) {
-            this.generateWSresponses();
-            client.emit('getWsData', this.wsData);
-        //}
+        this.generateWSresponses();
+        client.emit('getWsData', this.wsData);
     }
 
     @SubscribeMessage('requestFiltredServers')

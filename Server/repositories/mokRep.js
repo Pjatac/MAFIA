@@ -29,7 +29,7 @@ module.exports = {
             //         serversData[serversData.length - 1].vms.push(vmData);
             //     })
             // });
-            
+
             // executing time for this code with 4 servers and period 1 hour = 366ms 
             let lastChanges = await VMServer.aggregate([
                 { $match: { name: { "$in": params.servers } } },
@@ -138,7 +138,8 @@ module.exports = {
     },
     AddWSData: async function (data) {
         try {
-            let date = Date.now();
+            let date = new Date();
+            date = date.setHours(date.getHours() - 24);
             for (let i = 0; i < data.length; i++) {
                 const webService = await WebService.findOne({ name: data[i].name });
                 if (!webService) {
