@@ -17,7 +17,7 @@ export class UserService {
     password: ''
   };
 
-  constructor(private socket: Socket, private auth:AuthService, public dialog: MatDialog) { }
+  constructor(private socket: Socket, private auth: AuthService, public dialog: MatDialog) { }
 
   postUser(user: User) {
   }
@@ -41,7 +41,7 @@ export class UserService {
 
   register(authCredentials) {
     this.socket.on('register-res', data => {
-      this.dialog.open(OurDialogComponent, { data: "Register status " + data });
+      this.dialog.open(OurDialogComponent, { data: { body: "Register status " + data, title: 'signup' } });
     });
 
     this.socket.emit('register-request', authCredentials);

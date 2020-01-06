@@ -61,7 +61,7 @@ export class SignInComponent implements OnInit {
       this.router.navigateByUrl('/virtual-mashines');
     }
     else {
-      this.dialog.open(OurDialogComponent, { data: data.err });
+      this.dialog.open(OurDialogComponent, { data: {body:data.err, title: 'title' }});
     }
   }
 }
