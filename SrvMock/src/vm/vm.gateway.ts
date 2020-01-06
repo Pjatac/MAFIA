@@ -165,17 +165,32 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     generateWSerrors() {
-        let endDate = new Date();
-        let startDate = new Date();
-        startDate.setHours(startDate.getHours() - 24);
-        //Fill by  10 seconds
-        for (let currentDate = startDate; currentDate < endDate; currentDate.setSeconds(currentDate.getSeconds() + 10)) {
+        //get this day
+        let tmp = new Date();
+        //get end of previos day in ms
+        let endDate = new Date(tmp.getFullYear(), tmp.getMonth(), tmp.getDate()).getTime();
+        //get start of previos day in ms
+        let startDate = endDate - 86400000;
+        //Fill by 5 seconds
+        let errorLevel = [];
+        this.wsData.forEach(ws => {
+            ws.apis.forEach(api => {
+                errorLevel.push(Math.floor(Math.random() * 10));
+            });
+        });
+        for ( let i = 0; startDate < endDate; startDate += 5000) {
             this.wsData.forEach(ws => {
                 ws.apis.forEach(api => {
                     if (Math.random() > 0.9)
-                        api.errs.push(currentDate);
-                })
-            })
+                    {
+                        if (Math.floor(Math.random() * 10) > errorLevel[i])
+                        api.errs.push(startDate);
+                    }
+                    i++;
+                });
+                i++;
+            });
+            i = 0;
         }
     }
 }

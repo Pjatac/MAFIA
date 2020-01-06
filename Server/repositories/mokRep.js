@@ -132,8 +132,17 @@ module.exports = {
             return toSend;
         }
         else {
-            //need to find in DB by params
-            return;
+            data = await WebService.aggregate([
+                { $match: { name: { "$in": params.wsList } } },
+                
+            ]).exec();
+            toSend = [];
+            data.forEach(ws => {
+                ws.data[ws.data.length - 1].apis.forEach(api => {
+                    toSend.push([ws.name + "/" + api.name, api.errs.length]);
+                });
+            })
+            return toSend;
         }
     },
     AddWSData: async function (data) {

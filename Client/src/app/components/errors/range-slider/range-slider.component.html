@@ -4,7 +4,7 @@
     </ng5-slider>
 </div>
 <div class="d-flex justify-content-around">
-    <p>Min value: <input type="number" [(ngModel)]="minValue"></p>
-    <p>Max value: <input type="number" [(ngModel)]="maxValue"></p>
-    <input type="button" value="Apply" (click)="inputChanges()">
+    <p>Start value: <input matInput type="number" [(ngModel)]="minValue"></p>
+    <p>End value: <input matInput type="number" [(ngModel)]="maxValue"></p>
+    <input type="button" matButton value="Apply" (click)="inputChanges()">
 </div>

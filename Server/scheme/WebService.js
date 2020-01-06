@@ -11,7 +11,7 @@ const WebServiceSchema = mongoose.Schema({
         }],
         apis: [{
             name: String,
-            errs: [Date]
+            errs: [Number]
         }]
     }]
 });
