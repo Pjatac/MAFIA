@@ -1,26 +1,19 @@
 const jwt = require('jsonwebtoken');
-const secretToken = "10";
+const secretToken = "tratatatratata";
 
 module.exports = {
 
     CreateValidationToken: (item) => {
         return jwt.sign(item, secretToken);
     },
-    CheckValidationToken: (token) => {
-        return jwt.verify(token, secretToken);
-    },
-
-    ValidateTokenMiddleware: (req, res, next) => {
-        let response = { message: 'access denied', result: false };
-        /*      let token = req.header('authentication-token'); */
-        let token = req.body.token;
-        if (token) {
-            req.userToken = jwt.verify(token, secretToken);
-            next();
+    CheckValidationToken: (token, socket) => {
+        try {
+            res = jwt.verify(token, secretToken);
+            socket.emit("checkToken", true);
         }
-        else {
-            res.status(401).json(response);
+        catch (err){
+            console.log(err);
+            socket.emit("checkToken", false)
         }
     }
-
 }

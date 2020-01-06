@@ -1,5 +1,6 @@
 const UserSerivce = require('./services/userService');
-const MockService = require('./services/mockService')
+const MockService = require('./services/mockService');
+const AuthService = require('../Server/services/authService');
 
 var clients = [];
 var ids = 1;
@@ -51,6 +52,10 @@ module.exports = {
                 await MockService.GetErrors(socket, params);
             }
 
+            const CheckToken = async (token) => {
+                await AuthService.CheckValidationToken(token, socket);
+            }
+
             socket.on('getErrors', GetErrors);
             socket.on('getResponses', GetResponses);
             socket.on('getServers', GetServers);
@@ -59,6 +64,7 @@ module.exports = {
             socket.on('fb-login-request', FbLoginReq);
             socket.on('add-new-data', AddNewData);
             socket.on('disconnect', Disconnect);
+            socket.on('check-token', CheckToken);
 
             console.log("a new user connected", clients.length);
         });

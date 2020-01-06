@@ -25,7 +25,7 @@ module.exports = {
         if (!user) {
             let res = await UserRep.RegisterFBUser(data);
             if (res) {
-                result.token = await UserRep.GetToken(15);
+                result.token = AuthService.CreateValidationToken(socket.id);
                 socket.emit("fb-login-res", result);
             }
             else {
@@ -33,7 +33,7 @@ module.exports = {
             }
         }
         else {
-            result.token = await UserRep.GetToken(15);
+            result.token = AuthService.CreateValidationToken(socket.id);
             socket.emit("fb-login-res", result);
         }
     },
@@ -43,7 +43,7 @@ module.exports = {
         let result = { status: false };
         if (user) {
             if (data.password == user.password) {
-                result.token = await UserRep.GetToken();
+                result.token = AuthService.CreateValidationToken(socket.id);
                 result.status = true;
             }
             else {

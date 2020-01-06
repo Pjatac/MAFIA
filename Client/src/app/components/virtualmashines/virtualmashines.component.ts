@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck, AfterContentInit } from '@angular/core';
 import VmService from 'src/app/services/vm.service';
 import { Helper } from '../../middleware/helper';
 import { SRV } from 'src/app/models/srv';
@@ -6,33 +6,37 @@ import { VMParams } from 'src/app/models/vmparams';
 import { MatDialog } from '@angular/material';
 import { OurDialogComponent } from '../shared/our-dialog/our-dialog.component';
 import AuthService from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-virtualmashines',
   templateUrl: './virtualmashines.component.html',
   styleUrls: ['./virtualmashines.component.css']
 })
-export class VirtualmashinesComponent implements OnInit {
-  constructor(private vmService: VmService, public dialog: MatDialog, private auth: AuthService) { }
+export class VirtualmashinesComponent implements OnInit, AfterContentInit {
+  constructor(private vmService: VmService, public dialog: MatDialog, private auth: AuthService, private router: Router) { }
 
   serversData: SRV[];
   srvList: string[];
   cpuData;
   memData;
   period = 1;
-  msTitle="Servers";
+  msTitle = "Servers";
 
   simpleSelectionTitle = "Period";
-  periods  = [
-    {value: '1', viewValue: '1 minute'},
-    {value: '5', viewValue: '5 minutes'},
-    {value: '15', viewValue: '15 minutes'},
-    {value: '30', viewValue: '30 minutes'},
-    {value: '60', viewValue: '1 hour'}
+  periods = [
+    { value: '1', viewValue: '1 minute' },
+    { value: '5', viewValue: '5 minutes' },
+    { value: '15', viewValue: '15 minutes' },
+    { value: '30', viewValue: '30 minutes' },
+    { value: '60', viewValue: '1 hour' }
   ];
   //data for filtring servers data on server side
   params: VMParams;
 
+  ngAfterContentInit() {
+
+  }
   ngOnInit() {
     this.auth.CheckTokenValidation();
     this.vmService.requestServers();
@@ -48,6 +52,8 @@ export class VirtualmashinesComponent implements OnInit {
       this.serversData = Helper.AddData(this.serversData, servers);
       this.buildChartData(this.serversData);
     });
+
+
   }
 
   changeSelection(servers) {
