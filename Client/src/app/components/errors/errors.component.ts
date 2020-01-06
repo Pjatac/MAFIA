@@ -23,13 +23,6 @@ export class ErrorsComponent implements OnInit {
     {value: '5', viewValue: 'Top five'},
     {value: '10', viewValue: 'Top ten'}
   ];
-  periods  = [
-    {value: '1', viewValue: '1 minute'},
-    {value: '5', viewValue: '5 minutes'},
-    {value: '15', viewValue: '15 minutes'},
-    {value: '30', viewValue: '30 minutes'},
-    {value: '60', viewValue: '1 hour'}
-  ];
   wsList = [];
   apiList = [];
 

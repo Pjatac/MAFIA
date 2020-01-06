@@ -1,0 +1,10 @@
+<div class="mb-5">
+    <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
+        (userChangeEnd)="onUserChangeEnd($event)">
+    </ng5-slider>
+</div>
+<div class="d-flex justify-content-around">
+    <p>Min value: <input type="number" [(ngModel)]="minValue"></p>
+    <p>Max value: <input type="number" [(ngModel)]="maxValue"></p>
+    <input type="button" value="Apply" (click)="inputChanges()">
+</div>

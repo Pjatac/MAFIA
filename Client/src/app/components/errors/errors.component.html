@@ -3,6 +3,8 @@
     <app-our-data-picker (changeSelection)="changeDate($event)"></app-our-data-picker>
     <app-multy-select [(msList)]="params.wsList" [(title)]="wsSelectTitle" (changeSelection)="changeWsSelection($event)"></app-multy-select>
     <app-multy-select [(msList)]="params.apiList" [(title)]="apiSelectTitle" (changeSelection)="changeApiSelection($event)"></app-multy-select>
-    <app-simple-select [(selections)]="periods" [(title)]="simpleSelectionTitle" (changeSelection)="changePeriod($event)"></app-simple-select>
     <app-simple-select [(selections)]="topsList" [(title)]="topSelectionTitle" (changeSelection)="changeTop($event)"></app-simple-select>
+</div>
+<div>
+    <app-range-slider></app-range-slider>
 </div>
