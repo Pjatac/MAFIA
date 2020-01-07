@@ -4,6 +4,7 @@
       <app-navigation-bar-link *ngIf="checkLogedIn()" [href]="'virtual-mashines'">Virtual Machines</app-navigation-bar-link>
       <app-navigation-bar-link *ngIf="checkLogedIn()" [href]="'times-responses'">Response Metrics</app-navigation-bar-link>
       <app-navigation-bar-link *ngIf="checkLogedIn()" [href]="'errors'" >Top Fail</app-navigation-bar-link>
+      <app-navigation-bar-link *ngIf="checkLogedIn()" [href]="'print'" >Print</app-navigation-bar-link>
       <app-navigation-bar-link *ngIf="checkLogedIn()" [href]="'login'" (click)="logout($event)">Logout</app-navigation-bar-link>
   </app-navigation-bar>
  

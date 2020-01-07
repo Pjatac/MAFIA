@@ -55,6 +55,7 @@ import { ErrorsComponent } from './components/errors/errors.component';
 import { OurDataPickerComponent } from './components/errors/our-data-picker/our-data-picker.component';
 import { RangeSliderComponent } from './components/errors/range-slider/range-slider.component';
 import { Ng5SliderModule } from 'ng5-slider';
+import { PrintLayoutComponent } from './components/print-layout/print-layout.component';
 
 const ioConfig: SocketIoConfig = { url: 'localhost:100', options: {} };//http://91.205.172.45
 
@@ -93,6 +94,7 @@ export function provideConfig() {
     ErrorsComponent,
     OurDataPickerComponent,
     RangeSliderComponent,
+    PrintLayoutComponent,
   ],
   imports: [
     BrowserModule,

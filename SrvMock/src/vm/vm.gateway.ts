@@ -171,13 +171,14 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
         let endDate = new Date(tmp.getFullYear(), tmp.getMonth(), tmp.getDate()).getTime();
         //get start of previos day in ms
         let startDate = endDate - 86400000;
-        //Fill by 5 seconds
+        //Prepare fails levels for APIs
         let errorLevel = [];
         this.wsData.forEach(ws => {
             ws.apis.forEach(api => {
                 errorLevel.push(Math.floor(Math.random() * 10));
             });
         });
+        //Fill by 5 seconds
         for ( let i = 0; startDate < endDate; startDate += 5000) {
             this.wsData.forEach(ws => {
                 ws.apis.forEach(api => {

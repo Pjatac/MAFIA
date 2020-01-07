@@ -5,6 +5,7 @@ import { UserComponent } from './components/user/user.component';
 import { VirtualmashinesComponent } from './components/virtualmashines/virtualmashines.component';
 import { TimesResponsesComponent} from './components/times-responses/times-responses.component';
 import { ErrorsComponent } from './components/errors/errors.component';
+import { PrintLayoutComponent } from './components/print-layout/print-layout.component';
 
 export const appRoutes: Routes = [
     {
@@ -23,6 +24,9 @@ export const appRoutes: Routes = [
     },
     {
         path: 'errors', component: ErrorsComponent
+    },
+    {
+        path: 'print', component: PrintLayoutComponent
     },
     {
         path: '', redirectTo: '/login', pathMatch: 'full'
