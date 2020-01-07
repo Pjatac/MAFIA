@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import AuthService from './services/auth.service';
+import FilterService from './services/filter.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,26 @@ import AuthService from './services/auth.service';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
+
   title = 'app';
-  constructor(private router: Router, private auth: AuthService) { }
+  dropdownList = [];
+  selectedItems;
+  dropdownSettings = {};
+
+  constructor(private auth: AuthService, private filter: FilterService, private router: Router) { }
+
+  ngOnInit(): void {
+    this.dropdownList = this.filter.filterList;
+    this.selectedItems = [];
+    this.dropdownSettings = {
+      singleSelection: false,
+      text: "Current State Print",
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      classes: 'flex-grow-1'
+    };
+  }
 
   checkLogedIn() {
     return this.auth.getToken();
@@ -19,6 +37,22 @@ export class AppComponent {
   logout() {
     this.auth.removeToken();
   }
+  onItemSelect(item: any) {
 
+  }
+  OnItemDeSelect(item: any) {
+
+  }
+  onSelectAll(items: any) {
+
+  }
+  onDeSelectAll(items: any) {
+
+  }
+  print() {
+    this.filter.setSelected(this.selectedItems);
+    this.selectedItems = [];
+    this.router.navigateByUrl('/print');
+  }
 }
 

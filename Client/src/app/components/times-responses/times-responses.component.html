@@ -1,3 +1,3 @@
-<app-resp-pie-chart class="chart" [(chartData)]="timeData"></app-resp-pie-chart>
-<app-time-pie-chart class="chart" [(chartData)]="respData"></app-time-pie-chart>
+<app-resp-pie-chart *ngIf="!showCodesPie" class="chart" [disable]="disable" [(chartData)]="timeData"></app-resp-pie-chart>
+<app-time-pie-chart *ngIf="!showTimesPie" class="chart" [disable]="disable" [(chartData)]="respData"></app-time-pie-chart>
 

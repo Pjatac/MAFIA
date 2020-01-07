@@ -22,6 +22,8 @@
     "@angular/platform-browser-dynamic": "^8.2.14",
     "@angular/router": "^8.2.14",
     "@types/c3": "^0.7.4",
+    "angular-bootstrap-multiselect": "git+https://github.com/bentorfs/angular-bootstrap-multiselect.git",
+    "angular2-multiselect-dropdown": "^4.6.3",
     "angularx-social-login": "^2.2.1",
     "bootstrap": "^4.4.1",
     "c3": "^0.7.11",

@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./time-pie-chart.component.css']
 })
 export class TimePieChartComponent implements OnChanges {
-
+  @Input() disable: boolean = false;
   @Input() chartData;
   constructor(public dialog: MatDialog, private trService: TrService) { }
 
@@ -22,11 +22,13 @@ export class TimePieChartComponent implements OnChanges {
     let chart = c3.generate({
       bindto: '#timePieChart',
       data: {
-        columns: chartData,     
+        columns: chartData,
         type: 'pie',
-        onclick: (d, i) => { 
-          let data = this.trService.getCurrentTimeData(d.id);
-          this.dialog.open(PieChartDialogComponent, { data: {data: data, title: d.id }}); 
+        onclick: (d, i) => {
+          if (!this.disable) {
+            let data = this.trService.getCurrentTimeData(d.id);
+            this.dialog.open(PieChartDialogComponent, { data: { data: data, title: d.id } });
+          }
         }
       }
     });

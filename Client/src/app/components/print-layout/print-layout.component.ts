@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import  FilterService  from 'src/app/services/filter.service';
+
 
 @Component({
   selector: 'app-print-layout',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./print-layout.component.css']
 })
 export class PrintLayoutComponent implements OnInit {
-
-  constructor() { }
+  constructor(private filter: FilterService) {    
+    console.log(filter.states);
+   }
 
   ngOnInit() {
+    
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as c3 from 'c3';
 import AuthService from 'src/app/services/auth.service';
 import ErrService from 'src/app/services/err.service'
@@ -12,6 +12,8 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./errors.component.css']
 })
 export class ErrorsComponent implements OnInit {
+  @Input() printMode:boolean;
+  @Input() showErrors:boolean;
 
   buildData: any;
 

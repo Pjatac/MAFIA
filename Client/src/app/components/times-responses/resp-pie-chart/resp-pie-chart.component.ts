@@ -3,6 +3,7 @@ import { PieChartDialogComponent } from '../pie-chart-dialog/pie-chart-dialog.co
 import TrService from '../../../services/tr.service';
 import * as c3 from 'c3';
 import { MatDialog } from '@angular/material';
+import { disableDebugTools } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-resp-pie-chart',
@@ -10,7 +11,7 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./resp-pie-chart.component.css']
 })
 export class RespPieChartComponent implements OnChanges {
-
+  @Input() disable: boolean = false;
   @Input() chartData;
   constructor(public dialog: MatDialog, private trService: TrService) { }
 
@@ -25,8 +26,10 @@ export class RespPieChartComponent implements OnChanges {
         columns: chartData,     
         type: 'pie',
         onclick: (d, i) => { 
-          let data = this.trService.getCurrentCodeData(d.id);
-          this.dialog.open(PieChartDialogComponent,  { data: {data: data, title: d.id }}); 
+          if(!this.disable){
+            let data = this.trService.getCurrentCodeData(d.id);
+            this.dialog.open(PieChartDialogComponent,  { data: {data: data, title: d.id }}); 
+          }
         }
       }
     });

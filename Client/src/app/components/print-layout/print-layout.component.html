@@ -1,4 +1,3 @@
-<p>print-layout works!</p>
-<app-virtualmashines></app-virtualmashines>
-<app-times-responses></app-times-responses>
-<app-errors></app-errors>
+<app-virtualmashines [showCpu]="!this.filter.states[1].status" [showMemmory]="!this.filter.states[2].status" printMode=true></app-virtualmashines>
+<app-times-responses disable=true [showTimesPie]="!this.filter.states[4].status" [showCodesPie]="!this.filter.states[3].status"></app-times-responses>
+<app-errors printMode=true *ngIf="this.filter.states[5].status"></app-errors>

@@ -1,14 +1,22 @@
-<div class="chart" *ngIf="cpuData">
-  <app-cpu-chart [(chartData)]="cpuData" [(period)]="period"></app-cpu-chart>
-</div>
-<div class="chart" *ngIf="memData">
-  <app-mem-chart [(chartData)]="memData" [(period)]="period"></app-mem-chart>
-</div>
-<div class="d-flex justify-content-around">
-  <div class="mySelect" style="text-align: center">
-    <app-multy-select [(msList)]="srvList" [(title)]="msTitle" (changeSelection)="changeSelection($event)"></app-multy-select>
+<span *ngIf="!showCpu">
+    <div class="chart" *ngIf="cpuData">
+        <app-cpu-chart [(chartData)]="cpuData" [(period)]="period"></app-cpu-chart>
+      </div>
+</span>
+<span *ngIf="!showMemmory">
+    <div class="chart" *ngIf="memData">
+        <app-mem-chart [(chartData)]="memData" [(period)]="period"></app-mem-chart>
+      </div>
+</span>
+<span *ngIf="!printMode">
+  <div class="d-flex justify-content-around">
+    <div class="mySelect" style="text-align: center">
+      <app-multy-select [(msList)]="srvList" [(title)]="msTitle" (changeSelection)="changeSelection($event)">
+      </app-multy-select>
+    </div>
+    <div class="mySelect" style="text-align: center">
+      <app-simple-select [(selections)]="periods" [(title)]="simpleSelectionTitle"
+        (changeSelection)="changePeriod($event)"></app-simple-select>
+    </div>
   </div>
-  <div class="mySelect" style="text-align: center">
-    <app-simple-select [(selections)]="periods" [(title)]="simpleSelectionTitle" (changeSelection)="changePeriod($event)"></app-simple-select>
-  </div>
-</div>
+</span>

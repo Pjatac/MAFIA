@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import TrService from '../../services/tr.service';
 import { TimeResponse } from '../../models/tr';
 import { Helper } from 'src/app/middleware/helper';
@@ -11,6 +11,10 @@ import AuthService from 'src/app/services/auth.service';
   styleUrls: ['./times-responses.component.css']
 })
 export class TimesResponsesComponent implements OnInit {
+  @Input() showCodesPie:boolean;
+  @Input() showTimesPie:boolean;
+  @Input() disable: boolean = false;
+
   timeData = [];
   respData = [];
 

@@ -18,12 +18,14 @@ import ErrService from '../app/services/err.service';
 import VmService from '../app/services/vm.service';
 import TrService from '../app/services/tr.service';
 import AuthService from './services/auth.service';
+import FilterService from '../app/services/filter.service';
 //other
 import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider } from 'angularx-social-login';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { VirtualmashinesComponent } from './components/virtualmashines/virtualmashines.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { AngularMultiSelectModule} from 'angular2-multiselect-dropdown';
 //Material
 import {
   MatIconModule,
@@ -119,7 +121,8 @@ export function provideConfig() {
     MatDatepickerModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    Ng5SliderModule
+    Ng5SliderModule,
+    AngularMultiSelectModule
   ],
   providers: [
     AuthGuard,
@@ -128,6 +131,7 @@ export function provideConfig() {
     TrService,
     AuthService,
     ErrService,
+    FilterService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

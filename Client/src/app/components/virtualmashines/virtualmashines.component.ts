@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, AfterContentInit } from '@angular/core';
+import { Component, OnInit, DoCheck, AfterContentInit, Input } from '@angular/core';
 import VmService from 'src/app/services/vm.service';
 import { Helper } from '../../middleware/helper';
 import { SRV } from 'src/app/models/srv';
@@ -15,6 +15,10 @@ import { Router } from '@angular/router';
 })
 export class VirtualmashinesComponent implements OnInit, AfterContentInit {
   constructor(private vmService: VmService, public dialog: MatDialog, private auth: AuthService, private router: Router) { }
+  @Input() printMode:boolean;
+  @Input() showCpu:boolean;
+  @Input() showMemmory:boolean;
+
 
   serversData: SRV[];
   srvList: string[];
