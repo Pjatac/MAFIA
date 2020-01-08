@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,13 @@ export default class FilterService {
     { "id": 4, "itemName": "Responsive Metrics / Times" },
     { "id": 5, "itemName": "Top Failed" }
   ];
+
+  constructor(private socket: Socket) { }
+
+  sendMail(mailStruct) {
+    this.socket.emit('mailSendRequest', mailStruct);
+  }
+
   setSelected(selected: [{id: number, itemName: string}]) {
     this.statesInit();
     selected.forEach(item => {

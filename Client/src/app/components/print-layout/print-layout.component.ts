@@ -29,8 +29,8 @@ export class PrintLayoutComponent implements OnInit {
     elements.forEach(function(element){
       element.style.fill = "none";
     })
-    this.exportAsService.save(this.exportAsConfig, 'print').subscribe(() => {
-      console.log('saved');
+    this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
+      this.filter.sendMail({adresses: "pjataka@gmail.com",name: "image.png", data: content});
     });
   }
 
