@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import  FilterService from './filter.service';
+import  ScreenshotService from './screenshot.service';
 
 describe('Filter.ServiceService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: FilterService = TestBed.get(FilterService);
+    const service: ScreenshotService = TestBed.get(ScreenshotService);
     expect(service).toBeTruthy();
   });
 });

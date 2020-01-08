@@ -4,7 +4,7 @@ import { Socket } from 'ngx-socket-io';
 @Injectable({
   providedIn: 'root'
 })
-export default class FilterService {
+export default class ScreenshotService {
   public states = {
     //cpuChart
     1: { status: false },

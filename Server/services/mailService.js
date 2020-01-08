@@ -6,7 +6,9 @@ module.exports = {
 
     SendMail: async (mailStruct) => {
         var transporter = nodemailer.createTransport({
-            service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
             auth: {
                 user: 'ar.terekhov100@gmail.com',
                 pass: 'dostup21'
@@ -20,9 +22,9 @@ module.exports = {
             subject: 'Your request for system state image',
             text: 'With best regards',
             attachments: [
-                {   
+                {
                     filename: mailStruct.name,
-                    content: new Buffer.from(base64Image,'base64')
+                    content: new Buffer.from(base64Image, 'base64')
                 }
             ]
         };

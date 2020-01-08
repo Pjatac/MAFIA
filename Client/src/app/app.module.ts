@@ -18,7 +18,7 @@ import ErrService from '../app/services/err.service';
 import VmService from '../app/services/vm.service';
 import TrService from '../app/services/tr.service';
 import AuthService from './services/auth.service';
-import FilterService from '../app/services/filter.service';
+import ScreenshotService from './services/screenshot.service';
 //other
 import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider } from 'angularx-social-login';
 import { AuthGuard } from './auth/auth.guard';
@@ -43,6 +43,7 @@ import {
   MatSliderModule,
   MatNativeDateModule,
   MatDatepickerModule,
+  MatChipsModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OurDialogComponent } from './components/shared/our-dialog/our-dialog.component';
@@ -124,7 +125,8 @@ export function provideConfig() {
     ReactiveFormsModule,
     Ng5SliderModule,
     AngularMultiSelectModule,
-    ExportAsModule
+    ExportAsModule,
+    MatChipsModule
   ],
   providers: [
     AuthGuard,
@@ -133,7 +135,7 @@ export function provideConfig() {
     TrService,
     AuthService,
     ErrService,
-    FilterService,
+    ScreenshotService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

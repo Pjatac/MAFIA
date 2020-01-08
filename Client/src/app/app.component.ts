@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import AuthService from './services/auth.service';
-import FilterService from './services/filter.service';
+import ScreenshotService from './services/screenshot.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   selectedItems;
   dropdownSettings = {};
 
-  constructor(private auth: AuthService, private filter: FilterService, private router: Router) { }
+  constructor(private auth: AuthService, private filter: ScreenshotService, private router: Router) { }
 
   ngOnInit(): void {
     this.dropdownList = this.filter.filterList;
@@ -37,18 +37,13 @@ export class AppComponent implements OnInit {
   logout() {
     this.auth.removeToken();
   }
-  onItemSelect(item: any) {
 
-  }
-  OnItemDeSelect(item: any) {
+  // for multi select component
+  onItemSelect(item: any) { }
+  OnItemDeSelect(item: any) {}
+  onSelectAll(items: any) {}
+  onDeSelectAll(items: any) {}
 
-  }
-  onSelectAll(items: any) {
-
-  }
-  onDeSelectAll(items: any) {
-
-  }
   print() {
     this.filter.setSelected(this.selectedItems);
     this.selectedItems = [];

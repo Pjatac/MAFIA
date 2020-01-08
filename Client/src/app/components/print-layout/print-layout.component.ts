@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import FilterService from 'src/app/services/filter.service';
+import { Component, OnInit, ElementRef } from '@angular/core';
+import ScreenshotService from 'src/app/services/screenshot.service';
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 
 @Component({
@@ -18,19 +20,53 @@ export class PrintLayoutComponent implements OnInit {
     }
   }
 
-  constructor(private filter: FilterService, private exportAsService: ExportAsService, private elem:ElementRef) { }
+  constructor(private screenshot: ScreenshotService, private exportAsService: ExportAsService, private elem: ElementRef) { }
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  emails: string[] = [];
 
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our email
+    if ((value || '').trim()) {
+      this.emails.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(email: string): void {
+    const index = this.emails.indexOf(email);
+
+    if (index >= 0) {
+      this.emails.splice(index, 1);
+    }
+  }
   ngOnInit() {
 
   }
 
-  save() {
+  sendScreenshot(type) {
+    if (type === 'jpg') {
+      this.exportAsConfig.type = 'png';
+    } else {
+      this.exportAsConfig.type = type;
+    }
+
+    let emailAdresses = this.emails.join();
+    console.log(emailAdresses);
+
     let elements = this.elem.nativeElement.querySelectorAll('svg .c3-chart path.c3-shape.c3-shape.c3-line');
-    elements.forEach(function(element){
+    elements.forEach(function (element) {
       element.style.fill = "none";
     })
+    //pjataka@gmail.com, 
     this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
-      this.filter.sendMail({adresses: "pjataka@gmail.com",name: "image.png", data: content});
+      this.screenshot.sendMail({ adresses: emailAdresses, name: "screenshot." + type, data: content });
     });
   }
 

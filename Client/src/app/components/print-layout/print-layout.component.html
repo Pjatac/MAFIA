@@ -1,8 +1,27 @@
-<div id="printFrame">
-        <app-virtualmashines [showCpu]="!this.filter.states[1].status" [showMemmory]="!this.filter.states[2].status"
-            printMode=true></app-virtualmashines>
-        <app-times-responses disable=true [showTimesPie]="!this.filter.states[4].status"
-            [showCodesPie]="!this.filter.states[3].status"></app-times-responses>
-    <app-errors printMode=true *ngIf="this.filter.states[5].status"></app-errors>
+<div class="d-flex justify-content-around">
+    <mat-form-field class="mail-list w-50">
+        <mat-chip-list #chipList aria-label="email selection">
+            <mat-chip *ngFor="let email of emails" [selectable]=true [removable]=true
+                (removed)="remove(email)">
+                {{email}}
+                <mat-icon matChipRemove >X</mat-icon>
+            </mat-chip>
+            <input placeholder="Send to..." type="email" [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]=true
+                (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+    </mat-form-field>
+    <div class="align-self-center">
+        send in:
+        <button class="btn btn-outline-primary m-1 btn-sm" (click)="sendScreenshot('png')">png format</button>
+        <button class="btn btn-outline-primary m-1 btn-sm" (click)="sendScreenshot('pdf')">pdf format</button>
+        <button class="btn btn-outline-primary m-1 btn-sm" (click)="sendScreenshot('jpg')">jpg format</button>
+    </div>
 </div>
-<button (click)="save()">Save</button>
+<div id="printFrame">
+    <app-virtualmashines [showCpu]="!this.screenshot.states[1].status" [showMemmory]="!this.screenshot.states[2].status"
+        printMode=true></app-virtualmashines>
+    <app-times-responses disable=true [showTimesPie]="!this.screenshot.states[4].status"
+        [showCodesPie]="!this.screenshot.states[3].status"></app-times-responses>
+    <app-errors printMode=true *ngIf="this.screenshot.states[5].status"></app-errors>
+</div>
