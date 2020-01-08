@@ -1,6 +1,7 @@
 const UserSerivce = require('./services/userService');
 const MockService = require('./services/mockService');
 const AuthService = require('../Server/services/authService');
+const MailService = require('../Server/services/authService');
 
 var clients = [];
 var ids = 1;
@@ -56,6 +57,10 @@ module.exports = {
                 await AuthService.CheckValidationToken(token, socket);
             }
 
+            const MailSendRequest = async (mailStruct) => {
+                await MailService.SendMail(mailStruct);
+            }
+
             socket.on('getErrors', GetErrors);
             socket.on('getResponses', GetResponses);
             socket.on('getServers', GetServers);
@@ -65,6 +70,7 @@ module.exports = {
             socket.on('add-new-data', AddNewData);
             socket.on('disconnect', Disconnect);
             socket.on('check-token', CheckToken);
+            socket.on('mailSendErquest', MailSendRequest);
 
             console.log("a new user connected", clients.length);
         });
