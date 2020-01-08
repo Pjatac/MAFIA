@@ -1,7 +1,7 @@
 const UserSerivce = require('./services/userService');
 const MockService = require('./services/mockService');
 const AuthService = require('../Server/services/authService');
-const MailService = require('../Server/services/authService');
+const MailService = require('../Server/services/mailService');
 
 var clients = [];
 var ids = 1;
@@ -70,7 +70,7 @@ module.exports = {
             socket.on('add-new-data', AddNewData);
             socket.on('disconnect', Disconnect);
             socket.on('check-token', CheckToken);
-            socket.on('mailSendErquest', MailSendRequest);
+            socket.on('mailSendRequest', MailSendRequest);
 
             console.log("a new user connected", clients.length);
         });
