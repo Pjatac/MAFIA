@@ -58,7 +58,7 @@ module.exports = {
             }
 
             const MailSendRequest = async (mailStruct) => {
-                await MailService.SendMail(mailStruct);
+                await MailService.SendMail(socket, mailStruct);
             }
 
             socket.on('getErrors', GetErrors);

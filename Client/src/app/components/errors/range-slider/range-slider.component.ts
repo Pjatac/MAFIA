@@ -7,7 +7,6 @@ import { Options, ChangeContext, PointerType } from 'ng5-slider';
   styleUrls: ['./range-slider.component.css']
 })
 export class RangeSliderComponent  {
-  title = 'testmaterial';
   minValue: number = 0;
   maxValue: number = 1440;
   options: Options = {

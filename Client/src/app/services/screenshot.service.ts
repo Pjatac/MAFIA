@@ -30,6 +30,7 @@ export default class ScreenshotService {
 
   sendMail(mailStruct) {
     this.socket.emit('mailSendRequest', mailStruct);
+    return this.socket.fromEvent('mailSendResult');
   }
 
   setSelected(selected: [{id: number, itemName: string}]) {

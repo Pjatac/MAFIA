@@ -4,7 +4,7 @@ var nodemailer = require('nodemailer');
 
 module.exports = {
 
-    SendMail: async (mailStruct) => {
+    SendMail: async (socket, mailStruct) => {
         var transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 465,
@@ -31,8 +31,10 @@ module.exports = {
 
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
+                socket.emit("mailSendResult", false);
                 console.log(error);
             } else {
+                socket.emit("mailSendResult", true)
                 console.log('Email sent: ' + info.response);
             }
         });

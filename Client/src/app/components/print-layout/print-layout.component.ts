@@ -3,6 +3,8 @@ import ScreenshotService from 'src/app/services/screenshot.service';
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatDialog } from '@angular/material';
+import { OurDialogComponent } from '../shared/our-dialog/our-dialog.component';
 
 
 @Component({
@@ -20,7 +22,7 @@ export class PrintLayoutComponent implements OnInit {
     }
   }
 
-  constructor(private screenshot: ScreenshotService, private exportAsService: ExportAsService, private elem: ElementRef) { }
+  constructor(public dialog: MatDialog, private screenshot: ScreenshotService, private exportAsService: ExportAsService, private elem: ElementRef) { }
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   emails: string[] = [];
 
@@ -64,9 +66,17 @@ export class PrintLayoutComponent implements OnInit {
     elements.forEach(function (element) {
       element.style.fill = "none";
     })
-    //pjataka@gmail.com, 
+
     this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
-      this.screenshot.sendMail({ adresses: emailAdresses, name: "screenshot." + type, data: content });
+      this.screenshot.sendMail({ adresses: emailAdresses, name: "screenshot." + type, data: content }).subscribe((res) => {
+        if (res) {
+          this.dialog.open(OurDialogComponent, { data: { body: "Success!", title: 'Sending result' } });
+          this.emails = [];
+        }
+        else {
+          this.dialog.open(OurDialogComponent, { data: { body: "Sorry, sending problem...!", title: 'Sending result' } });
+        }
+      });
     });
   }
 
