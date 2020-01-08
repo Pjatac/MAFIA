@@ -26,6 +26,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { VirtualmashinesComponent } from './components/virtualmashines/virtualmashines.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { AngularMultiSelectModule} from 'angular2-multiselect-dropdown';
+import { ExportAsModule } from 'ngx-export-as';
 //Material
 import {
   MatIconModule,
@@ -122,7 +123,8 @@ export function provideConfig() {
     BrowserAnimationsModule,
     ReactiveFormsModule,
     Ng5SliderModule,
-    AngularMultiSelectModule
+    AngularMultiSelectModule,
+    ExportAsModule
   ],
   providers: [
     AuthGuard,
