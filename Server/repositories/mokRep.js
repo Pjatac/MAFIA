@@ -116,7 +116,17 @@ module.exports = {
             return toSend;
         }
         else {
-            //need to find in DB by data
+            let year = date.getFullYear;
+            let 
+            // data = await WebService.aggregate([
+            //     { $unwind: "$data" },
+            //     { $project: {
+            //         date: {
+            //            $dateToParts: { date: "$data.date" }
+            //         }
+            //     }},
+            //     { $match: {"data.date":{}},
+            // ]);
             return;
         }
     },
