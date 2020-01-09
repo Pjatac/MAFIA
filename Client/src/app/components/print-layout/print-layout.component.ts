@@ -69,11 +69,11 @@ export class PrintLayoutComponent implements OnInit {
     this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
       this.screenshot.sendMail({ adresses: emailAdresses, name: "screenshot." + type, data: content }).subscribe((res) => {
         if (res) {
-          this.dialog.open(OurDialogComponent, { data: { body: "Success!", title: 'Sending result' } });
+          this.dialog.open(OurDialogComponent, { panelClass: 'custom-dialog-container', data: { body: "Success!", title: 'Sending result' } });
           this.emails = [];
         }
         else {
-          this.dialog.open(OurDialogComponent, { data: { body: "Sorry, sending problem...!", title: 'Sending result' } });
+          this.dialog.open(OurDialogComponent, { panelClass: 'custom-dialog-container',data: { body: "Sorry, sending problem...!", title: 'Sending result' } });
         }
       });
     });

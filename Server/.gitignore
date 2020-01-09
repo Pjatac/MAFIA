@@ -12,6 +12,7 @@ lerna-debug.log*
 server.log*
 register.log*
 login.log*
+db-user.log*
 
 # OS
 .DS_Store

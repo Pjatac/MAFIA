@@ -27,7 +27,7 @@ export class TimePieChartComponent implements OnChanges {
         onclick: (d, i) => {
           if (!this.disable) {
             let data = this.trService.getCurrentTimeData(d.id);
-            this.dialog.open(PieChartDialogComponent, { data: { data: data, title: d.id } });
+            this.dialog.open(PieChartDialogComponent, { panelClass: 'custom-dialog-container',data: { data: data, title: d.id } });
           }
         }
       }

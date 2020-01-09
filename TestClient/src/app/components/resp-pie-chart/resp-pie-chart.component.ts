@@ -25,7 +25,7 @@ export class RespPieChartComponent implements OnChanges {
         type: 'pie',
         onclick: (d, i) => { 
           let data = this.wsService.getCurrentCodeData(d.id);
-          this.dialog.open(MychartdialogComponent,  { data: {data: data, title: d.id }}); 
+          this.dialog.open(MychartdialogComponent,  { panelClass: 'custom-dialog-container',data: {data: data, title: d.id }}); 
         }
       }
     });

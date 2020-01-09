@@ -15,8 +15,9 @@
   </div>
   <input type="password" #confirmPassword name="confirmPassword" placeholder="Confirm Password"
   minlength="4" required [ngClass]="{'invalid-textbox' :signUpForm.submitted && !confirmPassword.valid }">
-  <div *ngIf="confirmPassword.value !== password.value">
-    <label class="validation-message">Enter atleast 4 characters.</label>
+  <div *ngIf="signUpForm.submitted && password.errors">
+    <label *ngIf="password.errors.required" class="validation-message">This field is required.</label>
+    <label *ngIf="password.errors.minlength" class="validation-message">Enter atleast 4 characters.</label>
   </div>
   <div class="d-flex justify-content-around mb-3 mt-2 pr-4 pl-4">
     <button class="btn btn-lg btn-primary btn-block ">Sign Up</button>

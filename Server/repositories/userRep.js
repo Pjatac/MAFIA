@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 const User = require('../scheme/user');
 const FBUser = require('../scheme/fbUser');
+const UserLogger = require('simple-node-logger').createSimpleLogger('db-user.log');
 
 
 module.exports = {
@@ -15,18 +16,18 @@ module.exports = {
             await user.save();
             return true;
         } catch (error) {
-            //TO-DO : Write error to logger
+            UserLogger.error("On DB register: ", error);
             return false;
         }
     },
-    
+
     GetUser: async function (Username) {
         let userN = "" + Username;
         try {
             let res = await User.findOne({ username: userN.toLowerCase() });
             return res;
         } catch (error) {
-            //TO-DO : Write error to logger
+            UserLogger.error("On DB getUser: ", error);
             return null;
         }
     },
@@ -41,7 +42,7 @@ module.exports = {
             await user.save();
             return true;
         } catch (error) {
-            //TO-DO : Write error to logger
+            UserLogger.error("On DB FBregister: ", error);
             return false;
         }
     },
@@ -51,7 +52,7 @@ module.exports = {
             let res = await FBUser.findOne({ fbId: FbID });
             return res;
         } catch (error) {
-            //TO-DO : Write error to logger
+            UserLogger.error("On DB getFBregister: ", error);
             return null;
         }
     },

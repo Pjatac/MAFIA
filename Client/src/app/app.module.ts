@@ -13,7 +13,7 @@ import { NavigationBarComponent } from './components/common_elements/navigation_
 import { NavigationBarLinkComponent } from './components/common_elements/navigation_bar/navigation_bar_link/navigation_bar_link.component';
 // routes
 import { appRoutes } from './routes';
-import { UserService } from './shared/user.service';
+import { UserService } from './services/user.service';
 import ErrService from '../app/services/err.service';
 import VmService from '../app/services/vm.service';
 import TrService from '../app/services/tr.service';

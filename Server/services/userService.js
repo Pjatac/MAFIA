@@ -7,7 +7,7 @@ const RegisterLogger = require('simple-node-logger').createSimpleLogger('registe
 module.exports = {
     Register: async (data, socket) => {
         
-        RegisterLogger.info("Register from name ");
+        RegisterLogger.info(`Register from name ${data.userName}`);
 
         let user = await UserRep.GetUser(data.userName);
         if (!user) {
@@ -38,7 +38,7 @@ module.exports = {
             socket.emit("fb-login-res", result);
         }
     },
-    
+
     Login: async (data, socket) => {
         LoginLogger.info("Login from name ", data.userName);
         let user = await UserRep.GetUser(data.userName);

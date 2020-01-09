@@ -400,3 +400,8 @@ td.text-center {
 td.text-right {
   text-align: right;
 }
+
+.custom-dialog-container .mat-dialog-container {
+  margin: 0px;
+  padding: 0px;
+}
