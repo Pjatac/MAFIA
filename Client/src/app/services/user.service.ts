@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { environment } from '../../environments/environment';
-import { User } from './user.model';
+import { User } from '../models/user.model';
 import { JsonPipe } from '@angular/common';
 import { format } from 'util';
-import AuthService from '../services/auth.service'
+import AuthService from './auth.service'
 import { MatDialog } from '@angular/material';
 import { OurDialogComponent } from '../components/shared/our-dialog/our-dialog.component';
 
@@ -24,7 +24,7 @@ export class UserService {
 
   login(authCredentials, cb) {
     this.socket.on('login-res', data => {
-      this.auth.setToken(data.token);
+      if (data.token) this.auth.setToken(data.token);
       return cb(data);
     });
 
@@ -41,7 +41,10 @@ export class UserService {
 
   register(authCredentials) {
     this.socket.on('register-res', data => {
-      this.dialog.open(OurDialogComponent, { data: { body: "Register status " + data, title: 'signup' } });
+      if (data)
+        this.dialog.open(OurDialogComponent, { panelClass: 'custom-dialog-container', data: { body: "Your registration was success!", title: 'Signup' } });
+      else
+        this.dialog.open(OurDialogComponent, { panelClass: 'custom-dialog-container', data: { body: "Sorry, user with such name already exist", title: 'Signup' } });
     });
 
     this.socket.emit('register-request', authCredentials);

@@ -23,7 +23,7 @@ export class VmComponent implements OnInit {
   params: Params;
 
   ngOnInit() {
-    this.dialog.open(MydialogComponent, { data: "Hello on our cluster analic service" });
+    this.dialog.open(MydialogComponent, {panelClass: 'custom-dialog-container', data: "Hello on our cluster analic service" });
     this.vmService.getAllServers().subscribe((servers: SRV[]) => {
       this.serversData = servers;
       this.srvList = Helper.getServers(servers);

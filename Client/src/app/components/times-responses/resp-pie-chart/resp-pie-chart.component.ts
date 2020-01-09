@@ -28,7 +28,7 @@ export class RespPieChartComponent implements OnChanges {
         onclick: (d, i) => { 
           if(!this.disable){
             let data = this.trService.getCurrentCodeData(d.id);
-            this.dialog.open(PieChartDialogComponent,  { data: {data: data, title: d.id }}); 
+            this.dialog.open(PieChartDialogComponent,  { panelClass: 'custom-dialog-container', data: {data: data, title: d.id }}); 
           }
         }
       }
