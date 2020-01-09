@@ -1,19 +1,19 @@
 var nodemailer = require('nodemailer');
 
-
+const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: 'ar.terekhov100@gmail.com',
+        pass: 'dostup21'
+    }
+});
 
 module.exports = {
 
     SendMail: async (socket, mailStruct) => {
-        var transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 465,
-            secure: true,
-            auth: {
-                user: 'ar.terekhov100@gmail.com',
-                pass: 'dostup21'
-            }
-        });
+        
         let base64Image = mailStruct.data.split(';base64,').pop();
 
         var mailOptions = {

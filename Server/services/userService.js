@@ -18,6 +18,7 @@ module.exports = {
             socket.emit('register-res', false);
         }
     },
+
     FBLogin: async (data, socket) => {
         LoginLogger.info("Facebook Login from id ", data.fbID);
         let user = await UserRep.GetFBUser(data.fbID);
@@ -37,6 +38,7 @@ module.exports = {
             socket.emit("fb-login-res", result);
         }
     },
+    
     Login: async (data, socket) => {
         LoginLogger.info("Login from name ", data.userName);
         let user = await UserRep.GetUser(data.userName);

@@ -19,6 +19,7 @@ module.exports = {
             return false;
         }
     },
+    
     GetUser: async function (Username) {
         let userN = "" + Username;
         try {
@@ -28,18 +29,6 @@ module.exports = {
             //TO-DO : Write error to logger
             return null;
         }
-    },
-    GetToken: async (len) => {
-        var buf = [],
-            chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
-            charlen = chars.length,
-            length = len || 32;
-        var token = "";
-        for (var i = 0; i < length; i++) {
-            buf[i] = chars.charAt(Math.floor(Math.random() * charlen));
-            token += buf[i];
-        }
-        return token;
     },
 
     RegisterFBUser: async function (data) {
@@ -56,6 +45,7 @@ module.exports = {
             return false;
         }
     },
+
     GetFBUser: async function (FbID) {
         try {
             let res = await FBUser.findOne({ fbId: FbID });
