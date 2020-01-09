@@ -1,7 +1,9 @@
 <div class="card">
-    <div class="card-body">
-        <h5 class="card-title">{{data.title}}</h5>
-        <p class="card-text">{{data.body}}</p>
-        <button mat-rased-button (click)="close()">Close</button>
+    <div class="card-body bg-white">
+        <h5 class="card-title border-bottom">{{data.title}}</h5>
+        <p class="card-text text-center">{{data.body}}</p>
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-sm btn-outline-secondary" (click)="close()">Close</button>
+        </div>
     </div>
 </div>

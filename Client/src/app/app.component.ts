@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
       text: "Current State Print",
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      classes: 'flex-grow-1'
+      classes: 'flex-grow-1 border border-dark rounded'
     };
   }
 

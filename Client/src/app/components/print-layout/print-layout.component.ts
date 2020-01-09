@@ -60,7 +60,6 @@ export class PrintLayoutComponent implements OnInit {
     }
 
     let emailAdresses = this.emails.join();
-    console.log(emailAdresses);
 
     let elements = this.elem.nativeElement.querySelectorAll('svg .c3-chart path.c3-shape.c3-shape.c3-line');
     elements.forEach(function (element) {

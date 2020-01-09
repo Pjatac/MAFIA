@@ -400,8 +400,3 @@ td.text-center {
 td.text-right {
   text-align: right;
 }
-
-.mat-form-field-wrapper {
-  border-bottom: 1px solid #777777;
-  padding-bottom: 3px !important;
-}
