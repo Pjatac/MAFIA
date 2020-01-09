@@ -21,8 +21,6 @@ import AuthService from './services/auth.service';
 import ScreenshotService from './services/screenshot.service';
 //other
 import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider } from 'angularx-social-login';
-import { AuthGuard } from './auth/auth.guard';
-import { AuthInterceptor } from './auth/auth.interceptor';
 import { VirtualmashinesComponent } from './components/virtualmashines/virtualmashines.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { AngularMultiSelectModule} from 'angular2-multiselect-dropdown';
@@ -129,18 +127,13 @@ export function provideConfig() {
     MatChipsModule
   ],
   providers: [
-    AuthGuard,
     UserService,
     VmService,
     TrService,
     AuthService,
     ErrService,
     ScreenshotService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }, AuthGuard, UserService,
+    UserService,
     {
       provide: AuthServiceConfig,
       useFactory: provideConfig

@@ -4,7 +4,8 @@ import { Router } from "@angular/router";
 import { UserService } from '../../../services/user.service';
 import { MatDialog } from '@angular/material';
 import { OurDialogComponent } from '../../shared/our-dialog/our-dialog.component';
-import { AuthService, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
+import { AuthService as FbAuth, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
+import AuthService from '../../../services/auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -19,7 +20,7 @@ export class SignInComponent implements OnInit {
   user: SocialUser;
   loggedIn: boolean;
 
-  constructor(private userService: UserService, private router: Router, public dialog: MatDialog, private authService: AuthService) { }
+  constructor(private authService: AuthService, private userService: UserService, private router: Router, public dialog: MatDialog, private fbAuth: FbAuth) { }
 
   model = {
     username: '',
@@ -29,9 +30,8 @@ export class SignInComponent implements OnInit {
   serverErrorMessages: string;
 
   ngOnInit() {
-    if (this.userService.isLoggedIn())
-      this.router.navigateByUrl('/virtual-mashines');
-    this.authService.authState.subscribe((user) => {
+    this.authService.CheckTokenValidation();
+    this.fbAuth.authState.subscribe((user) => {
       if (user) {
         let fbData = {fbID: user.id, email: user.email};
         let data = this.userService.fb_login(fbData, (data) => {
@@ -42,11 +42,11 @@ export class SignInComponent implements OnInit {
   }
 
   signInWithFB(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.fbAuth.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
   signOut(): void {
-    this.authService.signOut();
+    this.fbAuth.signOut();
   }
 
   onSubmit(form: NgForm) {

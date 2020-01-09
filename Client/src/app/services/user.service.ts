@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { environment } from '../../environments/environment';
 import { User } from '../models/user.model';
-import { JsonPipe } from '@angular/common';
-import { format } from 'util';
 import AuthService from './auth.service'
 import { MatDialog } from '@angular/material';
 import { OurDialogComponent } from '../components/shared/our-dialog/our-dialog.component';
@@ -46,25 +43,6 @@ export class UserService {
       else
         this.dialog.open(OurDialogComponent, { panelClass: 'custom-dialog-container', data: { body: "Sorry, user with such name already exist", title: 'Signup' } });
     });
-
     this.socket.emit('register-request', authCredentials);
-  }
-
-  getUserPayload() {
-    var token = this.auth.getToken();
-    if (token) {
-      var userPayload = atob(token.split('.')[1]);
-      return JSON.parse(userPayload);
-    }
-    else
-      return null;
-  }
-
-  isLoggedIn() {
-    var userPayload = this.getUserPayload();
-    if (userPayload)
-      return userPayload.exp > Date.now() / 1000;
-    else
-      return false;
   }
 }
