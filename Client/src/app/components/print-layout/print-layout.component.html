@@ -1,10 +1,11 @@
+
 <div class="d-flex justify-content-around">
-    <mat-form-field class="mail-list w-50">
+    
+    <mat-form-field class="mail-list w-50 text-dark">
         <mat-chip-list #chipList aria-label="email selection">
-            <mat-chip *ngFor="let email of emails" [selectable]=true [removable]=true
-                (removed)="remove(email)">
+            <mat-chip *ngFor="let email of emails" [selectable]=true [removable]=true (removed)="remove(email)">
                 {{email}}
-                <mat-icon matChipRemove >X</mat-icon>
+                <mat-icon matChipRemove>X</mat-icon>
             </mat-chip>
             <input placeholder="Send to..." type="email" [matChipInputFor]="chipList"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]=true

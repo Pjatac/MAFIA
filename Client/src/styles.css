@@ -404,4 +404,6 @@ td.text-right {
 .custom-dialog-container .mat-dialog-container {
   margin: 0px;
   padding: 0px;
+  width: 25rem;
 }
+

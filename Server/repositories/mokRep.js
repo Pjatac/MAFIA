@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 const VMServer = require('../scheme/vMServer')
 const WebService = require('../scheme/WebService')
 const DATA_COUNT = 15;
+// var sleep = require('sleep');
 
 module.exports = {
     GetServers: async function (params) {
@@ -36,15 +37,18 @@ module.exports = {
                 { $unwind: "$vms" },
                 {
                     $project: {
-                        "_id": 0, name: 1, 
+                        "_id": 0, name: 1,
                         "vms": {
                             name: "$vms.name",
                             data: {
                                 $map: {
-                                    input: { $range: [{ 
-                                        $add: [ { $size: "$vms.data" }, -1] }, 
-                                        { $add: [ { $size: "$vms.data" }, -params.period * DATA_COUNT ] },
-                                         -params.period] },
+                                    input: {
+                                        $range: [{
+                                            $add: [{ $size: "$vms.data" }, -1]
+                                        },
+                                        { $add: [{ $size: "$vms.data" }, -params.period * DATA_COUNT] },
+                                        -params.period]
+                                    },
                                     in: { $arrayElemAt: ["$vms.data", "$$this"] }
                                 }
                             }
@@ -54,7 +58,7 @@ module.exports = {
                 { $group: { "_id": { name: "$name" }, vms: { "$push": "$vms" } } },
                 { $project: { "_id": 0, name: "$_id.name", vms: "$vms" } }
             ]).exec();
-           //console.timeEnd('label');
+            //console.timeEnd('label');
             return lastChanges;
         }
     },
@@ -117,7 +121,7 @@ module.exports = {
         }
         else {
             let year = date.getFullYear;
-            let 
+            let
             // data = await WebService.aggregate([
             //     { $unwind: "$data" },
             //     { $project: {
@@ -144,7 +148,7 @@ module.exports = {
         else {
             data = await WebService.aggregate([
                 { $match: { name: { "$in": params.wsList } } },
-                
+
             ]).exec();
             toSend = [];
             data.forEach(ws => {

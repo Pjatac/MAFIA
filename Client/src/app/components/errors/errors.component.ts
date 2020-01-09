@@ -3,8 +3,9 @@ import * as c3 from 'c3';
 import AuthService from 'src/app/services/auth.service';
 import ErrService from 'src/app/services/err.service'
 import { TFParams } from 'src/app/models/tfparams';
-import { OurDialogComponent } from '../shared/our-dialog/our-dialog.component';
 import { MatDialog } from '@angular/material';
+import { NgxSpinnerService } from "ngx-spinner";
+
 
 @Component({
   selector: 'app-errors',
@@ -30,9 +31,10 @@ export class ErrorsComponent implements OnInit {
 
   params = new TFParams(1, 5, Date.now(), [], []);
 
-  constructor(private auth: AuthService, private errService: ErrService, public dialog: MatDialog,) { }
+  constructor(private auth: AuthService, private errService: ErrService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.spinner.show('errorspiner');
     this.auth.CheckTokenValidation();
     this.errService.requestErrors();
     this.errService.getErrors().subscribe((errors: []) => {
@@ -42,6 +44,7 @@ export class ErrorsComponent implements OnInit {
       this.params.wsList = lists.wsList;
       this.params.apiList = lists.apiList;
       this.buildChart();
+      this.spinner.hide('errorspiner');
     });
   }
 

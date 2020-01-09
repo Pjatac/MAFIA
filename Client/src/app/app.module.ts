@@ -58,6 +58,8 @@ import { OurDataPickerComponent } from './components/errors/our-data-picker/our-
 import { RangeSliderComponent } from './components/errors/range-slider/range-slider.component';
 import { Ng5SliderModule } from 'ng5-slider';
 import { PrintLayoutComponent } from './components/print-layout/print-layout.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+
 
 const ioConfig: SocketIoConfig = { url: 'localhost:100', options: {} };//http://91.205.172.45
 
@@ -124,7 +126,8 @@ export function provideConfig() {
     Ng5SliderModule,
     AngularMultiSelectModule,
     ExportAsModule,
-    MatChipsModule
+    MatChipsModule,
+    NgxSpinnerModule
   ],
   providers: [
     UserService,

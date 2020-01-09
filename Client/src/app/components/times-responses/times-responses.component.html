@@ -1,3 +1,4 @@
 <app-resp-pie-chart *ngIf="!showCodesPie" class="chart" [disable]="disable" [(chartData)]="timeData"></app-resp-pie-chart>
 <app-time-pie-chart *ngIf="!showTimesPie" class="chart" [disable]="disable" [(chartData)]="respData"></app-time-pie-chart>
-
+  <!--spinner-->
+  <ngx-spinner name='timespiner' [fullScreen]="false" type="square-jelly-box"></ngx-spinner>

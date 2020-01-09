@@ -5,6 +5,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatDialog } from '@angular/material';
 import { OurDialogComponent } from '../shared/our-dialog/our-dialog.component';
+import { NgxSpinnerService } from "ngx-spinner";
 
 
 @Component({
@@ -12,7 +13,8 @@ import { OurDialogComponent } from '../shared/our-dialog/our-dialog.component';
   templateUrl: './print-layout.component.html',
   styleUrls: ['./print-layout.component.css']
 })
-export class PrintLayoutComponent implements OnInit {
+export class PrintLayoutComponent implements OnInit{
+
   exportAsConfig: ExportAsConfig = {
     type: 'png', // the type you want to download
     elementId: 'printFrame', // the id of html/table element
@@ -22,7 +24,8 @@ export class PrintLayoutComponent implements OnInit {
     }
   }
 
-  constructor(public dialog: MatDialog, private screenshot: ScreenshotService, private exportAsService: ExportAsService, private elem: ElementRef) { }
+  constructor(public dialog: MatDialog, private screenshot: ScreenshotService, private exportAsService: ExportAsService, private elem: ElementRef,
+    private spinner: NgxSpinnerService) {  }
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   emails: string[] = [];
 
@@ -49,10 +52,10 @@ export class PrintLayoutComponent implements OnInit {
     }
   }
   ngOnInit() {
-
   }
 
   sendScreenshot(type) {
+    this.spinner.show('fullscreen');
     if (type === 'jpg') {
       this.exportAsConfig.type = 'png';
     } else {
@@ -68,6 +71,7 @@ export class PrintLayoutComponent implements OnInit {
 
     this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
       this.screenshot.sendMail({ adresses: emailAdresses, name: "screenshot." + type, data: content }).subscribe((res) => {
+        this.spinner.hide('fullscreen');
         if (res) {
           this.dialog.open(OurDialogComponent, { panelClass: 'custom-dialog-container', data: { body: "Success!", title: 'Sending result' } });
           this.emails = [];

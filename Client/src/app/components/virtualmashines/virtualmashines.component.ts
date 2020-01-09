@@ -4,9 +4,10 @@ import { Helper } from '../../middleware/helper';
 import { SRV } from 'src/app/models/srv';
 import { VMParams } from 'src/app/models/vmparams';
 import { MatDialog } from '@angular/material';
-import { OurDialogComponent } from '../shared/our-dialog/our-dialog.component';
 import AuthService from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from "ngx-spinner";
+
 
 @Component({
   selector: 'app-virtualmashines',
@@ -14,7 +15,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./virtualmashines.component.css']
 })
 export class VirtualmashinesComponent implements OnInit, AfterContentInit {
-  constructor(private vmService: VmService, public dialog: MatDialog, private auth: AuthService, private router: Router) { }
+  constructor(private vmService: VmService, public dialog: MatDialog, private auth: AuthService, private router: Router,
+     private spinner: NgxSpinnerService) { }
   @Input() printMode:boolean;
   @Input() showCpu:boolean;
   @Input() showMemmory:boolean;
@@ -39,9 +41,9 @@ export class VirtualmashinesComponent implements OnInit, AfterContentInit {
   params: VMParams;
 
   ngAfterContentInit() {
-
   }
   ngOnInit() {
+    this.spinner.show('vmspiner');
     this.auth.CheckTokenValidation();
     this.vmService.requestServers();
     this.vmService.getServers().subscribe((servers: SRV[]) => {
@@ -75,5 +77,6 @@ export class VirtualmashinesComponent implements OnInit, AfterContentInit {
     let chartData = Helper.BuildChartData(servers);
     this.cpuData = chartData.c;
     this.memData = chartData.m;
+    this.spinner.hide('vmspiner');
   }
 }
