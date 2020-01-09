@@ -1,19 +1,27 @@
 import { WebSocketGateway, WebSocketServer, SubscribeMessage, OnGatewayConnection, OnGatewayDisconnect } from '@nestjs/websockets';
 import { Params } from '../models/vmparams';
-import { WS } from 'src/models/ws';
 import { MockData } from './vm.mock';
 
 const vmsDataCount = 15;
-const timeToAddCounter = 5;
 let counter = 0;
+const timeToAddCounter = 5;//add new Server after timeToSendData*timeToAddCounter
+const minUsage = 0;
+const maxUsage = 100;
+const responsesCountToGenerate = 1000;
+const respFirstLimit = 50;
+const respSecondLimit = 500;
+const respThirdLimit = 1000;
+const respFourthLimit = 2000;
+const errorGenerateLevel = 0.9;//from 0 to 1 between errorGenerateLevel and 1
+const errorGenerateStap = 5000;//in ms
 const timeToSendVMsData = 60000;
-let codes = ["200", "201", "400", "401", "404", "500"];
+const codes = ["200", "201", "400", "401", "404", "500"];
 
 @WebSocketGateway()
 export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     wsData = MockData.wsData;
-    data = MockData.data;
+    data = MockData.vmData;
     lastSendOfWS = new Date();
 
     private timer: NodeJS.Timer;
@@ -51,13 +59,11 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
         this.clients.splice(this.clients.indexOf(cl => cl.user.id = client.id), 1);
     }
 
-    addResponse(time) {
-        return { code: codes[Math.floor(Math.random() * codes.length)], time: Math.floor(Math.random() * time) }
-    }
-
     @SubscribeMessage('getWsData')
     async onGetResponses(client) {
+        //generate WSs data
         this.generateWSresponses();
+        this.generateWSerrors();
         client.emit('getWsData', this.wsData);
     }
 
@@ -100,13 +106,13 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
     };
 
     generateNewUsage(oldUsage) {
-        let change = Math.floor(Math.random() * 6) + 10;
-        let growth = (Math.random() > 0.5);
+        let change = this.getRandomInt(6) + 10;
+        let growth = this.getRandomYesNo();
         if (growth)
             oldUsage += change;
         else
             oldUsage -= change;
-        return Math.max(Math.min(oldUsage, 100), 0);
+        return Math.max(Math.min(oldUsage, maxUsage), minUsage);
     }
 
     public async sendVMsData() {
@@ -136,32 +142,35 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     }
     generateWSresponses() {
-        this.generateWSerrors();
-        for (let i = 0; i < 1000; i++)
+        for (let i = 0; i < responsesCountToGenerate; i++)
             this.wsData.forEach(ws => {
-                let req = (Math.random() > 0.5);
+                let req = this.getRandomYesNo();
                 if (req) {
-                    let kind = Math.floor(Math.random() * 5);
+                    let kind = this.getRandomInt(5);
                     switch (kind) {
                         case 1: {
-                            ws.responses.push(this.addResponse(50));
+                            ws.responses.push(this.addResponse(respFirstLimit));
                             break;
                         }
                         case 2: {
-                            ws.responses.push(this.addResponse(500));
+                            ws.responses.push(this.addResponse(respSecondLimit));
                             break;
                         }
                         case 3: {
-                            ws.responses.push(this.addResponse(1000));
+                            ws.responses.push(this.addResponse(respThirdLimit));
                             break;
                         }
                         case 4: {
-                            ws.responses.push(this.addResponse(2000));
+                            ws.responses.push(this.addResponse(respFourthLimit));
                             break;
                         }
                     }
                 }
             });
+    }
+
+    addResponse(time) {
+        return { code: codes[this.getRandomInt(codes.length)], time: this.getRandomInt(time) }
     }
 
     generateWSerrors() {
@@ -170,22 +179,21 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
         //get end of previos day in ms
         let endDate = new Date(tmp.getFullYear(), tmp.getMonth(), tmp.getDate()).getTime();
         //get start of previos day in ms
-        let startDate = endDate - 86400000;
+        let startDate = endDate - 24 * 60 * 60;
         //Prepare fails levels for APIs
         let errorLevel = [];
         this.wsData.forEach(ws => {
             ws.apis.forEach(api => {
-                errorLevel.push(Math.floor(Math.random() * 10));
+                errorLevel.push(this.getRandomInt(10));
             });
         });
         //Fill by 5 seconds
-        for ( let i = 0; startDate < endDate; startDate += 5000) {
+        for (let i = 0; startDate < endDate; startDate += errorGenerateStap) {
             this.wsData.forEach(ws => {
                 ws.apis.forEach(api => {
-                    if (Math.random() > 0.9)
-                    {
-                        if (Math.floor(Math.random() * 10) > errorLevel[i])
-                        api.errs.push(startDate);
+                    if (Math.random() > errorGenerateLevel) {
+                        if (this.getRandomInt(10) > errorLevel[i])
+                            api.errs.push(startDate);
                     }
                     i++;
                 });
@@ -193,5 +201,13 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
             });
             i = 0;
         }
+    }
+
+    getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+
+    getRandomYesNo() {
+        return Math.random() > 0.5;
     }
 }
