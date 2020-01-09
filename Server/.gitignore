@@ -10,7 +10,6 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 server.log*
-register.log*
 login.log*
 
 # OS
