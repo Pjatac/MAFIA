@@ -5,7 +5,7 @@ export class MockData{
     { name: "MailMng", responses: [], apis: [{ name: "Send", errs: [] }, { name: "Check", errs: [] }] },
     { name: "Analitic", responses: [], apis: [{ name: "GetAll", errs: [] }, { name: "GetErr", errs: [] }, { name: "GetServ", errs: [] }, { name: "GetResp", errs: [] }] }];
 
-    static data = [
+    static vmData = [
         {
             name: 'Srv1', vms: [
                 { name: "vm1", data: [{ cpuUsage: 100, memUsage: 25 }, { cpuUsage: 95, memUsage: 35 }, { cpuUsage: 55, memUsage: 45 }] },

@@ -6,6 +6,7 @@ module.exports = {
     CreateValidationToken: (item) => {
         return jwt.sign(item, secretToken);
     },
+    
     CheckValidationToken: (token, socket) => {
         try {
             res = jwt.verify(token, secretToken);

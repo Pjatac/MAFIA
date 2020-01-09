@@ -6,41 +6,41 @@ import { Socket } from 'ngx-socket-io';
   providedIn: 'root'
 })
 export default class AuthService {
-  
+
 
   constructor(private router: Router, private socket: Socket) { }
 
-  getToken(){
+  getToken() {
     return sessionStorage.getItem('token');
   }
 
-  setToken(token: string){
+  setToken(token: string) {
     sessionStorage.setItem('token', token);
   }
 
-  removeToken(){
+  removeToken() {
     sessionStorage.removeItem('token');
   }
 
-  CheckTokenValidation(){
+  CheckTokenValidation() {
     const token = this.getToken();
-    if(!token)
+    if (!token)
       this.router.navigateByUrl('/');
     else {
       this.requestCheckToken();
-    this.getCheckToken().subscribe((validation) => {
-      if (!validation) {
+      this.getCheckToken().subscribe((validation) => {
+        if (!validation) {
           this.removeToken();
           this.router.navigateByUrl('/');
-      } 
-    });
-    }  
+        }
+      });
+    }
   }
 
   requestCheckToken() {
     this.socket.emit('check-token', sessionStorage.getItem('token'));
   }
-  
+
   getCheckToken() {
     return this.socket.fromEvent('checkToken');
   }
