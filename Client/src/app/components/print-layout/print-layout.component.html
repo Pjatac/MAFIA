@@ -1,7 +1,7 @@
 
 <div class="d-flex justify-content-around">
     
-    <mat-form-field class="mail-list w-50 text-dark">
+    <mat-form-field class="mail-list w-50">
         <mat-chip-list #chipList aria-label="email selection">
             <mat-chip *ngFor="let email of emails" [selectable]=true [removable]=true (removed)="remove(email)">
                 {{email}}
