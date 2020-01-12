@@ -13,8 +13,8 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./errors.component.css']
 })
 export class ErrorsComponent implements OnInit {
-  @Input() printMode:boolean;
-  @Input() showErrors:boolean;
+  @Input() printMode: boolean;
+  @Input() showErrors: boolean;
 
   buildData: any;
 
@@ -23,8 +23,8 @@ export class ErrorsComponent implements OnInit {
   simpleSelectionTitle = "Period";
   topSelectionTitle = "TOP";
   topsList = [
-    {value: '5', viewValue: 'Top five'},
-    {value: '10', viewValue: 'Top ten'}
+    { value: '5', viewValue: 'Top five' },
+    { value: '10', viewValue: 'Top ten' }
   ];
   wsList = [];
   apiList = [];
@@ -39,10 +39,12 @@ export class ErrorsComponent implements OnInit {
     this.errService.requestErrors();
     this.errService.getErrors().subscribe((errors: []) => {
       this.buildData = errors;
-      this.errService.wsData = errors;
-      let lists = this.errService.getLists();
-      this.params.wsList = lists.wsList;
-      this.params.apiList = lists.apiList;
+      if (!this.errService.wsData) {
+        this.errService.wsData = errors;
+        let lists = this.errService.getLists();
+        this.wsList = lists.wsList;
+        this.apiList = lists.apiList;
+      }
       this.buildChart();
       this.spinner.hide('errorspiner');
     });
@@ -60,13 +62,13 @@ export class ErrorsComponent implements OnInit {
 
   changeApiSelection(apis) {
     this.params.apiList = apis;
-    this.params.wsList = this.errService.GetWSsByAPIs(apis);
+    //this.params.wsList = this.errService.GetWSsByAPIs(apis);
     this.errService.requestErrors(this.params);
   }
 
   changeWsSelection(wss) {
     this.params.wsList = wss;
-    this.params.apiList = this.errService.GetAPIsByWSs(wss);
+    //this.params.apiList = this.errService.GetAPIsByWSs(wss);
     this.errService.requestErrors(this.params);
   }
 

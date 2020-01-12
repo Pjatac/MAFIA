@@ -120,17 +120,11 @@ module.exports = {
             return toSend;
         }
         else {
-            let year = date.getFullYear;
-            let
-            // data = await WebService.aggregate([
-            //     { $unwind: "$data" },
-            //     { $project: {
-            //         date: {
-            //            $dateToParts: { date: "$data.date" }
-            //         }
-            //     }},
-            //     { $match: {"data.date":{}},
-            // ]);
+            date = new Date(date);
+            let endOfDay = new Date(params.date);
+            endOfDay = endOfDay.setTime(endOfDay.getTime() + 24 * 60 * 60 * 1000);
+            endOfDay = new Date(endOfDay);
+            data = await WebService.find({ "data.date": { $gte: date, $lt: endOfDay } });
             return;
         }
     },
@@ -146,18 +140,39 @@ module.exports = {
             return toSend;
         }
         else {
-            data = await WebService.aggregate([
-                { $match: { name: { "$in": params.wsList } } },
-
-            ]).exec();
+            search = this.setPipeLineByParams(params);
+            data = await WebService.aggregate(search).exec();
             toSend = [];
             data.forEach(ws => {
                 ws.data[ws.data.length - 1].apis.forEach(api => {
-                    toSend.push([ws.name + "/" + api.name, api.errs.length]);
+                    if (params.apiList.length > 0) {
+                        if (params.apiList.indexOf(ws.name + "/" + api.name) >= 0)
+                            toSend.push([ws.name + "/" + api.name, api.errs.length]);
+                    }
+                    else
+                        toSend.push([ws.name + "/" + api.name, api.errs.length]);
                 });
             })
             return toSend;
         }
+    },
+    setPipeLineByParams(params) {
+        let err_pipe_line;
+        params.date = new Date(params.date);
+        let endOfDay = new Date(params.date);
+        endOfDay = endOfDay.setTime(endOfDay.getTime() + 24 * 60 * 60 * 1000);
+        endOfDay = new Date(endOfDay);
+        console.log(params.date, endOfDay);
+        if (params.wsList.length > 0)
+            err_pipe_line = [
+                { $match: { name: { "$in": params.wsList } } },
+                { $match: { data: { $elemMatch: { date: { $gte: params.date, $lt: endOfDay } } } } },
+            ];
+        if (params.wsList.length == 0)
+            err_pipe_line = [
+                { $match: { data: { $elemMatch: { date: { $gte: params.date, $lt: endOfDay } } } } },
+            ];
+        return err_pipe_line;
     },
     AddWSData: async function (data) {
         try {
