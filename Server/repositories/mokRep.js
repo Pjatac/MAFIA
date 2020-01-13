@@ -143,7 +143,7 @@ module.exports = {
     },
     setPipeLineByParams(params) {
         let err_pipe_line;
-        if (!params) {
+        if (!params) {//first client request - return only names of APIs
             err_pipe_line = [
                 { $unwind: "$data" },
                 { $unwind: "$data.apis" },
@@ -152,31 +152,49 @@ module.exports = {
             ];
         }
         else {
-            params.date = new Date(params.date);
-            let endOfDay = new Date(params.date);
+            params.date = new Date(params.date);//transform date from params to Date kind
+            params.period.start += params.date.getTime();//set start period in ms
+            params.period.end += params.date.getTime();//set end period in ms
+            let endOfDay = new Date(params.date);//create for filtring data by days - end of searching day
             endOfDay = endOfDay.setTime(endOfDay.getTime() + 24 * 60 * 60 * 1000);
             endOfDay = new Date(endOfDay);
-            if (params.apiList.length > 0) {
-                apiList = [];
-                params.apiList.forEach(api => apiList.push(api.split('/').pop()));
-                err_pipe_line = [
-                    { $match: { data: { $elemMatch: { date: { $gte: params.date, $lt: endOfDay } } } } },
-                    { $unwind: "$data" },
-                    { $unwind: "$data.apis" },
-                    { $project: { _id: 0, name: 1, api: "$data.apis" } },
-                    { $match: { "api.name": { $in: apiList } } },
-                    { $project: { "_id": 0, name: { $concat: ["$name", "/", "$api.name"] }, errs: { $size: "$api.errs" } } },
-                    { $sort: { errs: -1 } },
-                    { $limit: parseInt(params.top) }
-                ];
-            }
+            apiList = [];
+            params.apiList.forEach(api => apiList.push(api.split('/').pop()));
+            err_pipe_line = [
+                { $match: { data: { $elemMatch: { date: { $gte: params.date, $lt: endOfDay } } } } }, //select day by params date
+                { $unwind: "$data" },//separate data array
+                { $unwind: "$data.apis" },//separate APIs data
+                { $project: { _id: 0, name: 1, api: "$data.apis" } },//separate APIs data
+                { $match: { "api.name": { $in: apiList } } },//select APIs by params 
+                {
+                    $project: {//select period by params 
+                        _id: 0, name: 1, api: {
+                            name: "$api.name", errs: {
+                                $filter: {
+                                    input: "$api.errs",
+                                    as: "time",
+                                    cond: {
+                                        $and: [
+                                            { $gte: ["$$time", params.period.start] },
+                                            { $lte: ["$$time", params.period.end] }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                { $project: { "_id": 0, name: { $concat: ["$name", "/", "$api.name"] }, errs: { $size: "$api.errs" } } },//union names
+                { $sort: { errs: -1 } },//sort for top
+                { $limit: parseInt(params.top) }//select top by params
+            ];
         }
         return err_pipe_line;
     },
     AddWSData: async function (data) {
         try {
             let date = new Date();
-            date = date.setHours(date.getHours() - 24);
+            //date = date.setHours(date.getHours() - 24);
             for (let i = 0; i < data.length; i++) {
                 const webService = await WebService.findOne({ name: data[i].name });
                 if (!webService) {

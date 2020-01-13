@@ -177,9 +177,9 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
         //get this day
         let tmp = new Date();
         //get end of previos day in ms
-        let endDate = new Date(tmp.getFullYear(), tmp.getMonth(), tmp.getDate()).getTime();
+        let startDate = new Date(tmp.getFullYear(), tmp.getMonth(), tmp.getDate()).getTime();
         //get start of previos day in ms
-        let startDate = endDate - 24 * 60 * 60;
+        let endDate = startDate + 24*60*60*1000;
         //Prepare fails levels for APIs
         let errorLevel = [];
         this.wsData.forEach(ws => {
