@@ -29,7 +29,7 @@ export class ErrorsComponent implements OnInit {
   wsList = [];
   apiList = [];
 
-  params = new TFParams(1, 5, Date.now(), [], []);
+  params = new TFParams({start: 0, end: 24*60*60*1000}, 5, Date.now(), []);
 
   constructor(private auth: AuthService, private errService: ErrService, private spinner: NgxSpinnerService) { }
 
@@ -42,7 +42,7 @@ export class ErrorsComponent implements OnInit {
       if (!this.errService.wsData) {
         this.errService.wsData = errors;
         let lists = this.errService.getLists();
-        this.wsList = this.params.wsList = lists.wsList;
+        this.wsList = lists.wsList;
         this.apiList = this.params.apiList = lists.apiList;
       }
       this.buildChart();
@@ -67,8 +67,7 @@ export class ErrorsComponent implements OnInit {
   }
 
   changeWsSelection(wss) {
-    this.params.wsList = wss;
-    //this.params.apiList = this.errService.GetAPIsByWSs(wss);
+    this.params.apiList = this.errService.GetAPIsByWSs(wss);
     this.errService.requestErrors(this.params);
   }
 

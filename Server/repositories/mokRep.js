@@ -133,22 +133,8 @@ module.exports = {
         }
     },
     GetErrors: async function (params) {
-        // if (!params) {
-        //     params = {top: 5, }
-        //     data = await WebService.aggregate([]).limit(5).exec();
-        // data = await WebService.find();
-        // toSend = [];
-        // data.forEach(ws => {
-        //     ws.data[ws.data.length - 1].apis.forEach(api => {
-        //         toSend.push([ws.name + "/" + api.name, api.errs.length]);
-        //     });
-        // })
-        // return toSend;
-        //}
-        //else {
         search = this.setPipeLineByParams(params);
         data = await WebService.aggregate(search).exec();
-        //}
         toSend = [];
         data.forEach(api => {
             toSend.push([api.name, api.errs]);
@@ -157,7 +143,6 @@ module.exports = {
     },
     setPipeLineByParams(params) {
         let err_pipe_line;
-
         if (!params) {
             err_pipe_line = [
                 { $unwind: "$data" },
@@ -171,15 +156,6 @@ module.exports = {
             let endOfDay = new Date(params.date);
             endOfDay = endOfDay.setTime(endOfDay.getTime() + 24 * 60 * 60 * 1000);
             endOfDay = new Date(endOfDay);
-            // if (params.wsList.length > 0)
-            //     err_pipe_line = [
-            //         { $match: { name: { $in: params.wsList } } },
-            //         { $match: { data: { $elemMatch: { date: { $gte: params.date, $lt: endOfDay } } } } },
-            //     ];
-            // if (params.wsList.length == 0)
-            //     err_pipe_line = [
-            //         { $match: { data: { $elemMatch: { date: { $gte: params.date, $lt: endOfDay } } } } },
-            //     ];
             if (params.apiList.length > 0) {
                 apiList = [];
                 params.apiList.forEach(api => apiList.push(api.split('/').pop()));
