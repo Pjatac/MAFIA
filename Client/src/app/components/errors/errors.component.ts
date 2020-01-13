@@ -50,7 +50,7 @@ export class ErrorsComponent implements OnInit {
     });
   }
 
-  changePeriod(period) {
+  changePeriodSelection(period) {
     this.params.period = period;
     this.errService.requestErrors(this.params);
   }
