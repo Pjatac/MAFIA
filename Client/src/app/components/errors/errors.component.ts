@@ -42,8 +42,8 @@ export class ErrorsComponent implements OnInit {
       if (!this.errService.wsData) {
         this.errService.wsData = errors;
         let lists = this.errService.getLists();
-        this.wsList = lists.wsList;
-        this.apiList = lists.apiList;
+        this.wsList = this.params.wsList = lists.wsList;
+        this.apiList = this.params.apiList = lists.apiList;
       }
       this.buildChart();
       this.spinner.hide('errorspiner');

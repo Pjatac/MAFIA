@@ -125,53 +125,76 @@ module.exports = {
             endOfDay = endOfDay.setTime(endOfDay.getTime() + 24 * 60 * 60 * 1000);
             endOfDay = new Date(endOfDay);
             data = await WebService.find({ "data.date": { $gte: date, $lt: endOfDay } });
-            return;
+            toSend = [];
+            data.forEach(ws => {
+                toSend.push({ name: ws.name, responses: ws.data[ws.data.length - 1].responses });
+            })
+            return toSend;
         }
     },
     GetErrors: async function (params) {
-        if (!params) {
-            data = await WebService.find();
-            toSend = [];
-            data.forEach(ws => {
-                ws.data[ws.data.length - 1].apis.forEach(api => {
-                    toSend.push([ws.name + "/" + api.name, api.errs.length]);
-                });
-            })
-            return toSend;
-        }
-        else {
-            search = this.setPipeLineByParams(params);
-            data = await WebService.aggregate(search).exec();
-            toSend = [];
-            data.forEach(ws => {
-                ws.data[ws.data.length - 1].apis.forEach(api => {
-                    if (params.apiList.length > 0) {
-                        if (params.apiList.indexOf(ws.name + "/" + api.name) >= 0)
-                            toSend.push([ws.name + "/" + api.name, api.errs.length]);
-                    }
-                    else
-                        toSend.push([ws.name + "/" + api.name, api.errs.length]);
-                });
-            })
-            return toSend;
-        }
+        // if (!params) {
+        //     params = {top: 5, }
+        //     data = await WebService.aggregate([]).limit(5).exec();
+        // data = await WebService.find();
+        // toSend = [];
+        // data.forEach(ws => {
+        //     ws.data[ws.data.length - 1].apis.forEach(api => {
+        //         toSend.push([ws.name + "/" + api.name, api.errs.length]);
+        //     });
+        // })
+        // return toSend;
+        //}
+        //else {
+        search = this.setPipeLineByParams(params);
+        data = await WebService.aggregate(search).exec();
+        //}
+        toSend = [];
+        data.forEach(api => {
+            toSend.push([api.name, api.errs]);
+        })
+        return toSend;
     },
     setPipeLineByParams(params) {
         let err_pipe_line;
-        params.date = new Date(params.date);
-        let endOfDay = new Date(params.date);
-        endOfDay = endOfDay.setTime(endOfDay.getTime() + 24 * 60 * 60 * 1000);
-        endOfDay = new Date(endOfDay);
-        console.log(params.date, endOfDay);
-        if (params.wsList.length > 0)
+
+        if (!params) {
             err_pipe_line = [
-                { $match: { name: { "$in": params.wsList } } },
-                { $match: { data: { $elemMatch: { date: { $gte: params.date, $lt: endOfDay } } } } },
+                { $unwind: "$data" },
+                { $unwind: "$data.apis" },
+                { $project: { _id: 0, name: 1, api: "$data.apis" } },
+                { $project: { "_id": 0, name: { $concat: ["$name", "/", "$api.name"] } } },
             ];
-        if (params.wsList.length == 0)
-            err_pipe_line = [
-                { $match: { data: { $elemMatch: { date: { $gte: params.date, $lt: endOfDay } } } } },
-            ];
+        }
+        else {
+            params.date = new Date(params.date);
+            let endOfDay = new Date(params.date);
+            endOfDay = endOfDay.setTime(endOfDay.getTime() + 24 * 60 * 60 * 1000);
+            endOfDay = new Date(endOfDay);
+            // if (params.wsList.length > 0)
+            //     err_pipe_line = [
+            //         { $match: { name: { $in: params.wsList } } },
+            //         { $match: { data: { $elemMatch: { date: { $gte: params.date, $lt: endOfDay } } } } },
+            //     ];
+            // if (params.wsList.length == 0)
+            //     err_pipe_line = [
+            //         { $match: { data: { $elemMatch: { date: { $gte: params.date, $lt: endOfDay } } } } },
+            //     ];
+            if (params.apiList.length > 0) {
+                apiList = [];
+                params.apiList.forEach(api => apiList.push(api.split('/').pop()));
+                err_pipe_line = [
+                    { $match: { data: { $elemMatch: { date: { $gte: params.date, $lt: endOfDay } } } } },
+                    { $unwind: "$data" },
+                    { $unwind: "$data.apis" },
+                    { $project: { _id: 0, name: 1, api: "$data.apis" } },
+                    { $match: { "api.name": { $in: apiList } } },
+                    { $project: { "_id": 0, name: { $concat: ["$name", "/", "$api.name"] }, errs: { $size: "$api.errs" } } },
+                    { $sort: { errs: -1 } },
+                    { $limit: parseInt(params.top) }
+                ];
+            }
+        }
         return err_pipe_line;
     },
     AddWSData: async function (data) {
