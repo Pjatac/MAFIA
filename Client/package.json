@@ -35,6 +35,7 @@
     "ngx-export-as": "^1.4.0",
     "ngx-socket-io": "^3.0.1",
     "ngx-spinner": "^8.1.0",
+    "ngx-treeview": "^6.0.2",
     "rxjs": "^6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

@@ -59,6 +59,8 @@ import { RangeSliderComponent } from './components/errors/range-slider/range-sli
 import { Ng5SliderModule } from 'ng5-slider';
 import { PrintLayoutComponent } from './components/print-layout/print-layout.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { TreeviewModule } from 'ngx-treeview';
+import { TreeComponent } from './components/shared/tree/tree.component';
 
 
 const ioConfig: SocketIoConfig = { url: 'localhost:100', options: {} };//http://91.205.172.45
@@ -99,6 +101,7 @@ export function provideConfig() {
     OurDataPickerComponent,
     RangeSliderComponent,
     PrintLayoutComponent,
+    TreeComponent,
   ],
   imports: [
     BrowserModule,
@@ -127,7 +130,8 @@ export function provideConfig() {
     AngularMultiSelectModule,
     ExportAsModule,
     MatChipsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    TreeviewModule.forRoot()
   ],
   providers: [
     UserService,
