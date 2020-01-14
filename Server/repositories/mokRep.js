@@ -115,6 +115,7 @@ module.exports = {
             data = await WebService.find();
             toSend = [];
             data.forEach(ws => {
+                //getting last record from DB
                 toSend.push({ name: ws.name, responses: ws.data[ws.data.length - 1].responses });
             })
             return toSend;
@@ -133,7 +134,7 @@ module.exports = {
         }
     },
     GetErrors: async function (params) {
-        search = this.setPipeLineByParams(params);
+        search = await this.setFailsPipeLineByParams(params);
         data = await WebService.aggregate(search).exec();
         toSend = [];
         data.forEach(api => {
@@ -141,28 +142,42 @@ module.exports = {
         })
         return toSend;
     },
-    setPipeLineByParams(params) {
+    setFailsPipeLineByParams: async function (params) {
         let err_pipe_line;
-        if (!params) {//first client request - return only names of APIs
-            err_pipe_line = [
-                { $unwind: "$data" },
-                { $unwind: "$data.apis" },
-                { $project: { _id: 0, name: 1, api: "$data.apis" } },
-                { $project: { "_id": 0, name: { $concat: ["$name", "/", "$api.name"] } } },
-            ];
+        if (!params) {//first client request - return all names of APIs and data for today
+            const dayStart = this.getDayStart(new Date());//create for filtring data by days - start of searching day
+            const dayEnd = this.getDayEnd(new Date());//create for filtring data by days - end of searching day
+            checkData = await WebService.find({ data: { "$elemMatch": { date: { $gte: dayStart, $lt: dayEnd } } } });
+            if (checkData.length > 0) {
+                err_pipe_line = [
+                    { $unwind: "$data" },
+                    { $match: { "data.date": { $gte: dayStart, $lt: dayEnd } } },
+                    { $unwind: "$data.apis" },
+                    { $project: { _id: 0, name: 1, api: "$data.apis" } },
+                    { $project: { "_id": 0, name: { $concat: ["$name", "/", "$api.name"] }, errs: { $size: "$api.errs" } } },
+                ];
+            }
+            else {
+                err_pipe_line = [
+                    { $unwind: "$data" },
+                    { $unwind: "$data.apis" },
+                    { $project: { _id: 0, name: 1, api: "$data.apis" } },
+                    { $project: { "_id": 0, name: { $concat: ["$name", "/", "$api.name"] } } },
+                    { $group: { "_id": "$name" } },
+                    { $project: { "_id": 0, name: "$_id" } }
+                ];
+            }
         }
         else {
-            params.date = new Date(params.date);//transform date from params to Date kind
-            params.period.start += params.date.getTime();//set start period in ms
-            params.period.end += params.date.getTime();//set end period in ms
-            let endOfDay = new Date(params.date);//create for filtring data by days - end of searching day
-            endOfDay = endOfDay.setTime(endOfDay.getTime() + 24 * 60 * 60 * 1000);
-            endOfDay = new Date(endOfDay);
+            const dayStart = this.getDayStart(params.date);//create for filtring data by days - start of searching day
+            const dayEnd = this.getDayEnd(params.date);//create for filtring data by days - end of searching day
+            params.period.start += dayStart.getTime();//set start period in ms
+            params.period.end += dayStart.getTime();//set end period in ms
             apiList = [];
             params.apiList.forEach(api => apiList.push(api.split('/').pop()));
             err_pipe_line = [
-                { $match: { data: { $elemMatch: { date: { $gte: params.date, $lt: endOfDay } } } } }, //select day by params date
                 { $unwind: "$data" },//separate data array
+                { $match: { "data.date": { $gte: dayStart, $lt: dayEnd } } },//select day by params date
                 { $unwind: "$data.apis" },//separate APIs data
                 { $project: { _id: 0, name: 1, api: "$data.apis" } },//separate APIs data
                 { $match: { "api.name": { $in: apiList } } },//select APIs by params 
@@ -190,6 +205,14 @@ module.exports = {
             ];
         }
         return err_pipe_line;
+    },
+    getDayStart: function (date) {
+        return new Date(new Date(date).setHours(0, 0, 0, 0));
+    },
+    getDayEnd: function (date) {
+        startOfDay = this.getDayStart(date);
+        endOfDay = startOfDay.setTime(startOfDay.getTime() + 24 * 60 * 60 * 1000);
+        return new Date(endOfDay);
     },
     AddWSData: async function (data) {
         try {
