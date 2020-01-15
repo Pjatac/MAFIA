@@ -9,6 +9,7 @@ import { TreeviewItem, TreeviewConfig } from 'ngx-treeview';
 export class TreeComponent implements OnInit, OnChanges {
   @Input() apiList: string[];
   @Output() changeSelection = new EventEmitter();
+  counter = 0;// need for init treeItems without sending event
 
   config = TreeviewConfig.create({
     hasAllCheckBox: true,
@@ -18,7 +19,7 @@ export class TreeComponent implements OnInit, OnChanges {
     maxHeight: 400
   });
   buttonClass = 'btn-outline-primary';
-  treeItems: TreeviewItem[] = this.getBooks();
+  treeItems: TreeviewItem[];
   values: string[];
   constructor() { }
 
@@ -47,39 +48,41 @@ export class TreeComponent implements OnInit, OnChanges {
     }
   }
   onSelectedChange(event) {
-
+    if (this.counter > 1)
+      this.changeSelection.emit(event);
+      this.counter++;
   }
   onFilterChange(event) {
 
   }
-  getBooks(): TreeviewItem[] {
-    const authMngCategory = new TreeviewItem({
-      text: 'AuthMng', value: 'AuthMng', collapsed: true, children: [
-        { text: 'LogIn', value: 'LogIn' },
-        { text: 'LogOut', value: 'LogOut' }
-      ]
-    });
-    const clientMngCategory = new TreeviewItem({
-      text: 'ClientMng', value: 2, collapsed: true, children: [
-        { text: 'Create', value: 21 },
-        { text: 'Edit', value: 22 },
-        { text: 'Del', value: 23 }
-      ]
-    });
-    const mailMngCategory = new TreeviewItem({
-      text: 'MailMng', value: 3, collapsed: true, children: [
-        { text: 'Send', value: 31 },
-        { text: 'Check', value: 32 }
-      ]
-    });
-    const analiticCategory = new TreeviewItem({
-      text: 'Analitic', value: 4, collapsed: true, children: [
-        { text: 'GetAll', value: 41 },
-        { text: 'GetErr', value: 42 },
-        { text: 'GetServ', value: 43 },
-        { text: 'GetResp', value: 44 },
-      ]
-    });
-    return [authMngCategory, clientMngCategory, mailMngCategory, analiticCategory];
-  }
+  // getBooks(): TreeviewItem[] {
+  //   const authMngCategory = new TreeviewItem({
+  //     text: 'AuthMng', value: 'AuthMng', collapsed: true, children: [
+  //       { text: 'LogIn', value: 'LogIn' },
+  //       { text: 'LogOut', value: 'LogOut' }
+  //     ]
+  //   });
+  //   const clientMngCategory = new TreeviewItem({
+  //     text: 'ClientMng', value: 2, collapsed: true, children: [
+  //       { text: 'Create', value: 21 },
+  //       { text: 'Edit', value: 22 },
+  //       { text: 'Del', value: 23 }
+  //     ]
+  //   });
+  //   const mailMngCategory = new TreeviewItem({
+  //     text: 'MailMng', value: 3, collapsed: true, children: [
+  //       { text: 'Send', value: 31 },
+  //       { text: 'Check', value: 32 }
+  //     ]
+  //   });
+  //   const analiticCategory = new TreeviewItem({
+  //     text: 'Analitic', value: 4, collapsed: true, children: [
+  //       { text: 'GetAll', value: 41 },
+  //       { text: 'GetErr', value: 42 },
+  //       { text: 'GetServ', value: 43 },
+  //       { text: 'GetResp', value: 44 },
+  //     ]
+  //   });
+  //   return [authMngCategory, clientMngCategory, mailMngCategory, analiticCategory];
+  // }
 }
