@@ -147,7 +147,7 @@ module.exports = {
         if (!params) {//first client request - return all names of APIs and data for today
             const dayStart = this.getDayStart(new Date());//create for filtring data by days - start of searching day
             const dayEnd = this.getDayEnd(new Date());//create for filtring data by days - end of searching day
-            checkData = await WebService.find({ data: { "$elemMatch": { date: { $gte: dayStart, $lt: dayEnd } } } });
+            checkData = await WebService.find({ data: { "$elemMatch": { date: { $gte: dayStart, $lt: dayEnd } } } });//check data exist for today
             if (checkData.length > 0) {
                 err_pipe_line = [
                     { $unwind: "$data" },
@@ -157,7 +157,7 @@ module.exports = {
                     { $project: { "_id": 0, name: { $concat: ["$name", "/", "$api.name"] }, errs: { $size: "$api.errs" } } },
                 ];
             }
-            else {
+            else {//return only APIs names
                 err_pipe_line = [
                     { $unwind: "$data" },
                     { $unwind: "$data.apis" },
