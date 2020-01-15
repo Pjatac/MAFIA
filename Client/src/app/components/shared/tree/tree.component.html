@@ -1,7 +1,6 @@
-<ngx-dropdown-treeview
-    [buttonClass]="buttonClass"
+<ngx-treeview
     [config]="config"
     [items]="treeItems"
-    (selectedChange)="onSelectedChange($event)"
+    (selectedChange)="values = $event"
     (filterChange)="onFilterChange($event)">
-</ngx-dropdown-treeview>
+</ngx-treeview>

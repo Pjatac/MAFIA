@@ -61,6 +61,7 @@ import { PrintLayoutComponent } from './components/print-layout/print-layout.com
 import { NgxSpinnerModule } from "ngx-spinner";
 import { TreeviewModule } from 'ngx-treeview';
 import { TreeComponent } from './components/shared/tree/tree.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 
 const ioConfig: SocketIoConfig = { url: 'localhost:100', options: {} };//http://91.205.172.45
@@ -104,6 +105,7 @@ export function provideConfig() {
     TreeComponent,
   ],
   imports: [
+    AngularFontAwesomeModule,
     BrowserModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
