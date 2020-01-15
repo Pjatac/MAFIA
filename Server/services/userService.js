@@ -5,10 +5,8 @@ const RegisterLogger = require('simple-node-logger').createSimpleLogger('registe
 
 
 module.exports = {
-    Register: async (data, socket) => {
-        
+    Register: async (data, socket) => {      
         RegisterLogger.info(`Register from name ${data.userName}`);
-
         let user = await UserRep.GetUser(data.userName);
         if (!user) {
             await UserRep.RegisterUser(data);
@@ -56,6 +54,5 @@ module.exports = {
             result.err = "User not exist";
         }
         socket.emit('login-res', result);
-        return result.status;
     }
 }

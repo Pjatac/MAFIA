@@ -8,11 +8,11 @@ module.exports = {
 
     Start: async () =>{
         
-        socketClient.on('getNewServersData',async (data) =>{
+        socketClient.on('getNewServersData', async (data) =>{
             await MockRep.AddNewServersData(data);
         });
         
-        socketClient.on('getWsData',async(data) =>{
+        socketClient.on('getWsData', async (data) =>{
          await MockRep.AddWSData(data);
         });
 

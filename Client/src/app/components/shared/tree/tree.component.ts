@@ -55,34 +55,5 @@ export class TreeComponent implements OnInit, OnChanges {
   onFilterChange(event) {
 
   }
-  // getBooks(): TreeviewItem[] {
-  //   const authMngCategory = new TreeviewItem({
-  //     text: 'AuthMng', value: 'AuthMng', collapsed: true, children: [
-  //       { text: 'LogIn', value: 'LogIn' },
-  //       { text: 'LogOut', value: 'LogOut' }
-  //     ]
-  //   });
-  //   const clientMngCategory = new TreeviewItem({
-  //     text: 'ClientMng', value: 2, collapsed: true, children: [
-  //       { text: 'Create', value: 21 },
-  //       { text: 'Edit', value: 22 },
-  //       { text: 'Del', value: 23 }
-  //     ]
-  //   });
-  //   const mailMngCategory = new TreeviewItem({
-  //     text: 'MailMng', value: 3, collapsed: true, children: [
-  //       { text: 'Send', value: 31 },
-  //       { text: 'Check', value: 32 }
-  //     ]
-  //   });
-  //   const analiticCategory = new TreeviewItem({
-  //     text: 'Analitic', value: 4, collapsed: true, children: [
-  //       { text: 'GetAll', value: 41 },
-  //       { text: 'GetErr', value: 42 },
-  //       { text: 'GetServ', value: 43 },
-  //       { text: 'GetResp', value: 44 },
-  //     ]
-  //   });
-  //   return [authMngCategory, clientMngCategory, mailMngCategory, analiticCategory];
-  // }
+
 }
