@@ -58,8 +58,6 @@ export class VirtualmashinesComponent implements OnInit, AfterContentInit {
       this.serversData = Helper.AddData(this.serversData, servers);
       this.buildChartData(this.serversData);
     });
-
-
   }
 
   changeSelection(servers) {

@@ -32,7 +32,7 @@ export class TreeComponent implements OnInit, OnChanges {
       let wsList = [];
       this.apiList.sort();
       this.apiList.forEach(api => {
-        if (wsList.indexOf(api.split("/")[0]) < 0) {
+        if (wsList.indexOf(api.split("/")[0]) < 0) {//check for parrent node(web service) existing
           wsList.push(api.split("/")[0]);
           this.treeItems.push(new TreeviewItem({
             text: api.split("/")[0], value: api.split("/")[0], collapsed: true, children:
