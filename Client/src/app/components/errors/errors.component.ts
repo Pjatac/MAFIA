@@ -26,7 +26,6 @@ export class ErrorsComponent implements OnInit {
     { value: '5', viewValue: 'Top five' },
     { value: '10', viewValue: 'Top ten' }
   ];
-  wsList = [];
   apiList = [];
 
   params = new TFParams({start: 0, end: 24*60*60*1000}, 5, Date.now(), []);
@@ -41,9 +40,7 @@ export class ErrorsComponent implements OnInit {
       this.buildData = errors;
       if (!this.errService.wsData) {
         this.errService.wsData = errors;
-        let lists = this.errService.getLists();
-        this.wsList = lists.wsList;
-        this.apiList = this.params.apiList = lists.apiList;
+        this.apiList = this.params.apiList = this.errService.getApiList();
       }
       this.buildChart();
       this.spinner.hide('errorspiner');
@@ -60,14 +57,8 @@ export class ErrorsComponent implements OnInit {
     this.errService.requestErrors(this.params);
   }
 
-  changeApiSelection(apis) {
+  changeAPISelection(apis) {
     this.params.apiList = apis;
-    //this.params.wsList = this.errService.GetWSsByAPIs(apis);
-    this.errService.requestErrors(this.params);
-  }
-
-  changeWsSelection(wss) {
-    this.params.apiList = this.errService.GetAPIsByWSs(wss);
     this.errService.requestErrors(this.params);
   }
 

@@ -4,18 +4,14 @@
 <span *ngIf="!printMode">
     <div class="d-flex justify-content-around">
         <app-our-data-picker (changeSelection)="changeDate($event)"></app-our-data-picker>
-        <app-tree></app-tree>
-        <app-multy-select [(msList)]="wsList" [(title)]="wsSelectTitle"
-            (changeSelection)="changeWsSelection($event)"></app-multy-select>
-        <app-multy-select [(msList)]="apiList" [(title)]="apiSelectTitle"
-            (changeSelection)="changeApiSelection($event)"></app-multy-select>
+        <app-tree [(apiList)]="apiList" (changeSelection)="changeAPISelection($event)"></app-tree>
         <app-simple-select [(selections)]="topsList" [(title)]="topSelectionTitle"
             (changeSelection)="changeTop($event)"></app-simple-select>
-            
+
     </div>
     <div class="border border-dark rounded p-2">
         <app-range-slider (changeSelection)="changePeriodSelection($event)"></app-range-slider>
     </div>
 </span>
-  <!--spinner-->
-  <ngx-spinner name='errorspiner' [fullScreen]="false" type="square-jelly-box"></ngx-spinner>
+<!--spinner-->
+<ngx-spinner name='errorspiner' [fullScreen]="false" type="square-jelly-box"></ngx-spinner>
