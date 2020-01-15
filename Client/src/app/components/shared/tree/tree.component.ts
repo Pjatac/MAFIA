@@ -30,7 +30,7 @@ export class TreeComponent implements OnInit {
   }
   getBooks(): TreeviewItem[] {
     const authMngCategory = new TreeviewItem({
-        text: 'AuthMng', value: 1,collapsed: true, children: [
+        text: 'AuthMng', value: 1, collapsed: true, children: [
             { text: 'LogIn', value: 11 },
             { text: 'LogOut', value: 12 }
         ]
