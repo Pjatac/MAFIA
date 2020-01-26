@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+# development
+/ssl
+
 # Logs
 logs
 *.log
