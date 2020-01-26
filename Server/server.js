@@ -1,10 +1,11 @@
 const log = require('simple-node-logger').createSimpleLogger('server.log');
 const server = require('http').createServer();
 const io = require('socket.io')(server);
+require('dotenv').config();
 const ConnectToDb = require('./database');
 const sessionRouter = require('./router');
 const mockServer = require('./mock/mock');
-const PORT = 100;   
+const PORT = process.env.SERVER_PORT;   
 ConnectToDb();
 sessionRouter.sessionRouter(io);
 mockServer.Start();

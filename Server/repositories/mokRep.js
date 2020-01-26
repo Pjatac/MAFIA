@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
-const VMServer = require('../scheme/vMServer')
-const WebService = require('../scheme/WebService')
-const DATA_COUNT = 15;
+const VMServer = require('../scheme/vMServer');
+const WebService = require('../scheme/WebService');
+require('dotenv').config();
+const DATA_COUNT = process.env.DATA_COUNT;
 
 module.exports = {
     GetServers: async function (params) {
@@ -224,22 +225,27 @@ module.exports = {
     AddWSData: async function (data) {
         try {
             let date = new Date();
-            for (let i = 0; i < data.length; i++) {
-                const webService = await WebService.findOne({ name: data[i].name });
-                if (!webService) {
-                    let newWebService = new WebService({
-                        _id: new mongoose.Types.ObjectId(),
-                        name: data[i].name,
-                        data: [{ date: date, responses: data[i].responses, apis: data[i].apis }]
-                    });
-                    await newWebService.save();
+            //check for today data existing
+            const dayStart = this.getDayStart(new Date());//create for filtring data by days - start of searching day
+            const dayEnd = this.getDayEnd(new Date());//create for filtring data by days - end of searching day
+            checkData = await WebService.find({ data: { "$elemMatch": { date: { $gte: dayStart, $lt: dayEnd } } } });
+            if (checkData.length === 0)
+                for (let i = 0; i < data.length; i++) {
+                    const webService = await WebService.findOne({ name: data[i].name });
+                    if (!webService) {
+                        let newWebService = new WebService({
+                            _id: new mongoose.Types.ObjectId(),
+                            name: data[i].name,
+                            data: [{ date: date, responses: data[i].responses, apis: data[i].apis }]
+                        });
+                        await newWebService.save();
+                    }
+                    else {
+                        webService.data.push({ date: date, responses: data[i].responses, apis: data[i].apis });
+                        await webService.save();
+                    }
                 }
-                else {
-                    webService.data.push({ date: date, responses: data[i].responses, apis: data[i].apis });
-                    await webService.save();
-                }
-            }
-            console.log("New WSs Data Inbounds");
+            console.log("WSs Data Inbounds");
         } catch (error) {
             console.log(error);
         }

@@ -1,6 +1,7 @@
+require('dotenv').config();
 const ioClient = require('socket.io-client');
 const MockRep = require('../repositories/mokRep');
-var socketClient = ioClient("http://localhost:150");
+var socketClient = ioClient(process.env.MOCK_ADRESS);
 console.log("Mock Server is up!");
 
 
