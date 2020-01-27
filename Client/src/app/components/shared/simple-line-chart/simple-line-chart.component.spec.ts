@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CpuChartComponent } from './cpu-chart.component';
+import { SimpleLineChartComponent } from './simple-line-chart.component';
 
-describe('CpuChartComponent', () => {
-  let component: CpuChartComponent;
-  let fixture: ComponentFixture<CpuChartComponent>;
+describe('SimpleLineChartComponent', () => {
+  let component: SimpleLineChartComponent;
+  let fixture: ComponentFixture<SimpleLineChartComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CpuChartComponent ]
+      declarations: [ SimpleLineChartComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CpuChartComponent);
+    fixture = TestBed.createComponent(SimpleLineChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

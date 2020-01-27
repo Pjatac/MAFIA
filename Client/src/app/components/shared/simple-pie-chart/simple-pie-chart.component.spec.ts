@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MemChartComponent } from './mem-chart.component';
+import { SimplePieChartComponent } from './simple-pie-chart.component';
 
-describe('MemChartComponent', () => {
-  let component: MemChartComponent;
-  let fixture: ComponentFixture<MemChartComponent>;
+describe('SimplePieChartComponent', () => {
+  let component: SimplePieChartComponent;
+  let fixture: ComponentFixture<SimplePieChartComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MemChartComponent ]
+      declarations: [ SimplePieChartComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MemChartComponent);
+    fixture = TestBed.createComponent(SimplePieChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

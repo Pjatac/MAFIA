@@ -21,8 +21,6 @@ import { SignUpComponent } from './components/user/sign-up/sign-up.component';
 import { NavigationBarComponent } from './components/common_elements/navigation_bar/navigation_bar.component';
 import { NavigationBarLinkComponent } from './components/common_elements/navigation_bar/navigation_bar_link/navigation_bar_link.component';
 import { OurDialogComponent } from './components/shared/our-dialog/our-dialog.component';
-import { MemChartComponent } from './components/virtualmashines/mem-chart/mem-chart.component';
-import { CpuChartComponent } from './components/virtualmashines/cpu-chart/cpu-chart.component';
 import { MultySelectComponent } from './components/shared/multy-select/multy-select.component';
 import { SimpleSelectComponent } from './components/shared/simple-select/simple-select.component';
 import { TimesResponsesComponent } from './components/times-responses/times-responses.component';
@@ -35,6 +33,7 @@ import { RangeSliderComponent } from './components/errors/range-slider/range-sli
 import { PrintLayoutComponent } from './components/print-layout/print-layout.component';
 import { TreeComponent } from './components/shared/tree/tree.component';
 import { VirtualmashinesComponent } from './components/virtualmashines/virtualmashines.component';
+import { SimpleLineChartComponent } from './components/shared/simple-line-chart/simple-line-chart.component';
 // routes
 import { appRoutes } from './routes';
 //services
@@ -62,6 +61,8 @@ import {
   MatDatepickerModule,
   MatChipsModule
 } from '@angular/material';
+import { SimplePieChartComponent } from './components/shared/simple-pie-chart/simple-pie-chart.component';
+
 
 
 
@@ -92,8 +93,6 @@ export function provideConfig() {
     OurDialogComponent,
     NavigationBarComponent,
     NavigationBarLinkComponent,
-    MemChartComponent,
-    CpuChartComponent,
     MultySelectComponent,
     SimpleSelectComponent,
     TimesResponsesComponent,
@@ -105,6 +104,8 @@ export function provideConfig() {
     RangeSliderComponent,
     PrintLayoutComponent,
     TreeComponent,
+    SimpleLineChartComponent,
+    SimplePieChartComponent,
   ],
   imports: [
     AngularFontAwesomeModule,

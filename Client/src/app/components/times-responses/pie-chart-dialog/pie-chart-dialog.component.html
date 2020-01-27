@@ -2,7 +2,8 @@
     Parcelling for {{data.title}}
 </p>
 <div class='md-dialog-container'>
-    <div id="chart"></div>
+    <!-- <div id="chart"></div> -->
+    <app-simple-pie-chart [(chartData)] = "data.data" [name] = "'dialogChart'"></app-simple-pie-chart>
 <div mat-dialog-actions align="center">
     <button  mat-rased-button (click)="close()">Close</button>
 </div>

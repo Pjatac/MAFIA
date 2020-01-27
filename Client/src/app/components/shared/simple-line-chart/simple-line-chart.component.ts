@@ -1,34 +1,36 @@
-import { Component, OnChanges, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import * as c3 from 'c3';
-import { Helper } from 'src/app/middleware/helper';
-
+import { Helper } from 'src/app/helpers/helper';
 
 @Component({
-  selector: 'app-cpu-chart',
-  templateUrl: './cpu-chart.component.html',
-  styleUrls: ['./cpu-chart.component.css'],
+  selector: 'app-simple-line-chart',
+  templateUrl: './simple-line-chart.component.html',
+  styleUrls: ['./simple-line-chart.component.css'],
+  //to remove background artefacts
   encapsulation: ViewEncapsulation.None
-
 })
-export class CpuChartComponent implements OnChanges {
+export class SimpleLineChartComponent implements  AfterViewInit {
+  @Input() name;
   @Input() chartData;
   @Input() period;
 
   constructor() { }
 
-  ngOnChanges() {
+  ngAfterViewInit(){
     this.buildChart();
   }
+
   buildChart() {
     let columns = Helper.buildAxisXLabels(this.period);
     let chartData = this.chartData;
+    //adding columns
     chartData.unshift(columns);
     chartData = {
       x: 'x',
       columns: chartData
     };
-    let chart = c3.generate({
-      bindto: '#cpuChart',
+    c3.generate({
+      bindto: document.getElementById(this.name),
       data: chartData,
       axis: {
         x: {
@@ -47,7 +49,7 @@ export class CpuChartComponent implements OnChanges {
           min : 10,
           max: 100,
           label: {
-            text: 'CPU usage',
+            text: this.name + ' usage',
             position: 'outer-center'
           },
           tick: {

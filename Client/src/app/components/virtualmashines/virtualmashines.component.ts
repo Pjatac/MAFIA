@@ -1,6 +1,6 @@
-import { Component, OnInit, DoCheck, AfterContentInit, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import VmService from 'src/app/services/vm.service';
-import { Helper } from '../../middleware/helper';
+import { Helper } from '../../helpers/helper';
 import { SRV } from 'src/app/models/srv';
 import { VMParams } from 'src/app/models/vmparams';
 import { MatDialog } from '@angular/material';
@@ -14,7 +14,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   templateUrl: './virtualmashines.component.html',
   styleUrls: ['./virtualmashines.component.css']
 })
-export class VirtualmashinesComponent implements OnInit, AfterContentInit {
+export class VirtualmashinesComponent implements OnInit {
   constructor(private vmService: VmService, public dialog: MatDialog, private auth: AuthService, private router: Router,
      private spinner: NgxSpinnerService) { }
   @Input() printMode:boolean;
@@ -40,8 +40,6 @@ export class VirtualmashinesComponent implements OnInit, AfterContentInit {
   //data for filtring servers data on server side
   params: VMParams;
 
-  ngAfterContentInit() {
-  }
   ngOnInit() {
     this.spinner.show('vmspiner');
     this.auth.CheckTokenValidation();

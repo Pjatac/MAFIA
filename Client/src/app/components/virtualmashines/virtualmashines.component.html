@@ -1,12 +1,12 @@
 <span *ngIf="!showCpu">
-    <div class="chart" *ngIf="cpuData">
-        <app-cpu-chart [(chartData)]="cpuData" [(period)]="period"></app-cpu-chart>
-      </div>
+  <div class="chart" *ngIf="cpuData">
+    <app-simple-line-chart [(chartData)]="cpuData" [name]="'CPU'" [(period)]="period"></app-simple-line-chart>
+  </div>
 </span>
 <span *ngIf="!showMemmory">
-    <div class="chart" *ngIf="memData">
-        <app-mem-chart [(chartData)]="memData" [(period)]="period"></app-mem-chart>
-      </div>
+  <div class="chart" *ngIf="memData">
+    <app-simple-line-chart [(chartData)]="memData" [name]="'Memory'" [(period)]="period"></app-simple-line-chart>
+  </div>
 </span>
 <span *ngIf="!printMode">
   <div class="d-flex justify-content-around">
@@ -20,5 +20,5 @@
     </div>
   </div>
 </span>
-  <!--spinner-->
-  <ngx-spinner name='vmspiner' [fullScreen]="false" type="square-jelly-box"></ngx-spinner>
+<!--spinner-->
+<ngx-spinner name='vmspiner' [fullScreen]="false" type="square-jelly-box"></ngx-spinner>
