@@ -1,19 +1,16 @@
 <!--navbar-->
 <app-navigation-bar>
-  <app-navigation-bar-link *ngIf="checkLogedIn()" [href]="'virtual-mashines'">Virtual Machines
-  </app-navigation-bar-link>
-  <app-navigation-bar-link *ngIf="checkLogedIn()" [href]="'times-responses'">Response Metrics
-  </app-navigation-bar-link>
-  <app-navigation-bar-link *ngIf="checkLogedIn()" [href]="'errors'">Top Fail</app-navigation-bar-link>
-  <app-navigation-bar-link *ngIf="checkLogedIn()" [href]="'login'" (click)="logout($event)">Logout
-  </app-navigation-bar-link>
+  <app-navigation-bar-link *ngIf="checkLogedIn()" ><a routerLink="virtual-mashines" routerLinkActive="active">Virtual Machines</a></app-navigation-bar-link>
+  <app-navigation-bar-link *ngIf="checkLogedIn()" ><a routerLink="times-responses" routerLinkActive="router-link-active">Response Metrics</a></app-navigation-bar-link>
+  <app-navigation-bar-link *ngIf="checkLogedIn()" ><a routerLink="errors" routerLinkActive="router-link-active">Top Fail</a></app-navigation-bar-link>
+  <app-navigation-bar-link *ngIf="checkLogedIn()" ><a [href]="'login'" (click)="logout($event)" routerLinkActive="router-link-active">Logout</a></app-navigation-bar-link>
 </app-navigation-bar>
-
-
 
 <!--page-->
 <div class="p-3 text-dark">
-  <router-outlet></router-outlet>
+  <router-outlet>
+    
+  </router-outlet>
   <!--spinner-->
   <ngx-spinner name='fullscreen' type="square-jelly-box"></ngx-spinner>
 </div>
