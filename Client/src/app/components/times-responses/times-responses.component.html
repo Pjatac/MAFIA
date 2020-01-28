@@ -1,7 +1,5 @@
-<!-- <app-simple-pie-chart *ngIf="!showCodesPie" class="chart" [disable]="disable" [(chartData)]="timeData" [name]="'responses'"></app-simple-pie-chart>
-<app-simple-pie-chart *ngIf="!showTimesPie" class="chart" [disable]="disable" [(chartData)]="respData" [name]="'times'"></app-simple-pie-chart> -->
-<app-resp-pie-chart *ngIf="!showCodesPie" class="chart" [disable]="disable" [(chartData)]="timeData"></app-resp-pie-chart>
-<app-time-pie-chart *ngIf="!showTimesPie" class="chart" [disable]="disable" [(chartData)]="respData"></app-time-pie-chart>
+<app-clickable-pie-chart *ngIf="!showCodesPie" class="chart" [disable]="disable" [(chartData)]="timeData" [name]="'codes'"></app-clickable-pie-chart>
+<app-clickable-pie-chart *ngIf="!showTimesPie" class="chart" [disable]="disable" [(chartData)]="respData" [name]="'times'"></app-clickable-pie-chart>
   <!--spinner-->
  <ngx-spinner name='timespiner' [fullScreen]="false" type="square-jelly-box"></ngx-spinner>
  

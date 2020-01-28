@@ -24,8 +24,6 @@ import { OurDialogComponent } from './components/shared/our-dialog/our-dialog.co
 import { MultySelectComponent } from './components/shared/multy-select/multy-select.component';
 import { SimpleSelectComponent } from './components/shared/simple-select/simple-select.component';
 import { TimesResponsesComponent } from './components/times-responses/times-responses.component';
-import { RespPieChartComponent } from './components/times-responses/resp-pie-chart/resp-pie-chart.component';
-import { TimePieChartComponent } from './components/times-responses/time-pie-chart/time-pie-chart.component';
 import { PieChartDialogComponent } from './components/times-responses/pie-chart-dialog/pie-chart-dialog.component';
 import { ErrorsComponent } from './components/errors/errors.component';
 import { OurDataPickerComponent } from './components/errors/our-data-picker/our-data-picker.component';
@@ -62,6 +60,7 @@ import {
   MatChipsModule
 } from '@angular/material';
 import { SimplePieChartComponent } from './components/shared/simple-pie-chart/simple-pie-chart.component';
+import { ClickablePieChartComponent } from './components/times-responses/clickable-pie-chart/clickable-pie-chart.component';
 
 
 
@@ -96,8 +95,6 @@ export function provideConfig() {
     MultySelectComponent,
     SimpleSelectComponent,
     TimesResponsesComponent,
-    RespPieChartComponent,
-    TimePieChartComponent,
     PieChartDialogComponent,
     ErrorsComponent,
     OurDataPickerComponent,
@@ -106,6 +103,7 @@ export function provideConfig() {
     TreeComponent,
     SimpleLineChartComponent,
     SimplePieChartComponent,
+    ClickablePieChartComponent,
   ],
   imports: [
     AngularFontAwesomeModule,

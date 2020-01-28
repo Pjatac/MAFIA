@@ -7,7 +7,7 @@ import * as c3 from 'c3';
   styleUrls: ['./simple-pie-chart.component.css']
 })
 export class SimplePieChartComponent implements AfterViewInit {
-  @Input() disable: boolean = false;
+
   @Input() name;
   @Input() chartData;
   constructor() { }

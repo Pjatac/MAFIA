@@ -19,6 +19,17 @@ export default class TrService {
     return this.socket.fromEvent('getResponses');
   }
 
+  getCurrentPiceData(kind, pice) {
+    switch (kind) {
+      case 'times': {
+        return this.getCurrentTimeData(pice);
+      }
+      case 'codes': {
+        return this.getCurrentCodeData(pice);
+      }
+    }
+  }
+
   getCurrentTimeData(time) {
     let minTime, maxTime;
     switch (time) {
