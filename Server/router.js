@@ -2,10 +2,12 @@ const UserSerivce = require('./services/userService');
 const MockService = require('./services/mockService');
 const AuthService = require('../Server/services/authService');
 const MailService = require('../Server/services/mailService');
+require('dotenv').config();
 
 var clients = [];
 var ids = 1;
-var sendInterval = 1;
+const sendInterval = process.env.SEND_INTERVAL;//in minutes
+const checkForSendInreval = process.env.CHECK_FOR_SEND_INTERVAL;//in ms
 
 module.exports = {
     sessionRouter: (io) => {
@@ -70,7 +72,7 @@ module.exports = {
             socket.on('mailSendRequest', MailSendRequest);
 
             console.log(`a new user connected with nextSendTime ${AddMinutes(sendInterval)}`, clients.length);
-            //add new connected client
+            //add new connected client to server list of clients
             let c = { id: ids, session: socket, nextSendTime: AddMinutes(sendInterval) }
             clients.push(c);
             ids++;
@@ -91,7 +93,7 @@ module.exports = {
                     }
                 }
             });
-        }, 10000 / 1);
+        }, checkForSendInreval);
     }
 }
 

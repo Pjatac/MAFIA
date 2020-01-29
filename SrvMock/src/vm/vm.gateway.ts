@@ -136,7 +136,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
         console.log(`Send new VMs data on ${new Date()}`);
         this.clients.forEach(c => {
             let data = this.getVMsByFilter(newData, c.params);
-            console.log(`For client ${c.id}`);
+            console.log(`For client ${c.user.id}`);
             c.user.emit('getNewServersData', data);
         });
 

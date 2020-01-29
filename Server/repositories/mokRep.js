@@ -44,10 +44,10 @@ module.exports = {
                                 $map: {
                                     input: {
                                         $range: [{
-                                            $add: [{ $size: "$vms.data" }, -1]
+                                            $add: [{ $size: "$vms.data" }, -params.period * (DATA_COUNT)]
                                         },
-                                        { $add: [{ $size: "$vms.data" }, -params.period * DATA_COUNT] },
-                                        -params.period]
+                                        { $size: "$vms.data" },
+                                        parseInt(params.period)]
                                     },
                                     in: { $arrayElemAt: ["$vms.data", "$$this"] }
                                 }

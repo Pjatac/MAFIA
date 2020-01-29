@@ -59,11 +59,13 @@ export class VirtualmashinesComponent implements OnInit {
   }
 
   changeSelection(servers) {
+    this.spinner.show('vmspiner');
     this.params.servers = servers;
     this.vmService.requestServers(this.params);
   }
 
   changePeriod(period) {
+    this.spinner.show('vmspiner');
     this.params.period = period;
     this.period = period;
     this.vmService.requestServers(this.params);
