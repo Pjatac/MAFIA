@@ -23,8 +23,8 @@ export class SimpleLineChartComponent implements AfterViewInit, OnChanges {
       this.buildChart();
     }
   }
-  
-//need for intit chart
+
+//need for init chart
   ngAfterViewInit() {
     if (this.init) {
       this.buildChart();

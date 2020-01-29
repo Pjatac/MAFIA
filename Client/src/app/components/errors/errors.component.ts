@@ -48,27 +48,31 @@ export class ErrorsComponent implements OnInit {
   }
 
   changePeriodSelection(period) {
+    this.spinner.show('errorspiner');
     this.params.period = period;
     this.errService.requestErrors(this.params);
   }
 
   changeTop(top) {
+    this.spinner.show('errorspiner');
     this.params.top = top;
     this.errService.requestErrors(this.params);
   }
 
   changeAPISelection(apis) {
+    this.spinner.show('errorspiner');
     this.params.apiList = apis;
     this.errService.requestErrors(this.params);
   }
 
   changeDate(date) {
+    this.spinner.show('errorspiner');
     this.params.date = date;
     this.errService.requestErrors(this.params);
   }
 
   buildChart() {
-    var chart = c3.generate({
+    c3.generate({
       data: {
         columns: this.buildData,
         type: 'bar',
@@ -82,7 +86,6 @@ export class ErrorsComponent implements OnInit {
           ratio: 0.5
         },
         space: 0.75
-
       },
     });
   }

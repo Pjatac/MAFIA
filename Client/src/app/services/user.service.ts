@@ -16,23 +16,19 @@ export class UserService {
 
   constructor(private socket: Socket, private auth: AuthService, public dialog: MatDialog) { }
 
-  postUser(user: User) {
-  }
-
   login(authCredentials, cb) {
     this.socket.on('login-res', data => {
       if (data.token) this.auth.setToken(data.token);
       return cb(data);
     });
-
     this.socket.emit('login-request', authCredentials);
   }
+
   fb_login(fbData, cb) {
     this.socket.on('fb-login-res', data => {
       this.auth.setToken(data.token);
       return cb(data);
     });
-
     this.socket.emit('fb-login-request', fbData);
   }
 
