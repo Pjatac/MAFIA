@@ -30,7 +30,8 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     @WebSocketServer() server;
     async handleConnection(client) {
-        this.timer = global.setInterval(() => this.sendVMsData(), timeToSendVMsData);
+        if (!this.timer)
+            this.timer = global.setInterval(() => this.sendVMsData(), timeToSendVMsData);
         console.log(`New Connectionn on ${new Date}`, this.clients.length);
         let params = new Params(1, [])
         this.clients.push({ user: client, params: params });
