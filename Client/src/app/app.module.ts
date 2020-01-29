@@ -62,10 +62,7 @@ import {
 import { SimplePieChartComponent } from './components/shared/simple-pie-chart/simple-pie-chart.component';
 import { ClickablePieChartComponent } from './components/times-responses/clickable-pie-chart/clickable-pie-chart.component';
 
-
-
-
-const ioConfig: SocketIoConfig = { url: 'http://localhost:100', options: {} };//http://91.205.172.45
+const ioConfig: SocketIoConfig = {url: 'http://localhost:100', options: {}};
 //try to add SSL connection
 //{ url: 'https://localhost:3003', options: {transports: ['websocket'],secure: true} }
 

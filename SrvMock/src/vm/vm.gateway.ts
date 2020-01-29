@@ -30,7 +30,8 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     @WebSocketServer() server;
     async handleConnection(client) {
-        console.log("New Connectionn", this.clients.length);
+        this.timer = global.setInterval(() => this.sendVMsData(), timeToSendVMsData);
+        console.log(`New Connectionn on ${new Date}`, this.clients.length);
         let params = new Params(1, [])
         this.clients.push({ user: client, params: params });
         let data;
@@ -51,11 +52,10 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
         }
         client.emit('getAllServers', data);
         //start sending VMs data
-        this.timer = global.setInterval(() => this.sendVMsData(), timeToSendVMsData);
     }
 
     async handleDisconnect(client) {
-        console.log("Disconnect ", client);
+        console.log("Disconnect ", client.id.id);
         this.clients.splice(this.clients.indexOf(cl => cl.user.id = client.id), 1);
     }
 
@@ -136,6 +136,7 @@ export class VMGateway implements OnGatewayConnection, OnGatewayDisconnect {
         console.log(`Send new VMs data on ${new Date()}`);
         this.clients.forEach(c => {
             let data = this.getVMsByFilter(newData, c.params);
+            console.log(`For client ${c.id}`);
             c.user.emit('getNewServersData', data);
         });
 

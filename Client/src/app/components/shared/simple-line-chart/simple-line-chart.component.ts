@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import * as c3 from 'c3';
 import { Helper } from 'src/app/helpers/helper';
 
@@ -9,15 +9,26 @@ import { Helper } from 'src/app/helpers/helper';
   //to remove background artefacts
   encapsulation: ViewEncapsulation.None
 })
-export class SimpleLineChartComponent implements  AfterViewInit {
+export class SimpleLineChartComponent implements AfterViewInit, OnChanges {
   @Input() name;
   @Input() chartData;
   @Input() period;
+  init = true;
 
   constructor() { }
 
-  ngAfterViewInit(){
-    this.buildChart();
+  ngOnChanges() {
+    if (!this.init) {
+      console.log(`new data for ${this.name} on ${new Date()}`);
+      this.buildChart();
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.init) {
+      this.buildChart();
+      this.init = false;
+    }
   }
 
   buildChart() {
@@ -41,12 +52,12 @@ export class SimpleLineChartComponent implements  AfterViewInit {
           },
           tick: {
             format: function (d) {
-              return d+'min';
+              return d + 'min';
             }
           }
         },
         y: {
-          min : 10,
+          min: 10,
           max: 100,
           label: {
             text: this.name + ' usage',

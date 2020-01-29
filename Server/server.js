@@ -29,12 +29,12 @@ log.info("Server started on port ",PORT);
 // const server =
 //     https.createServer({
 //         key: fs.readFileSync(
-//            './ssl/localhost.key'
+//             './ssl/localhost.key', 'utf8'
 //         ),
 //         cert: fs.readFileSync(
-//            './ssl/localhost.crt'
+//             './ssl/localhost.crt', 'utf8'
 //         ),
-//         requestCert: false,
+//         requestCert: true,
 //         rejectUnauthorized: false
 //     });
 

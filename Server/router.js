@@ -10,10 +10,7 @@ var sendInterval = 1;
 module.exports = {
     sessionRouter: (io) => {
         io.on('connection', function (socket) {
-            //add new connected client
-            let c = { id: ids, session: socket, nextSendTime: new Date() }
-            clients.push(c);
-            ids++;
+            
 
             const RegisterRequest = async (data) => {
                 console.log("Register Request", data);
@@ -72,21 +69,29 @@ module.exports = {
             socket.on('check-token', CheckToken);
             socket.on('mailSendRequest', MailSendRequest);
 
-            console.log("a new user connected", clients.length);
+            console.log(`a new user connected with nextSendTime ${AddMinutes(sendInterval)}`, clients.length);
+            //add new connected client
+            let c = { id: ids, session: socket, nextSendTime: AddMinutes(sendInterval) }
+            clients.push(c);
+            ids++;
         });
         setInterval(() => {
-            console.log("Started");
-
+            console.log(`Check for sending on ${new Date()}`);
             clients.forEach(cl => {
-                if (cl.nextSendTime < Date.now()) {
+                console.log(`Check for sending for client ${cl.id} with time ${cl.nextSendTime}`);
+                if (cl.nextSendTime <= Date.now()) {
                     MockService.GetNewServersData(cl.session, cl.params);
-                    if (cl.params)
+                    if (cl.params) {
                         cl.nextSendTime = AddMinutes(cl.params.period);
-                    else
+                        console.log(`Set for client ${cl.id} new send time to ${cl.nextSendTime}`);
+                    }
+                    else {
                         cl.nextSendTime = AddMinutes(sendInterval);
+                        console.log(`Set for client ${cl.id} new send time to ${cl.nextSendTime}`);
+                    }
                 }
             });
-        }, 30000 / 1);
+        }, 10000 / 1);
     }
 }
 
