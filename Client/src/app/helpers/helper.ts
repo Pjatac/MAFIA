@@ -1,6 +1,9 @@
 import { SRV } from '../models/srv';
+const DATA_COUNT = 15;
 
 export class Helper {
+
+   
 
     static addResponse(time, codes) {
         return { code: codes[Math.floor(Math.random() * codes.length)], time: Math.floor(Math.random() * time) }
@@ -8,7 +11,7 @@ export class Helper {
 
     static buildAxisXLabels(period) {
         let labels = ['x'];
-        for (let i = 0; i < 16; i++) {
+        for (let i = 0; i <= DATA_COUNT; i++) {
             labels.push((period * i).toString());
         }
         return labels;
@@ -16,7 +19,7 @@ export class Helper {
 
     static AddData(current: SRV[], newData) {
         if (current) {
-            if (current[0].vms[0].data.length < 16) {
+            if (current[0].vms[0].data.length <= DATA_COUNT) {
                 let srvCounter = 0;
                 current.forEach(srv => {
                     let vmCounter = 0;
