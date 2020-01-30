@@ -1,9 +1,9 @@
 <!--navbar-->
-<app-navigation-bar>
-  <app-navigation-bar-link *ngIf="checkLogedIn()" ><a routerLink="virtual-mashines" routerLinkActive="active">Virtual Machines</a></app-navigation-bar-link>
-  <app-navigation-bar-link *ngIf="checkLogedIn()" ><a routerLink="times-responses" routerLinkActive="router-link-active">Response Metrics</a></app-navigation-bar-link>
-  <app-navigation-bar-link *ngIf="checkLogedIn()" ><a routerLink="errors" routerLinkActive="router-link-active">Top Fail</a></app-navigation-bar-link>
-  <app-navigation-bar-link *ngIf="checkLogedIn()" ><a [href]="'login'" (click)="logout($event)" routerLinkActive="router-link-active">Logout</a></app-navigation-bar-link>
+<app-navigation-bar *ngIf="checkLogedIn()">
+  <app-navigation-bar-link (linkClick)="closeMenu($event)"><a routerLink="virtual-mashines" routerLinkActive="active">Virtual Machines</a></app-navigation-bar-link>
+  <app-navigation-bar-link (linkClick)="closeMenu($event)"><a routerLink="times-responses" routerLinkActive="router-link-active">Response Metrics</a></app-navigation-bar-link>
+  <app-navigation-bar-link (linkClick)="closeMenu($event)"><a routerLink="errors" routerLinkActive="router-link-active">Top Fail</a></app-navigation-bar-link>
+  <app-navigation-bar-link (linkClick)="closeMenu($event)"><a [href]="'login'" (click)="logout($event)" routerLinkActive="router-link-active">Logout</a></app-navigation-bar-link>
 </app-navigation-bar>
 
 <!--page-->

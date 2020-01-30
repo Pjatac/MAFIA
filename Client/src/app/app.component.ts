@@ -49,5 +49,10 @@ export class AppComponent implements OnInit {
     this.selectedItems = [];
     this.router.navigateByUrl('/print');
   }
+
+  
+  closeMenu() {
+    document.querySelector('.navbar-collapse').classList.remove('show');
+  }
 }
 

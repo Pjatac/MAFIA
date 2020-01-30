@@ -9,9 +9,9 @@ export class NavigationBarLinkComponent {
   @Input() active: boolean;
   @Input() disable: boolean;
   @Input() href: string;
-  @Output() click = new EventEmitter();
+  @Output() linkClick = new EventEmitter();
 
   onClick() {
-    this.click.emit("");
+    this.linkClick.emit();
   }
 }
