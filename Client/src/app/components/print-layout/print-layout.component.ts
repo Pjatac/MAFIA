@@ -30,9 +30,10 @@ export class PrintLayoutComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private screenshot: ScreenshotService, private exportAsService: ExportAsService, private elem: ElementRef,
     private spinner: NgxSpinnerService) { }
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+    readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   emails: string[] = [];
-
+  sendResSubscription;
+  
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
@@ -75,7 +76,7 @@ export class PrintLayoutComponent implements OnInit {
     })
 
     this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
-      this.screenshot.sendMail({ adresses: emailAdresses, name: "screenshot." + type, data: content }).subscribe((res) => {
+      this.sendResSubscription = this.screenshot.sendMail({ adresses: emailAdresses, name: "screenshot." + type, data: content }).subscribe((res) => {
         this.spinner.hide('fullscreen');
         if (res) {
           this.dialog.open(OurDialogComponent, { panelClass: 'custom-dialog-container', data: { body: "Success!", title: 'Sending result' } });
@@ -84,8 +85,11 @@ export class PrintLayoutComponent implements OnInit {
         else {
           this.dialog.open(OurDialogComponent, { panelClass: 'custom-dialog-container', data: { body: "Sorry, sending problem...!", title: 'Sending result' } });
         }
+        this.sendResSubscription.unsubscribe();
       });
     });
   }
-
+  ngOnDestroy() {
+    this.sendResSubscription.unsubscribe();
+  }
 }
