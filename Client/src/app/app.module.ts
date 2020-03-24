@@ -35,7 +35,7 @@ import { SimpleLineChartComponent } from './components/shared/simple-line-chart/
 // routes
 import { appRoutes } from './routes';
 //services
-import { UserService } from './services/user.service';
+import UserService from '../app/services/user.service';
 import ErrService from '../app/services/err.service';
 import VmService from '../app/services/vm.service';
 import TrService from '../app/services/tr.service';
@@ -62,7 +62,9 @@ import {
 import { SimplePieChartComponent } from './components/shared/simple-pie-chart/simple-pie-chart.component';
 import { ClickablePieChartComponent } from './components/times-responses/clickable-pie-chart/clickable-pie-chart.component';
 
-const ioConfig: SocketIoConfig = {url: 'http://localhost:100', options: {}};
+//const ioConfig: SocketIoConfig = {url: 'http://localhost:100', options: {}};
+const ioConfig: SocketIoConfig = {url: 'https://cluster-server.azurewebsites.net/:8080', options: {transports: ['websocket']}};
+
 //try to add SSL connection
 //{ url: 'https://localhost:3003', options: {transports: ['websocket'],secure: true} }
 
@@ -134,7 +136,6 @@ export function provideConfig() {
     TreeviewModule.forRoot()
   ],
   providers: [
-    UserService,
     VmService,
     TrService,
     AuthService,

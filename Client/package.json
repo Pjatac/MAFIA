@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^8.2.14",
     "@angular/platform-browser-dynamic": "^8.2.14",
     "@angular/router": "^8.2.14",
+    "@azure/ng-deploy": "^0.2.3",
     "@types/c3": "^0.7.4",
     "angular-bootstrap-multiselect": "git+https://github.com/bentorfs/angular-bootstrap-multiselect.git",
     "angular-font-awesome": "^3.1.2",
@@ -44,7 +45,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.22",
-    "@angular/cli": "^8.3.22",
+    "@angular/cli": "^9.0.7",
     "@angular/compiler-cli": "^8.2.14",
     "@angular/language-service": "^8.2.14",
     "@types/jasmine": "^2.8.16",

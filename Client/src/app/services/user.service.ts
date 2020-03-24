@@ -8,7 +8,7 @@ import { OurDialogComponent } from '../components/shared/our-dialog/our-dialog.c
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export default class UserService {
   selectedUser: User = {
     userName: '',
     password: ''

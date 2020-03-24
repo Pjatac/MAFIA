@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import TrService from '../../services/tr.service';
 import { TimeResponse } from '../../models/tr';
-import AuthService from 'src/app/services/auth.service';
+import AuthService from '../../services/auth.service';
 import { NgxSpinnerService } from "ngx-spinner";
 
 
