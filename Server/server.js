@@ -1,47 +1,24 @@
-const log = require('simple-node-logger').createSimpleLogger('server.log');
-const server = require('http').createServer();
-const io = require('socket.io')(server);
 require('dotenv').config();
+const log = require('simple-node-logger').createSimpleLogger('server.log');
+const http = require('http');
+const express = require('express'),
+    app = module.exports.app = express();
+const server = http.createServer(app);
+//const io = require('socket.io').(server);
+const io = require('socket.io').listen(server,{
+  perMessageDeflate :false
+});
+const options = { index: 'index.html' }; 
+app.use('/', express.static('/home/site/wwwroot', options));
+io.origins('*:*');
+io.set('transports', ['websocket']);
 const ConnectToDb = require('./database');
 const sessionRouter = require('./router');
 const mockServer = require('./mock/mock');
-const PORT = process.env.SERVER_PORT;   
+const PORT = process.env.PORT || process.env.SERVER_PORT;   
 ConnectToDb();
 sessionRouter.sessionRouter(io);
 mockServer.Start();
 server.listen(PORT);
-//console.log();
+
 log.info("Server started on port ",PORT);
-
-// try to add Self_TRUSTED key and SSL connection
-// process.env.NODE_ENV = 'development';
-// const log = require('simple-node-logger').createSimpleLogger('server.log');
-// const ConnectToDb = require('./database');
-// const sessionRouter = require('./router');
-// const mockServer = require('./mock/mock');
-// const PORT = 3003;
-// ConnectToDb();
-
-// var fs = require('fs');
-// var https = require('https');
-// var path = require('path');
-
-// const server =
-//     https.createServer({
-//         key: fs.readFileSync(
-//             './ssl/localhost.key', 'utf8'
-//         ),
-//         cert: fs.readFileSync(
-//             './ssl/localhost.crt', 'utf8'
-//         ),
-//         requestCert: true,
-//         rejectUnauthorized: false
-//     });
-
-
-// const io = require('socket.io')(server);
-// server.listen(PORT);
-
-// sessionRouter.sessionRouter(io);
-// mockServer.Start();
-// log.info("Server started on port ", PORT);

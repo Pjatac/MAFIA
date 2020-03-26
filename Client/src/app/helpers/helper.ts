@@ -3,7 +3,7 @@ const DATA_COUNT = 15;
 
 export class Helper {
 
-   
+
 
     static addResponse(time, codes) {
         return { code: codes[Math.floor(Math.random() * codes.length)], time: Math.floor(Math.random() * time) }
@@ -61,8 +61,14 @@ export class Helper {
                 cData.push(`${srv.name}/${vm.name}`);
                 mData.push(`${srv.name}/${vm.name}`);
                 vm.data.forEach(d => {
-                    cData.push(d.cpuUsage);
-                    mData.push(d.memUsage);
+                    if (d) {
+                        cData.push(d.cpuUsage);
+                        mData.push(d.memUsage);
+                    }
+                    else {
+                        cData.push(0);
+                        mData.push(0);
+                    }
                 });
                 cpuData.push(cData);
                 memData.push(mData);

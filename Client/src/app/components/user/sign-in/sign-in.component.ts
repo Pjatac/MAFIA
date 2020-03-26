@@ -1,11 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
-import UserService from '../../../services/user.service';
+import { UserService } from '../../../services/user.service';
 import { MatDialog } from '@angular/material';
 import { OurDialogComponent } from '../../shared/our-dialog/our-dialog.component';
 import { AuthService as FbAuth, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
-import AuthService from '../../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-sign-in',

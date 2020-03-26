@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import VmService from 'src/app/services/vm.service';
+import { VmService } from 'src/app/services/vm.service';
 import { Helper } from '../../helpers/helper';
 import { SRV } from 'src/app/models/srv';
 import { VMParams } from 'src/app/models/vmparams';
 import { MatDialog } from '@angular/material';
-import AuthService from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 
@@ -26,7 +26,7 @@ export class VirtualmashinesComponent implements OnInit, OnDestroy {
   srvList: string[];
   cpuData;
   memData;
-  newDataSabscribtion;
+  newDataSubscribtion;
   period = 1;
   msTitle = "Servers";
 
@@ -53,7 +53,7 @@ export class VirtualmashinesComponent implements OnInit, OnDestroy {
       }
       this.buildChartData(servers);
     });
-    this.newDataSabscribtion = this.vmService.getNewServersData().subscribe((servers: SRV[]) => {
+    this.newDataSubscribtion = this.vmService.getNewServersData().subscribe((servers: SRV[]) => {
       this.serversData = Helper.AddData(this.serversData, servers);
       this.buildChartData(this.serversData);
     });
@@ -80,6 +80,6 @@ export class VirtualmashinesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.newDataSabscribtion.unsubscribe();
+    this.newDataSubscribtion.unsubscribe();
   }
 }

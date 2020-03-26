@@ -1,7 +1,7 @@
 const UserSerivce = require('./services/userService');
 const MockService = require('./services/mockService');
-const AuthService = require('../Server/services/authService');
-const MailService = require('../Server/services/mailService');
+const AuthService = require('./services/authService');
+const MailService = require('./services/mailService');
 require('dotenv').config();
 
 var clients = [];

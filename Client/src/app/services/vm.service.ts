@@ -5,7 +5,7 @@ import { Params } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export default class VmService {
+export class VmService {
 
   constructor(private socket: Socket) { }
 

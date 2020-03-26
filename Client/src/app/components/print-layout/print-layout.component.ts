@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import ScreenshotService from 'src/app/services/screenshot.service';
+import { ScreenshotService } from 'src/app/services/screenshot.service';
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -28,12 +28,13 @@ export class PrintLayoutComponent implements OnInit {
     }
   }
 
-  constructor(public dialog: MatDialog, private screenshot: ScreenshotService, private exportAsService: ExportAsService, private elem: ElementRef,
+  constructor(public dialog: MatDialog, public screenshot: ScreenshotService, private exportAsService: ExportAsService, private elem: ElementRef,
     private spinner: NgxSpinnerService) { }
-    readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   emails: string[] = [];
   sendResSubscription;
-  
+
+
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;

@@ -4,7 +4,7 @@ import { Socket } from 'ngx-socket-io';
 @Injectable({
   providedIn: 'root'
 })
-export default class TrService {
+export class TrService {
   wsData;
   codes = ['200', '201', '400', '401', '404', '500'];
   times = ['<50', '500>>50', '999>>500', '>1000'];

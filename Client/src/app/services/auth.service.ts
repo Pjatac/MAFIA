@@ -5,7 +5,7 @@ import { Socket } from 'ngx-socket-io';
 @Injectable({
   providedIn: 'root'
 })
-export default class AuthService {
+export class AuthService {
 
 
   constructor(private router: Router, private socket: Socket) { }

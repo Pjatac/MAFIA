@@ -4,7 +4,7 @@ import { Socket } from 'ngx-socket-io';
 @Injectable({
   providedIn: 'root'
 })
-export default class ErrService {
+export class ErrService {
 
   wsData;
 

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { User } from '../models/user.model';
-import AuthService from './auth.service'
+import { AuthService } from './auth.service'
 import { MatDialog } from '@angular/material';
 import { OurDialogComponent } from '../components/shared/our-dialog/our-dialog.component';
 
 @Injectable({
   providedIn: 'root'
 })
-export default class UserService {
+export class UserService {
   selectedUser: User = {
     userName: '',
     password: ''

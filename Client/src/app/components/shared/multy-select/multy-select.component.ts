@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatOption } from '@angular/material';
 
 @Component({
   selector: 'app-multy-select',
@@ -9,7 +10,7 @@ import { FormControl } from '@angular/forms';
 export class MultySelectComponent implements OnChanges{
 
   msControl = new FormControl();
-
+  selected: any;
   @Input() title;
   @Input() msList: string[];
   @Output() changeSelection = new EventEmitter();

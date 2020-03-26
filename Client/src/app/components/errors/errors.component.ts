@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as c3 from 'c3';
-import AuthService from 'src/app/services/auth.service';
-import ErrService from 'src/app/services/err.service'
+import { AuthService } from 'src/app/services/auth.service';
+import { ErrService } from 'src/app/services/err.service'
 import { TFParams } from 'src/app/models/tfparams';
 import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from "ngx-spinner";

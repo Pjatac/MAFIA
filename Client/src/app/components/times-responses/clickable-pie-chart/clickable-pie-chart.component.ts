@@ -1,7 +1,7 @@
 import { Component, OnChanges, Input } from '@angular/core';
 import * as c3 from 'c3';
 import { PieChartDialogComponent } from '../pie-chart-dialog/pie-chart-dialog.component';
-import TrService from '../../../services/tr.service';
+import { TrService } from '../../../services/tr.service';
 import { MatDialog } from '@angular/material';
 
 @Component({

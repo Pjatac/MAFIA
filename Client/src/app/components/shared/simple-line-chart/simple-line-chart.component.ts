@@ -39,7 +39,8 @@ export class SimpleLineChartComponent implements AfterViewInit, OnChanges {
     chartData.unshift(columns);
     chartData = {
       x: 'x',
-      columns: chartData
+      columns: chartData,
+      type: 'spline'
     };
     c3.generate({
       bindto: document.getElementById(this.name),
