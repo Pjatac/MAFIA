@@ -62,8 +62,8 @@ import {
 import { SimplePieChartComponent } from './components/shared/simple-pie-chart/simple-pie-chart.component';
 import { ClickablePieChartComponent } from './components/times-responses/clickable-pie-chart/clickable-pie-chart.component';
 
-//const ioConfig: SocketIoConfig = {url: 'http://localhost:100', options: {transports: ['websocket']}};
-const ioConfig: SocketIoConfig = {url: 'wss://analitic-server.azurewebsites.net', options: {transports: ['websocket']}};
+const ioConfig: SocketIoConfig = {url: 'http://localhost:100', options: {transports: ['websocket']}};
+//const ioConfig: SocketIoConfig = {url: 'wss://analitic-server.azurewebsites.net', options: {transports: ['websocket']}};
 
 const authConfig = new AuthServiceConfig([
   {

@@ -6,14 +6,14 @@ const DATA_COUNT = process.env.DATA_COUNT;
 
 module.exports = {
     GetServers: async function (params) {
+        let lastChanges;
         if (!params) {
-            let lastChanges = await VMServer.aggregate([
+            lastChanges = await VMServer.aggregate([
                 { $unwind: "$vms" },
                 { $project: { "_id": 0, name: 1, "vms": { name: "$vms.name", data: { $slice: ["$vms.data", -DATA_COUNT] } } } },
                 { $group: { "_id": { name: "$name" }, vms: { "$push": "$vms" } } },
                 { $project: { "_id": 0, name: "$_id.name", vms: "$vms" } }
             ]).exec();
-            return lastChanges;
         }
         else {
             //console.time('label');
@@ -32,7 +32,7 @@ module.exports = {
             // });
 
             // executing time for this code with 4 servers and period 1 hour = 366ms 
-            let lastChanges = await VMServer.aggregate([
+            lastChanges = await VMServer.aggregate([
                 { $match: { name: { "$in": params.servers } } },
                 { $unwind: "$vms" },
                 {
@@ -59,8 +59,9 @@ module.exports = {
                 { $project: { "_id": 0, name: "$_id.name", vms: "$vms" } }
             ]).exec();
             //console.timeEnd('label');
-            return lastChanges;
         }
+        this.clearVMsIDs(lastChanges);
+        return lastChanges;
     },
 
     AddNewServersData: async function (data) {
@@ -114,27 +115,26 @@ module.exports = {
     },
 
     GetResponses: async function (date) {
+        let toSend = [];
         if (!date) {
-            data = await WebService.find();
-            toSend = [];
+            data = await WebService.find().lean();
             data.forEach(ws => {
                 //getting last record from DB
                 toSend.push({ name: ws.name, responses: ws.data[ws.data.length - 1].responses });
             })
-            return toSend;
         }
         else {
             //need implementation on client side?
             date = new Date();
             const dayStart = this.getDayStart(date);//create for filtring data by days - start of searching day
             const dayEnd = this.getDayEnd(date);//create for filtring data by days - end of searching day
-            data = await WebService.find({ data: { "$elemMatch": { date: { $gte: dayStart, $lt: dayEnd } } } });
-            toSend = [];
+            data = await WebService.find({ data: { "$elemMatch": { date: { $gte: dayStart, $lt: dayEnd } } } }).lean();
             data.forEach(ws => {
                 toSend.push({ name: ws.name, responses: ws.data[0].responses });
             })
-            return toSend;
         }
+        this.clearReaponsesIDs(toSend);
+        return toSend;
     },
 
     GetErrors: async function (params) {
@@ -249,5 +249,21 @@ module.exports = {
         } catch (error) {
             console.log(error);
         }
+    },
+
+    clearVMsIDs(lastChanges) {
+        lastChanges.forEach( srv => {
+            delete srv._id;
+            srv.vms.forEach( vm => {
+                delete vm._id;
+                vm.data.map(el => delete el._id);
+            });
+        });
+    },
+
+    clearReaponsesIDs(toSend) {
+        toSend.forEach( service => {
+            service.responses.map(el => delete el._id);
+        })
     }
 }
