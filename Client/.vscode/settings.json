@@ -4,5 +4,5 @@
         ".vscode{,/**}"
     ],
     "appService.deploySubpath": "dist\\LoginAndRegister",
-    "appService.defaultWebAppToDeploy": "/subscriptions/e4f43f45-b9c7-4f94-abce-640d9671a16e/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/analitic-client"
+    "appService.defaultWebAppToDeploy": "/subscriptions/<Azure subscription>/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/analitic-client"
 }
